@@ -1,0 +1,5329 @@
+Данный FAQ составлен по материалам FIDO-конференции RU.CISCO,
+newsgroup comp.dcom.sys.cisco, списка рассылки inet-admins,
+конференций online.comptek.ru и других источников.
+
+Спасибо всем обитателям эхи RU.CISCO.
+Спасибо всем, кто присылал ссылки, пары q/a.
+
+Пытающийся иногда вести FAQ - Dmitriy Yermakov, dyer@rcp.ru, 2:5030/1115
+Дата последней модификации - $Date: 2014/05/05 18:52:43 $.
+Дополнения, исправления лучше присылать на dyer@rcp.ru
+Если ответ на вопрос не ваш - просьба указывать (Имя Фамилия) автора ответа.
+
+http://rcp.ru/faq/cisco.html
+Текстовая версия
+ftp://ftp.east.ru/pub/inet-admins/cisco.txt
+http://rcp.ru/faq/cisco.txt
+
+
+
+DISCLAIMER.
+Составитель данного текста не является Cisco-гуру
+и не осуществляет tech-support by e-mail or netmail.
+
+0. Общие вопросы
+1. Sync,Async,AUX,Callback
+2. Frame Relay
+3. X.25
+4. ACL
+5. Traffic-shape, QoS
+6. Routing
+7. TACACS,RADIUS,AAA
+8. Memory
+9. NTP, TZ
+10. NAT
+11. Telco, ISDN
+12. VoIP
+13. SNMP
+14. Cables
+15. TROUBLESHOOTING
+16. Switching,VLAN
+17. Netflow
+18. PIX/ASA
+96. Modules
+97. SoftWare
+98. IOS Black List/White List/Recommendations
+99. Misc
+Заметки на полях
+
+===========================================================
+0. Общие вопросы
+
+===========================================================
+
+0.1>Q: Где можно что-то почитать про Cisco ?
+
+>A: хором :)
+
+UniverCD, идущий в поставке.
+http://www.cisco.com и
+http://www-europe.cisco.com
+
+Некоторые переводные материалы.
+http://cisco.udm.ru МАРК-ИТТ
+[23.01.2001] http://www.pluscom.ru/general/library/index.htmБиблиотека PlusCom
+
+A>: (Vladimir Chepikov)
+Cisco Product Quick Reference Guide 
+
+A>: (Alexey Milevsky)
+Portable Product Sheets
+
+[11.09.2000] По поводу UniverCD.
+
+A>: (Dmitry Morozovsky) 'Новые' DocCD от Cisco - gzip-compressed
+
+(Dmitry Lesnichenko) сейчас содержимое UniverCD не gzip-compressed, а bzip2-compressed.
+Поэтому вместо "gzcat -f" в приведенном фрагменте нужно использовать "bzcat"
+
+------- httpd.conf:
+
+Action text/gzipped /cgi-bin/gzcat.cgi?
+AddHandler text/gzipped .html .htm
+
+
+------- gzcat.cgi:
+#!/bin/sh -
+
+echo "Content-type: text/html"
+echo ""
+
+HF=${DOCUMENT_ROOT}/$REQUEST_URI
+
+if [ -r $HF ]; then
+        gzcat -f $HF
+else
+        echo "No such file, sorry"
+fi
+
+>A: По поводу установки под Win2k  (Sergey Zarubin)
+
+From: "Evan Wagner" 
+Newsgroups: comp.dcom.sys.cisco
+Subject: Re: Windows 2000 & Cisco CD
+Date: Thu, 20 Apr 2000 23:04:18 -0400
+
+To get the Cisco documentation to work under Windows 2000:
+Run regedit
+Export your registry (as a precaution)
+Locate the Windows 2000 Registry Key:
+HKEY_LOCAL_MACHINE/SOFTWARE/Microsoft/IE4/Setup/Path
+Change the value from "%programfiles%\Internet Explorer" to the location
+where IE is installed on your system, for example "D:\Program Files\Internet
+Explorer"
+Uninstall the Cisco Documentation CD
+Delete the old install directory
+Reinstall the Cisco documentation CD and you should be good to go.
+
+>Q: При монтировании univercd под FreeBSD имена файлов и каталогов
+получаются заглавными буквами, можно ли избавиться от этого?
+
+>A: (Victor Sudakov) mount_cd9660 -j
+
+>A: Александр Раинчик 
+
+Cisco Systems and Cisco Routers in a Nutshell
+http://www.clark.net/pub/rbenn/cisco.html
+
+[18.01.2002] теперь это Cisco Systems? In a Nutshell 
+
+Есть такой замечательный сервер: McGraw-Hill Beta Books
+http://www.pbg.mcgraw-hill.com/betabooks/betabooks-home.html
+
+>A: (Dmitriy Yermakov)
+
+Кое-какие конкретные примеры конфигов есть на
+Релкоме
+http://relcom.eu.net/INFO/NOC-IP/FAQ/faq.html
+сайте С.Богомолова
+http://www.bog.pp.ru/work/cisco_access.html
+
+Cisco роутеры и борьба с ними в библиотете М.Мошкова
+http://www.parkline.ru/Library/koi/CISCO/
+
+Sample Configurations на www.cisco.com
+http://www.cisco.com/warp/public/700/tech_configs.html
+
+Guide to Cisco Router Configuration
+http://www.primenet.com/~web/router/cisco-configuration.html
+
+TACACS-FAQ - http://www.easynet.de/tacacs-faq
+
+CISCO-FAQ - comp.dcom.sys.cisco Frequently Asked Questions
+Date: 10 February 2002
+Subject: Where can I obtain/View the FAQ
+B.    http://www.networkingunlimited.com/CiscoFAQ.html
+C.    http://www.evolutiontechnical.com/cisco-faq/index.htm
+D.    http://mrubino.com:8080/cdsc-faq
+
+http://cube.sut.ru/~dyer/faq/cisco-networking-faq.txt и
+ftp://ftp.east.ru/pub/inet-admins/cisco-networking-faq.txt
+
+CISCO-FAQ на сервере Cisco - http://www.cisco.com/warp/public/458/index.shtml
+
+Архив mailing-list inet-admins http://info.east.ru/win/inetadm.html где тоже есть вопросы/ответы. И не только по Cisco.
+
+Небольшой FAQ http://www.sunshine.dp.ua/os/reports/ciscofaq.html
+
+Статьи с сообщениями из RU.CISCO на http://www.opennet.ru/base/cisco
+
+[07.09.2000] >A: Martin McFlySr 
+
+Поиск по киске на движке Google http://cisco.google.com/cisco
+
+[18.09.2000] Обзор литературы Cisco Press "S.Zaytsev" 
+
+[23.01.2000] http://www.npr.ru/tutorial/course98.html
+лучше поздно чем никогда :) Материалы курсов "Практическое применение маршрутизаторов CISCO в корпоративных сетях", прочитанных в марте-апреле 1998 года для сотрудников РАО "ЕЭС России". 
+
+
+
+
+0.2>Q: Где взять архив RU.CISCO ?
+
+>A: (Dmitriy Yermakov)
+
+
+http://groups.google.com/groups?hl=ru&safe=off&group=fido7.ru.cisco :)
+ru?cisco.zip FTP
+ru?cisco.zip HTTP
+ВНИМАНИЕ ! Формат базы - Squish. Viewer - SQVIEW
+
+0.3>Q:  Где взять свежий IOS ?
+
+>A: (Denis Saveliev)
+
+Бета версии лежат на ftp://ftpeng.cisco.com/isp
+
+P.S. (DY) Вообщем-то IOS не бесплатен.
+
+[09.02.2000]  (DY) Несколько статей на void.ru
+
+Конфигурирование роутеров Cisco
+(1)
+(2)
+
+Защищенные роутеры на базе Cisco IOS (перевод Phrack 55)
+(1)
+(2)
+
+P.S. На мой взгляд статья про конфигурирование уступает
+по качеству материалам Сергея Богомолова
+
+[09.02.2000] Кискины книжнки, public доступ.
+
+http://www.cisco.com/public/cons/isp/documents
+В соседние каталоги тоже полезно заглянуть http://www.cisco.com/public/cons
+
+[25.10.2002] Documentation Icon Library
+
+(Vladimir Litovka) Cisco Dynamic Configuration Tool - пускает в режиме guest и позволяет собрать конфигурацию и проверить ее на валидность.
+
+===========================================================
+1. Sync,Async,AUX,Callback
+
+===========================================================
+
+Access-Dial Technical Tips
+WAN Technical Tips
+How to Tunnel Async Data
+
+[19.05.2003] (Denis V. Schapov)
+Recommended Modemcaps for Internal Digital and Analog Modems on Cisco Access Servers
+Configuring and Troubleshooting V.92 Modems
+
+1.1>Q: Подскажите как на Cisco 2509 сделать вход с модемов на IFCICO !
+
+>A: (Dmitriy Yermakov)
+При использовании TACACS/RADIUS см. (7.6)
+
+username **EMSI_INQC816 nopassword
+username **EMSI_INQC816 autocommand telnet [host] [port_ifcico] /stream
+необхобимость наличия ключика /stream лучше проверить опытным путем
+по поводу
+banner login # **EMSI_REQA77E #
+надо/не надо к окончательному решению не пришли
+у меня это есть
+
+>A: (Alecsey Gusev)
+
+username **EMSI_INQC816 nopassword noescape
+username **EMSI_INQC816 autocommand telnet  
+username **EMSI_INQC816**EMSI_INQC816q. nopassword noescape
+username **EMSI_INQC816**EMSI_INQC816q. autocommand telnet  
+username **EMSI_INQC816q nopassword noescape
+username **EMSI_INQC816q autocommand telnet  
+username **EMSI_TZP16B2 nopassword noescape
+username **EMSI_TZP16B2 autocommand telnet  
+не нужен banner login # **EMSI_REQA77E #
+
+>A: (Alecsey Gusev)
+
+Для Argus'a надо добавить пользователя **EMSI_TZP16B2,
+argus первым делом посылает это.
+
+[19.07.2000] (Sergei Shumakov) такого аргус точно не делает. вот это
+
+-TZP16B2-
+
+он послать может, но только после того, как поймал **EMSI_REQA77E.
+
+>A: патчик для ifcico (Maksim Malchuk)
+
+*** session.c.orig      Wed Dec 27 16:22:31 1995
+- --- session.c   Tue Feb 13 08:48:13 1996
+***************
+*** 163,168 ****
+- --- 163,170 ----
+                SM_ERROR;
+        }
++ PUTSTR("**EMSI_INQC816\r");
++
+        p=buf;
+        /*PUTSTR(" \r");*/
+        PUTCHAR('\r');
+
+
+1.2>Q: Dialout service for unix или как прицепить порт NAS'a к чему нибудь.
+
+>A: (Sergei Shumakov)
+Com Port Redirector
+
+P.S. (DY) остальные продукты "мертвы"
+
+>A: Alex Tutubalin, Vadim Mikhailov
+
+Win95/NT
+http://www.cisco.com - dialout serice или как там его.
+FreeBSD,Linux
+modemu-0.0.1 Эмулирует /dev/ttyXX через любой телнет.
+Для циски это будет инверсный телнет на порт 2000+n.
+Hо факсы вряд ли через это пошлешь, хотя кто его знает?
+
+(AT): Hа 2000+n поpту нет flow control. А dialout ходит на 6000+n.
+
+(DY): nettty - где-то в районе http://www.livingston.com
+Там ее уже давно нет. Брать здесь - ftp://ftp.sut.ru/pub/dyer
+Лежат 2 версии - оригинальная и патченная by birdie@
+
+>A: (Leonid Kirillov)
+
+Под Win'95/3.x/NT проблема решается при помощи
+http://www.cisco.com/univercd/cc/td/doc/product/access/acs_soft/dialoutd/index.htm
+Способ решения проблемы под ДОСом неизвестен.
+
+NB. Cisco DialOut utility уже некоторое время End-Of-Life.
+Вместо нее - http://www.tacticalsoftware.com/de.asp
+
+1.3>Q: Можно-ли как-нибудь организовать попадание не на определенную линию,
+а на первую свободную, скажем? Мне думается, что это можно как-то
+организовать через объединение может, в Dialer Group? Вообще, интересно;)
+
+>A: (Vasily Ivanov)
+
+ 5000+номер
+ чеpез установленый rotary на нужных линиях.
+
+1.4>Q: Хотелось немногого - прицепить модем на AUX. Прописал ему следующее:
+
+ line aux 0
+  location TESTING
+  access-class 1 in
+  password line anything
+  script reset reset-modem
+  modem InOut
+  transport preferred none
+  transport input all
+  transport output none
+  stopbits 1
+  rxspeed 19200
+  txspeed 19200
+  flowcontrol hardware
+
+ Зайдя телнетом на этот модем, наружу позонить я могу, а звоню на него
+ снаружи - тишина, модем поднимает трубку и молчит, после чего
+ отваливает. Hикаких промптов, ничего. Остальные восемь модемов
+ работают нормально.
+ Куда мне пнуть киску, чтобы она признала AUX? IOS 11.2.
+
+>A: (Sergey Zhuk)
+
+line aux 0
+ login local
+ modem Dialin
+ terminal-type vt100
+ stopbits 1
+ rxspeed 38400
+ txspeed 38400
+ flowcontrol hardware
+вот... работает...
+с inout тоже работает...
+
+1.5>Q: Что за номера 20xx, 40xx, 60xx портов на Cisco ?
+
+>A: (Dmitri Beloslioudtsev)
+
+А это разные режимы работы telnet:
+Telnet              port 20xx
+Telnet raw          port 40xx
+Telnet binary       port 60xx
+
+A>: (Eugene Zhilitsky)
+Порты 30хх, 50хх, 70хх - то же самое, но для rotary.
+
+P.S. (DY)
+6000+ port number binary connection ( CR converted to CR+LF)
+9000+ port number Xremote
+
+1.6>Q: А не подскажет ли всезнающий All, как в киске 2503 настpоить AUX
+поpт для подключения к нему модема с выделенной линией. Hа
+маpшpутеpе с дpугой стоpоны выделенки остались только асинхpонные
+поpты.
+
+>A: (Dmitry Morozovsky)
+
+int a0
+    ip unn e0
+    enc ppp
+    keep 10
+    asy mode dedicated
+    asy def rou
+    asy dyn rou
+
+li a 0
+    speed 38400
+    flow hard
+    esc NONE
+    stopbits 1
+
+    Плюс конфигурация модема (для reverse telnet нужны modem inout & tran in
+telnet)
+
+1.7>Q: Как заставить работать NT, Win c киской по нуль-модему ?
+
+>A: (mkader) How to Configure Windows 95 Dial-up Networking via a Null-modem Cable
+
+>A: (Alexander Karpoff)
+
+ppp через Зелаксы и с 95, и с NT работают без проблем.
+А надо всего-то сходить на http://www.mindspring.com/~kewells/net/
+и скачать необходимые *.inf.
+
+[19.07.2000] (zaruba@artelecom.ru)
+
+предпочитаю скачивать с ftp://ftp.zelax.ru/pub/soft/mdmzelax.inf
+см. так же http://www.zelax.ru/faq/faq76.html
+
+P.S. (DY) говорят еще что, можно поставить на NT вместо модема - X.25 pad.
+P.P.S. (DY) найти mdm3640t.inf или взять тут - http://rcp.ru/mdm3640t.inf.txt с курьерами - работает :)
+
+>A: (DY) А вот более полный способ (откопан где-то у меня на диске)
+
+=============================================================================
+* Area : RU.WINDOWS.NT (RU.WINDOWS.NT)
+* From : Dmitry Vashkovsky, 2:5020/168.121 (Пятница Сентябрь 26 1997 19:23)
+* Subj : NT&выделенная линия
+=============================================================================
+ VB> Как сделать %SUBJ%?
+ VB> Есть NT4+SP3+RAS&Routing+Motorola Premier 33.6
+Предлагаю вариант решения который работает у меня с мая и проверен моими
+знакомыми, у них тоже работает на ура :)
+И так провайдер предоставил вам выделенныю линию на которой с вашей стороны
+висит модем, при включении он сразу подключается к провайдеру
+и никакими обычными средствами nt его неудается увидеть. Сразу скажу, что в
+ресурските по этому поводу написано всего две строчки, что вы должны работать
+по null modem, это почти правильно. Hа самом деле вы имитируете x25.
+Первое что вы должны сделать сохранить на всякий случай из директории ras свой
+файл pad.inf и вместо него положить новый я взял из nt3.51 файл modem.inf и
+отредактировал его (только в нем! в nt4 нет подходящего описание null modem)
+выбросил из него описания всех модемов оставил только некоторую общую
+информацию и отредактированное под необходимую нам ситуацию описание
+нулмодема, привожу эту чать полностью
+;----------------------------------------
+[Null Modem 33600]
+CALLBACK_TIME=10
+DEFAULTOFF=
+MAXCARRIERBPS=33600
+MAXCONNECTBPS=33600
+COMMAND=
+CONNECT=
+;----------------------------------------
+появившемся меню выбираем Install X25 Pad где в предлагаемом меню естественно
+выбираем Null Modem, далее подтверждаем все, что можно не забыв сказать, что
+данное устройство работает только на dial out и по продотоколу tcp/ip :)
+настраивая dialup в части посвященной х25 у вас несколько строк в первой с
+помощью стрелки вниз выбираете ваш нулмодем в остальных пишите любую ерунду (я
+накписал имя провайдера). Все можете спокойно работать. Только не забудьте в
+описании порта указать туже скорость, что и описании нулмодема. Если вам негде
+взять modem.inf от nt3.51 можете забрать мой уже отредактированный pad.inf
+(правда под 19200, ну да цифирки перебить не сложно) у меня по
+ftp:\\www.advance.com.ru он там лежит прямо в корне.
+Dmitry dva@skydive.ru http:\\www.advance.com.ru/skydiver
+ЗЫ: после того как у вас все заработает не забудьте угостить меня пивом
+=============================================================================
+
+>A: (DY)
+
+Провозившись какое-то время с http://www.mindspring.com/~kewells/net/
+пошел несколько другим путем.
+Пишу по памяти, что вспомнил.
+
+Со стороны киски -
+
+modemcap entry usr_ll:FD=&f1&l1:AA=A
+line X
+modem autoconfigure type usr_ll
+
+Со стороны Win,WinNT
+Ставятся нормальные драйвера от установленого модема.
+
+Конфигурим модем
+AT&F1
+AT&W
+
+Вариант 1.
+В настройках модема (там где что-то типа advanced/extra settings)
+ставим строчку инициализации AT&L1
+
+Вариант 2.
+В строчке с телефоном ставим X3T1
+(в таком варианте пожалуй будет работать любой модем,
+который и не умеет по паспорту режим Leased Line)
+
+И еще о том же - http://www.psc.ru/sergey/TehSerenada/CISCO/ONLINE/wint4ll.html
+
+[14.03.2001] И еще - http://peps37.ktk.ru/freebsd/leased-nt/
+
+1.8>Q:  А знает ли кто-нибудь , можно ли передавать звонящему абоненту адреса
+DNS автоматически с кисы ? Я слышал , что такое бывает.
+
+>A: (Sergiy Zhuk)
+
+async-bootp dns-server 192.168.3.100 192.168.3.110
+это DNS ^^^
+async-bootp nbns-server 192.168.3.2 192.168.2.2
+а это netbios (wins)
+
+1.9>Q: Стоит киска 3640 у которой установлен модуль Mica-modem на 30 модемов и
+модуль Е1 соединенный с АТС. Когда я делаю команду sh use то вижу картинку такого плана
+> 66 tty 66 pupkin ...
+> 55 tty 55 vasya ...
+Как мне узнать по какому таймслоту в потоке Е1 вышел пользователь т.е.
+существует ли привязка line к bchannel, если нет то можно ли это зделать.
+
+>A: (Andrew Lun)
+
+sh modem csm
+
+1.10>Q: Имеется Cisco 1005. Последовательный порт сконфигурирован
+как синхронный. Подскажите, pls, как ее заставить работать с асихронным модемом?
+
+>A: (Dmitry Morozovsky)
+
+Для 1005 sync-async переключается софтом.
+
+Hачиная с 2520/2522 -- командой physical-layer async на интерфейсе
+(кстати, полезно помнить, что при этом меняется SNMP номер интерфейса).
+
+P.S. (DY) The Cisco 1005 requires the IP/ASYNC or the IP/IPX/ASYNC feature set 
+of Cisco IOS Software in order to allow asynchronous mode on its Serial interface. 
+IP/Async - c1005-qy-mz
+IP/IPX/Async - c1005-nqy-mz
+
+1.11>Q: Проброс uucp-шников.
+
+>A: (DY) про RADIUS взято из inet-admins, за точность не ручаюсь.
+
+a. NAS, TACACS/RADIUS
+
+TACACS:
+group = uucp {
+                default service = permit
+                service = exec {
+                                noescape = true
+                                autocmd = "telnet aaa.bbb.ccc.ddd 540 /stream"
+                                }
+          }
+
+RADIUS:
+(Victor Sudakov)
+uucp    Auth-Type = Accept
+	Service-Type = Login-User,
+	Login-IP-Host = ip.of.uucp.host,
+	Login-Service = TCP-Clear,
+	Login-TCP-Port = 540
+
+(Vladimir Kravchenko)
+cistron 1.4.x
+------------------------------------------------------------------------
+# hints
+
+DEFAULT Prefix = "uu", Strip-User-Name = No
+        Hint = "UUCP"
+
+------------------------------------------------------------------------
+# users
+
+DEFAULT Huntgroup-Name = POOL, Hint = UUCP, Auth-Type = Accept
+       Service-Type = Login-User,
+       Cisco-AVPair = "shell:autocmd=rlogin xxx.xxx.xxx.xxx /user $user"
+------------------------------------------------------------------------
+
+P.S. (Vladimir Kravchenko) radius-server optional-passwords,
+чтобы cisco не спрашивала пароль.
+
+Для RADIUS, (Dmitry Morozovsky)
+
+/var/spool/uucp/public/.rhosts:
+nas0    ciscoTS
+nas1    ciscoTS
+
+(Basil Dolmatov) - NAS приходит со специфическим именем "ciscoTS"...
+Именно его и надо разрешать...
+
+NAS: (Taras Heychenko)
+
+rlogin trusted-remoteuser-source local
+rlogin trusted-localuser-source local
+
+b. Clients
+
+sys от taylor-uucp
+
+myname client
+system host
+time any
+call-login uuclient
+call-password cl.password
+port port1
+phone XXXXXXX
+chat sername: \L\r assword: \P\r ogin: \L\r sword: \P\r
+
+system.pat от UUPC/@
+
+200 gGt N g(%L_GWSIZE%,%L_GPSIZE%)/g(%R_GWSIZE%,%R_GPSIZE%) ""
+ \W20\c name--name--name \p\p\L sword:-\L-sword:-\L-sword:-\L-sword: \p\P
+->-> \crlogin\sUUHOST\r ogin--ogin--ogin \p\p\L sword:-\L-sword:-\L-sword: \p\P
+
+UUHOST заменить на свое
+Для случая с autocommand "->-> \crlogin\sUUHOST\r " можно выкинуть
+
+1.12>Q: Обратный звонок с Cisco в Windows
+
+>A: (Vyacheslav V. Fedorov)
+
+Hа Cisco 2511:
+version 11.
+service exec-callback
+...
+aaa authentication login execcheck tacacs+
+aaa authentication ppp ppp_list tacacs+
+...
+interface Async2
+ ip unnumbered Ethernet0
+ ip tcp header-compression passive
+ encapsulation ppp
+ async mode interactive
+ peer default ip address x.x.x.x
+ ppp callback initiate
+ ppp authentication chap ppp_list
+....
+line 2
+ autoselect during-login
+ autoselect ppp
+ script modem-off-hook offhook
+ script callback idc
+ login authentication execcheck
+ modem InOut
+ transport input all
+ escape-character NONE
+ callback forced-wait 30
+ callback nodsr-wait 10000
+ stopbits 1
+ rxspeed 57600
+ txspeed 57600
+ flowcontrol hardware
+.....
+
+Hа сервере где tacacs+:
+
+В файле tacacs.config
+user= mylogin {
+    global = cleartext "xxxxxxxxxx"
+    service=ppp protocol = lcp {
+        callback-dialstring = 388888
+    }
+    service=ppp protocol=ip {
+    }
+    service=exec {
+        callback-dialstring = 388888
+        callback-line=2
+        nocallback-verify=1
+    }
+
+}
+
+(DY) Для RADIUS примерно так:
+# users
+
+    Cisco-AVPair = "lcp:callback-rotary=1",
+    Cisco-AVPair = "lcp:callback-dialstring=1234567890"
+
+>A: (Dmitry Valdov)
+
+Для того, чтоб юзер мог вводить номер, из такакса должно приходить
+callback-dialstring = ""
+
+В общем:
+cisco:
+service exec-callback (это нужно только в случае, если предполагается
+использовать callback со скриптами.)
+....
+chat-script dial ABORT ERROR TIMEOUT 50 "" "AT" "OK" "ATD\T" "CONNECT"
+....
+interface group-async 1
+ ppp authentication pap
+ ppp callback accept
+...
+line 1 60
+ script callback micadial
+ rotary 1
+ callback forced-wait 10
+ autoselect during-login
+ autoselect ppp
+.....
+
+В такаксе:
+group = callback {
+.....
+service ppp protocol = lcp {
+                callback-dialstring = ""
+                callback-rotary = 1
+                nocallback-verify = 1
+
+}
+
+}
+
+user ..... {
+member = callback service = exec {
+.....
+callback-dialstring = "" nocallback-verify = 1 callback-rotary = 1
+}
+}
+
+Мастдайка сама ВСЕГДА запрашивает callback по cbcp при любом звонке с нее. 
+Если ей не отказывают, то оно запрашивает номер телефона. Для HТ надо это 
+все указать в явном виде.
+
+>A: (Andy Igoshin)
+
+ftp://ftp.vsu.ru/pub/hardware/cisco/callback
+
+[29.01.2001] >A: (Denis Shaposhnikov) Для RADIUS'a
+
+pp******        Crypt-Password = "**********************************"
+                Cisco-AVPair = "lcp:callback-dialstring=******",
+                Fall-Through = Yes,
+                Hint = "DL-S"
+
+[29.01.2001] >A: (Oleg V Prokofiev)
+в радиусе
+
+call    Auth-Type = Local, Password = "******"
+        Service-Type = Framed-User,
+        Framed-Protocol = PPP,
+        Framed-MTU = 1500,
+        Cisco-AVPair = "lcp:callback-dialstring=135"
+
+
+[31.01.2001] >A: (Maxim Basunov)
+
+Пpимеp скpипта для exec-callback для кошки
+ftp://ftp.idknet.com/pub2/cb3.scp
+
+1.13>Q: Как связать две Киски по Е1?
+
+>A: (Gosha Zafievsky), прислал (Oleh Hrynchuk)
+
+    Конфиг пpимеpно следующий (одинаковый в случае 5300 & 3600):
+
+controller E1 ZZZ
+    linecode hdb3  |
+    framing CRC4   | Эти два паpаметpа зависят от каналообp. обоpудования
+    clock source line primary | Hа 3600 есть только в 12.0
+    channel-group 1 timeslots 1-31
+
+interface serialZZZ:1
+    encapsulation hdlc
+    ip address a.b.c.d x.y.z.t
+
+ip route 0.0.0.0 0.0.0.0 serialZZZ:1
+
+    Что подставляется вместо ZZZ зависит от конкpетной железки...
+
+1.14>Q: Mожно ли оpганизовать IP канал чеpез AUX поpт с пpямым подключением
+к СОМ'у на HТ (думаю чеpез нуль-модем), или я много хочу?
+
+>A: (??), прислал (Oleh Hrynchuk)
+
+Нет проблем. Недавно самому понадобилось - у cisco3640 не было Ethernet.
+Немного пришлось повозиться с кабелем, распайка такая
+RJ-45 - DB-25
+1-5
+2-6,8
+3-3
+4-7
+5-7
+6-2
+7-20
+8-4
+Все остальное как обычно на асин. порту.
+
+[13.06.2000] 1.14>Q: Как лучше настроить модем на async порту ?
+
+>A: (Mathey M. Teplov)
+
+Я, например, да и многие вообще советуют сделать так:
+1) убиваешь modem autoconfigure путём прописывания no modem autoconfigure
+2) инициализируешь линию, как 115200 8,n,1
+!
+! chat-script поправлен (Michael Smirnov)
+chat-script RESET-SCRIPT ABORT BUSY ABORT ERROR ABORT "NO CARRIER" ABORT "NO ANSWER" "" AT&F1 OK
+!
+line x
+    speed 115200
+    databits 8
+    flowcontrol hardware
+    stopbits 1
+    parity none
+    no modem autoconfigure
+    script reset RESET_SCRIPT
+!
+и после этого жёстко прописываешь в F1 профиль в Courier следующее:
+&A3&B1&C1&D2&G2&H1&I0&K1&L0&M4&N0&P1&R2&S0&T5&X0&Y0%N6
+
+и выставляешь на нём джампера дабы он грузился из F1.
+
+Проверено на горьком опыте.
+
+[05.09.2000] 1.15>Q: Callback на линух
+
+>A: (Eugene Crosser)
+
+Linux: Callback Я сам не проверял.  Hа мой вкус скрипт кривой, но идея ясна.
+
+[01.03.2001] >A: (Juri Milodanovich) Настройка callback в pppd
+
+[23.01.2001] 1.16>Q: Есть кошка 1601, AUXа на ней нет, надо повесить
+модем на консоль, чтобы ее конфигурить можно было.
+
+>A: (Alex Bakhtin)
+
+Втыкаешь его в поpт и pаботаешь. Только вот PPP там пpосто так не
+запустить, если именно этого хочется.
+
+Говоpя о возможности поднять PPP на консоли я подpазумевал техническую 
+возможность входящего PPP, больше теоpетического хаpактеpа. Может, я 
+даже попpобую как-нибудь это сделать, если вpемя будет.
+
+1. Hужен софт, котоpый позволяет делать тpансляцию (так же умеет Virtual
+   Async интеpфейсы), насколько я помню, service provider or enterprise.
+2. Hа консоли можно сделать autocommand telnet localhost xxxx /stream,
+   сконфигуpиpовав соответствующим обpазом линию, скоpее всего так же, как
+   для fido.
+3. Соответственным обpазом делать нужную тpансляцию в ppp и поднимать
+   virtual async.
+
+Dialout, похоже, не сделать никак, хотя в pежиме, когда модем сам звонит
+пpи поднятом DTRе - все пpойдет по той же схеме, единственно, что пpидется
+объяснить PPP что он callout, возможно...
+
+[26.01.2001] 1.17>Q: Что нужно сказать cisco'е, что бы я, зайдя на нее 
+telnet'ом, сказал ppp и получил PPP, а не "This line may not run PPP'? 
+Или нужна спец. веpсия IOS?     
+
+>A: (Basil Dolmatov)
+
+Enterprise IOS + vty-async в конфиге.
+
+[28.02.2001] 1.18>Q: В сети есть WINS, DNS, PDC и BDC - вроде полный набор и 
+все прекрасно работает. Хочется что-бы народ звонил на КИСКУ и заходил в сеть, 
+мог подключаться к компьютерам, пользоваться сетевыми ресурсами ...
+
+>A: (Denis V. Schapov)
+
+conf t
+async nbns-server ....
+
+на клиентах NetBios node type: p-node (0x2)
+выключить master browsing в NetBIOS
+
+Все написано вот здесь
+Cisco- Windows Networking Design Implementation Guide
+Cisco - Configuration Issues with Cisco Routers and Windows NT
+
+[12.04.2001] (Denis V. Schapov) Помнится, пролетало в эхе про проблемы с Win2000 и mppp
+Cisco - Microsoft Windows 2000 PCs with MPPP Connections Experience Low Throughput
+
+[03.09.2001] 1.19>Q: Вопрос чайника - можно ли на циске 26 или 36 серий 
+настроить callback без радиуса и такакса? Если да - как? 
+
+>A: (Denis V. Schapov)
+
+Можно.
+
+Configuring EXEC Callback
+Async-PPP Callback Between an Access Server and a PC
+
+[07.03.2002] 1.20>Q: Callback без TACACS/RAIDUS
+
+>A: (Victor E. Denisenko)
+
+username xxx callback-dialstring "" password 7 0000000000000
+chat-script callback ABORT ERROR "" "AT Z" OK "ATDPw \T"  TIMEOUT 60 CONNECT \c
+interface Async65
+ async default routing
+ async mode dedicated
+ ppp max-bad-auth 3
+ ppp callback permit
+ ppp authentication pap
+line aux 0
+ script dialer callback
+ script callback callback
+ modem InOut
+ modem autoconfigure type usr_courier
+ transport input all
+ escape-character NONE
+ callback forced-wait 5
+ stopbits 1
+ speed 115200
+ flowcontrol hardware
+
+[08.09.2002] 1.21>Q: BSTUN на AUX. Можно ли такое сделать и если можно то как?
+
+>A: (Kostya Golubev)
+
+без пpоблем (чем, спpашивается, AUX от сеpиала отличается, кpоме как
+обpабатывается полностью пpоцессоpом)
+
+bstun peer-name x.x.x.x
+bstun protocol-group 1 async-generic (нy или чего там тебе надо)
+
+int lo0
+ip add x.x.x.x
+
+int a17
+no ip add
+enc bstun
+bstun group 1
+bstun route all tcp y.y.y.y
+asp role primary (с дpyгой стоpоны - secondary)
+asp rx-ift nnn (если понадобится)
+
+line 17
+speed 9600
+flow h
+modem inout
+stopb 1
+
+P.S. (Oleg V Prokofiev) в конфигурации AUX async иногда надо сказать 
+no ip route-cache, в старых иосах он пытается фастсвитчить и 
+соответственно не работает.
+
+[06.03.2003] 1.22>Q: Если 2 человека с одинаковым логином/паролем коннектится с разных машин
+на as5300 то их загоняет в один бандл. Если у них не стоит Negotiate
+multi-link for single link connections тогда все идет нормально. Т.е.
+разные Vi и ip-адреса. В чем проблема, почему объединение идет ?
+
+>A: (Maxim Basunov)
+multilink bundle-name both
+
+>A: (Denis V. Schapov)
+Criteria for Naming Multilink PPP Bundles
+
+===========================================================
+2. Frame Relay
+
+===========================================================
+
+[02.04.2001] 2.0> (Сергей Громов) Вот для начала пара ссылок.
+
+Cisco Enterprise: Frame Relay WAN
+Frame Relay
+
+2.1>Q: Frame Relay & Unnumbered interface
+
+Кто-то некотоpое вpемя назад тут писал, что IP unnumbered на
+FrameRelay subinterfaces не бывает. А у меня получилось.
+
+>A: (Alex Tutubalin)
+
+Пpимеpно так:
+Interface Serial 0
+ no ip address
+ frame-relay lmi-type ansi
+Interface Serial 0.1 point-to-point
+ frame-relay interface-dlci 16 ietf
+ ip unnumbered ethernet 0
+ip route 192.168.111.48 255.255.255.240 Serial 0.1
+C дpугой стоpоны стоит FreeBSD + Cronyx Sigma-22.
+Там все сделано пpимеpно так:
+cxconfig cx0 hdlc fr +extclock
+ifconfig cx0 192.128.111.49 195.54.222.201
+route add default 192.168.111.201
+.49 - Ethernet на этой же машине
+.201 - Ethernet на Cisco
+
+>A: (Alex Zinin)
+
+В случае с unnumbered инкапсуляция играет только косвенную
+роль. А сабинтерфейсы -- лишь частный случай.
+Общее правило такое -- ip unnumbered можно ставить только на
+интерфейсах, которые Cisco рассматривает как p-t-p.
+Для WAN интерфейсов тип определяется инкапсуляцией.
+Т.е. hdlc - ptp, ppp-ptp, slip-ptp, fr-ptm, x25-ptm, smds-ptm
+Отдельный случай -- dialer. Он не меняет типа интерфейса
+и работает исключительно самостоятельно поверх data-link
+уровня.
+В случае же с сабинтерфейсами, вы можете разбить один
+физический p-t-m на несколько p-t-p и p-t-m интерфейсов.
+Соответственно на p-t-p можно использовать unnumbered.
+
+[28.03.2001]2.2>Q: frame-relay traffic shaping?
+
+>A: прислал Тимур З. Нижарадзе
+Configuring and Troubleshooting Frame Relay
+
+[18.01.2001] (Slawa Olhovchenkov) Frame Relay Switch over IP Tunnel
+
+===========================================================
+3. X.25
+
+===========================================================
+
+Автор ответов - Eugene Zhilitsky, если не указано иное.
+
+3.1>Q: [DOS-COM1]--a1[Cisco2509]--[Cisco2522]-- -[?]--[UNIX-APP]
+Hа Cisco2522 выполняется трансляция TCP в X.25, а 2509 просто
+делает telnet на транслируемый адрес. HО, забрать с УHИХмашины
+можно, а положить нет.
+Пробовал трансляции и binary и stream, и telnet /stream и с иными
+параметрами и то и другое. И профайл юзал типа
+x29 profile aaaa 2:0 3:0 4:100 7:21 11:14, в плане эксперимента.
+
+>A: (Eugene Zhilitsky)
+
+4:100 - это очень плохо, неполные пакеты будут  уходить только через 100*0.05=5 секунд!
+
+1. трансляция и телнет должны быть stream.
+
+2. x29 profile aaa 1:0 2:0 3:2 4:5 5:0 8:0 9:0 10:0 12:0 15:0 22:0
+   3:2 - это для "профилактики", чтобы по ^M пакеты уходили сразу же, иногда
+это мешает (в очень редких специальных приложениях). Можно ставить 3:0.
+
+3. на асинхронном порту (a1[Cisco2509]), к которому подключена досовая тачка:
+   escape-character NONE
+   telnet transparent
+4. Для юзера, которым досовая тачка заходит на первую циску - noesc.
+
+5. Hа всех vty, которые могут использоваться для трансляции надо также:
+    escape-character NONE
+    telnet transparent
+
+6. Везде вместо этих двух строк можно использовать одну:
+    terminal-type download
+   Этот способ подсказали гуру из RU.CISCO (кто конкретно не помню :-(.
+
+Hу вроде бы больше ничего не забыл :-))))) Должно работать.
+
+3.2>Q: Как настраивать х25?
+
+>A: Есть простое эмпирическое правило: все параметры labp (hdlc) и х25 должны
+быть одинаковыми на обоих концах линка, кроме логического DTE/DCE -
+он должен быть _разным_. Кроме того, не надо забывать, что размер пакета на
+втором уровне (lapb) на Циске указывается в _битах_,
+а у большинства других  производителей - в _байтах_.
+
+3.3>Q: Хорошо, но на моем х25-box'е есть параметр "Группа логических каналов",
+   а в Циске я такого не нашел. Что делать?
+
+>A: Каждая единица в этом параметре добавляет 256 к номеру логического
+   канала. Hапример, на х25-box'е такие параметры:
+
+   Группа логических каналов  -  4
+   Hомер первого Two-way VC   -  1
+   Количество Two-way VC      - 16
+
+   Тогда на Циске надо выставить:
+
+   x25 ltc 1025
+   x25 htc 1040
+
+3.4>Q: Я прописал трансляцию х25-ТСР, но она не работает, Циска вместо нее
+выдает Username: (запускается exec). Что делать?
+
+>A: У вас для трансляции используется такой же х25 адрес как и в x25
+address на Serial. Использование Call User Data (cud) в трансляции не
+спасает. Адреса должны быть разными, например, расширьте х25 адрес в
+трансляции с помощью подадресов.
+
+3.5>Q: Из-за местных условий использовать подадреса я не могу.
+
+>A: Тогда просто удалите x25 address из конфигурации Serial. Этот параметр
+используется в исходящих пакетах вызова как адрес источника. Если его удалить,
+то пакеты вызова будут уходить с пустым адресом источника.
+Практически все х25 сети требуют, чтобы адрес источника был указан правильно,
+либо был пустым, так что все должно работать и без него.
+
+3.6>Q: Ура! Трансляция заработала. Hо задача поменялась, надо чтобы на вызов с
+   Call User Data (cud) запускалась трансляция, а на вызов по тому же адресу
+   без cud запускался exec.
+
+>A: Пропишите этот адрес через
+
+   x25 routing
+   x25 route  alias Serial
+
+3.7>Q: Hи y кого нет настpоек Cisco <--> Eicon по X.25.
+Хотя бы с стоpоны Cisco.
+PPP и Frame Relay полyчилось, а вот X.25 никак. А надо.
+
+>A: (john gladkih)
+
+direct connection?
+
+interface Serial1
+ description x.25 4 m$ eXchange
+ bandwidth 5
+ no ip address
+ no ip directed-broadcast
+ encapsulation x25 dce ietf
+ no ip mroute-cache
+ x25 address ADDRESS
+ x25 htc 32
+ x25 win 7
+ x25 wout 7
+ x25 accept-reverse
+ x25 nonzero-dte-cause
+ clockrate 4800
+ lapb T1 500
+ lapb N2 9
+
+[13.06.2000] 3.8>Q: Подскажите пожалуйста как детально отрабатывает такой 
+"кусочек"  translate: translate x25 03 cud 4411 profile NUL ppp ............
+
+>A: (Vasily Ivanov)
+
+   Убого он отpабатывает, т.к. для настpоек со стоpоны киски хватает данные с
+пеpвого попавшегося интеpфейса. Оставлен для совместимости со стаpыми ИОСами.
+Гоpаздо лучше использовать translate x25 12345 virtual-template 1. А детально
+с каpтинками смотpи на Configuring Protocol Translation and Virtual Asynchronous Devices
+
+[05.09.2000] 3.9>Q: я тут вспомнил как с полгода назад обсуждали проблему pad
+доступа через xot и когда x.25 сеть не хотела принимать вызовы с facilities 
+которые при xot неизбежны. еще актуально?
+могу дать рецепт. но он требует 12.1 ;) (как я помню в
+дискуссии был еще и annex-g? тогда 12.1 быть должен)
+
+>A: (john gladkih)
+
+ok. рутер с annex-g, он же локальный x25 switch:
+
+service pad to-xot
+service pad from-xot
+service tcp-keepalives-in
+service tcp-keepalives-out
+!
+frame-relay switching
+!
+x25 profile test dte
+ x25 address 61273
+ x25 htc 32
+ x25 win 7
+ x25 wout 7
+ x25 ips 1024
+ x25 ops 1024
+ x25 nonzero-dte-cause
+1> x25 subscribe flow-control never
+ lapb modulo 128
+2> x25 routing acknowledge local
+!
+interface Serial0
+ bandwidth 64
+ no ip address
+ encapsulation frame-relay IETF
+ frame-relay interface-dlci 25
+ x25-profile test
+ frame-relay lmi-type ansi
+!
+x25 route ^6127305 xot 10.10.0.21 xot-keepalive-period 10
+3> x25 route .* source ^$ substitute-source 6127305999 interface Serial0 dlci
+3> 25
+x25 route .* interface Serial0 dlci 25
+
+1> отключение согласования flow-control на интерфейсе для
+вызовов.
+
+2> разрешить локальную пересборку пакетов.
+
+3> pad call через xot приходит c пустым src address и мы src
+тут подменяем на 6127305999
+
+с другой стороны xot ничего особенного:
+
+x25 route ^612.* xot 10.10.0.118 xot-keepalive-period 10
+
+xot-keepalive-period тут чисто для проформы.
+
+[19.10.2001] 3.9>Q: X25 node address, А если я хочу общий адрес узла,
+наподобие как у вангардов указывается? Или у циски нет такого, и надо
+указывать адрес для каждого Х25 порта или аннекс-ж окончания PVC? 
+
+Адреса выставляемые на х25 боксах могут иметь два смысла:
+1. Адрес линка, который участвует в процедуре вызова.
+2. Адрес собственно железки. Hа вызов по нему дается командный интерфейс
+(аналог у Циско - exec).
+
+В "чистых" х25 боксах эти адреса различаются и задаются отдельно.
+В Циске это не так. Тут более уместна аналогия с IP-адресом на интерфейсе.
+Указав его, получаем сразу две вещи:
+1. Можно его использовать как адрес интерфейса (например, в маршрутизации).
+2. Этот адрес выступает как адрес бокса, т.е. телнетом по нему можем получить
+exec.
+
+Х25 в Циске сделано аналогично. Адрес интерфейса трактуется как адрес линка и
+участвует в процедурах вызовал. И как адрес собственно устройства. Это не
+всегда полезно, иногда их нужно развести. Для этого есть специальные команды.
+Hапример, чтобы Циска "откликалась" на адрес, но он не участвовал в процедурах
+вызова, его можно задать через Alias (в FAQ есть пример).
+
+[02.12.2001] 3.10>Q: А не подскажете полностью прозрачный профиль x29 для циски?
+Сейчас стоит вот такой:
+x29 profile default 1:0 2:0 3:0 4:1 5:0 7:0 9:0 10:0 12:0 13:0 14:0 16:0 17:0 18:0
+Hе прозрачен :( Hе проходит, скорее-всего, xon/xoff.
+
+>A: (Евгений Hовоселов)
+
+У нас работало когда-то
+
+x29 profile default 1:0 2:0 3:2 4:2 5:0 6:5 7:21 8:0 9:0 10:0 11:16 12:0
+13:4 14:0 15:0 16:8 17:24 18:2 19:0 20:0 21:0 22:0
+
+А под другие нужды (какие не помню не пытайте)
+x29 profile tdt 1:0 2:1 3:2 4:0 5:0 6:0 7:21 8:0 9:0 10:0 11:16 12:0 13:0
+14:0 15:0 16:127 17:24 18:18 19:0 20:0 21:0 22:0
+
+>A: (john gladkih)
+x29 profile default 1:1 2:0 3:127 4:1 5:0 6:0 7:0 8:0 9:0 10:0 12:0 13:0 14:0 15:0 19:0 21:0
+
+>A: (Serge Patokov)
+1:0 2:0 3:0 4:1 5:1 6:0 7:21 8:0 9:0 10:0 12:0 13:0 14:0 15:0 18:0 19:0 21:0
+
+[08.10.2002] 3.11>Q: А кто нибудь делал SWIFT Через Киску? Енкриптор не инкритирует...
+
+>A: (Shpak Vladimir)
+
+Пробовали, работает.
+Вот такая схема:
+CyLink(encryptor)<----x25---->cisco1720<-----AnnexG----->cisco2610<-----x25----->To x25 network
+
+Енкриптор CyLink. Только дело совсем не в нем.
+Циска не пропускает некоторые facility. 
+Лечится скрытой командой "x25 version 1993" на x25 интерфейсе.
+
+[11.11.2002] 3.12>Q: Есть интерфейс BRI, на который приходят IP пакеты,
+инкапсулированные в Х.25. Hадо их принять, вытащить и отправить дальше по Ethernet.
+
+>A: (Oleg V Prokofiev)
+
+X.25 over ISDN Bi-Directional Call
+Configuring X.25 on ISDN
+
+===========================================================
+4. ACL
+
+===========================================================
+
+Flexible Packet Matching for Cisco IOS XE
+
+4.1>Q: Рекомендации по access-lists для защиты от атак из интернета.
+
+Некоторые рекомендации и соображения.
+aaa.bbb.ccc.ddd, naa.nbb.ncc.ndd - соответственно свои сеть и маска.
+wba.wbb.wbc.wbd - wildcard bits
+
+ВНИМАНИЕ !!! в access-list используется не netmask, а wildcard bits.
+Есть жуткая формула, но я предпочитаю пользоватся такой -
+
+WB=255-NM
+таким образом, если netmask 255.255.255.0 в access-list
+пишется 0.0.0.255
+
+! deny all RFC1597 & default
+no access-list 101
+access-list 101 deny ip host 0.0.0.0 any
+access-list 101 deny ip 10.0.0.0 0.255.255.255 any
+access-list 101 deny ip 127.0.0.0 0.255.255.255 any
+access-list 101 deny ip 172.16.0.0 0.15.255.255 any
+access-list 101 deny ip 192.168.0.0 0.0.255.255 any
+! deny ip spoofing
+access-list 101 deny ip aaa.bbb.ccc.ddd wba.wbb.wbc.wbd any
+! deny netbios
+access-list 101 deny udp any any range 137 139 log
+access-list 101 deny tcp any any range 137 139 log
+! deny Back-Orifice
+access-list 101 deny udp any any eq 31337 log
+! deny telnet
+access-list 101 deny tcp any any eq telnet log
+! deny unix r-commands and printer, NFS, X11, syslog. tftp
+access-list 101 deny tcp any any range exec lpd log
+access-list 101 deny udp any any eq sunrpc log
+access-list 101 deny tcp any any eq sunrpc log
+access-list 101 deny udp any any eq xdmcp  log
+access-list 101 deny tcp any any eq 177    log
+access-list 101 deny tcp any any range 6000 6063 log
+access-list 101 deny udp any any range 6000 6063 log
+access-list 101 deny udp any any range biff syslog log
+access-list 101 deny tcp any any eq 11 log
+access-list 101 deny udp any any eq tftp log
+! permit all
+access-list 101 permit ip any any
+no access-list 102
+access-list 102 permit ip aaa.bbb.ccc.ddd wba.wbb.wbc.wbd any
+access-list 102 deny ip any any
+int XXX
+ip access-group 101 in
+ip access-group 102 out
+
+4.2>Q: Киньте, пожалуйста, пример access-list'а ( надо закрыть для
+доступа извне во внутреннюю сеть все порты - оставить только
+возможность работы по http и e-mail) Cisco - 1601 Заранее благодарен.
+
+>A: (Alex Bakhtin)
+
+Итак. Есть две стратегии по установке аксесс-листов:
+1. Закрыть все опасное, открыть все остальное.
+2. Открыть все нужное, закрыть все остальное.
+
+	В здешнем FAQе, который был порекомендован, имеется пример,
+написаный именно по первому принципу. Hе будем обсуждать преимущества и
+недостатки данного подхода, насколько я понимаю, у вас есть желание
+использовать второй. Я попытаюсь описать достаточно универсальную методику,
+которая может быть использована при построении защиты второго типа, а затем
+привести пример реально работающей конфигурации. Сразу хочу сказать, что
+все ниженаписаное - это чисто мое IMHO. Предполагается разработка
+access-listа, ограничивающего возможности доступа _извне_ в локальную сеть,
+а не ограничения возможностей по выходу наружу из локальной сети.
+
+	Итак.
+	Hачать имеет смысл с систематизации того, что мы, собственно хотим
+получить. Для этого предлагаю выстроить следующую таблицу:
+            !    !    !   !     !
+            !www !mail!ftp!binkd!и так далее - здесь перечиляем сервисы
+            !    !    !   !     !доступ к которым мы хотим предоставить
+            !    !    !   !     !пользователям "извне"
+------------!----!----!---!-----!----------------------------------------
+www.qq.ru   ! X  !    !   !     !
+relay.qq.ru !    !  X !   !     !
+ftp.qq.ru   !    !    ! X !     !
+any         !    !    !   !  X  !
+здесь хосты/
+группы хостов,
+которые предоставляют соответствующие сервисы. Порядок расположения хостов
+в таблице важен. Есть два правила:
+a. Общие определения необходимо располагать как можно ниже. То есть host
+   10.0.1.1/32 должен быть расположен _выше_ чем subnet
+   10.0.1.0/24. Соответственно в самую последнюю строчку пишется что-то
+   типа any.
+b. В случае, если по правилу a. оказывается, что порядок каких-то
+   конкретных строк может быть любым (как в нашем примере www, relay и ftp
+   могут быть перечислены в любом порядке, но обязательно выше чем any), то
+   на более высокие позиции надо ставить хосты, количество обращений к
+   которым по отмеченным сервисам предполагается большим. В нашем случае мы
+   предполагаем, что основные запросы будут поступать на www сервер, затем
+   будет передаваться какое-то количество почты и уж совсем мало будет
+   запросов на ftp.
+
+	После составления, проверки и, по возможности, оптимизации такой
+таблицы (вообще это процесс достаточно творческий и нетривиальный;-)) можно
+переходить собственно к написанию первой версии access-listа. Первая версия
+будет практически калькой нашей таблицы.
+
+ip access-list extended Firewall
+  permit tcp any host www.qq.ru     eq www
+  permit tcp any host relay.qq.ru   eq smtp
+  permit tcp any host ftp.qq.ru     eq ftp
+  permit tcp any any                eq 24554
+
+	Последняя строка по умолчанию принимается за deny ip any
+any. Фактически, построение первой версии access-listа закончено. Что мы
+делаем, чтобы продолжать развивать этот access-list? В конец листа мы
+добавляем одну строчку
+ deny ip any any log
+которая не только запретит весь остальной трафик, что было сделано
+по-умолчанию, но и заставить выдавать на консоль/монитор/syslog сообщения о
+пакетах, попадающих под это правило. И далее, в зависимости от того, какие
+сервисы не были учтены в нашем листе(сообщения об отброшеных пакетах будут
+сыпаться на консоль), можно будет дорабатывать наш access-list. Вот примеры
+сообщений:
+%SEC-6-IPACCESSLOGP: list firewall denied tcp xxx.xxx.xx.xx(1418) ->
+  %xxx.xxx.xxx.xx(23), 1 packet
+%SEC-6-IPACCESSLOGP: list firewall denied udp xxx.xxx.xxx.xxx(4000) ->
+  %xxx.xxx.xxx.xx(1038), 1 packet
+%SEC-6-IPACCESSLOGP: list firewall denied udp xxx.xxx.xxx.xxx(53) ->
+  %xxx.xxx.xxx.xx(1041), 1 packet
+%SEC-6-IPACCESSLOGP: list firewall denied udp xxx.xxx.xxx.xxx(53) ->
+  %xxx.xxx.xxx.xx(1044), 1 packet
+%SEC-6-IPACCESSLOGP: list firewall denied udp xxx.xxx.xxx.xxx(53) ->
+  %xxx.xxx.xxx.xx(1047), 1 packet
+%SEC-6-IPACCESSLOGP: list firewall denied udp xxx.xxx.xx.xx(49869) ->
+  %xxx.xxx.xxx.xx(33456), 1 packet
+%SEC-6-IPACCESSLOGP: list firewall denied udp xxx.xxx.xx.xx(49869) ->
+  %xxx.xxx.xxx.xx(33458), 1 packet
+
+	Вот собственно и все;) Hадо не забывать открывать _на_вход_ порт
+domain - чтобы к нам приходили ответы на наши dns запросы. active ftp - это
+вообще отдельная песня. Вот пример реально работающего access-листа, он,
+разумеется, не идеален, но работает;) Да, надо не забывать открывать
+established. После знака ; - мой комментарии.
+
+===================
+ip access-list extended firewall
+ permit tcp any any eq smtp ; все хосты принимают почту по smtp
+ permit tcp any any eq domain ; две строчки на dns
+ permit udp any any eq domain ;
+ permit tcp any any eq 22 ; ssh
+ permit tcp any host fido.qq.ru eq 24554 ; binkd
+ permit tcp any any established ; вот оно самое
+ permit tcp any host www.qq.ru  eq www ; www-сервера
+ permit tcp any host images.qq.ru eq www
+ permit tcp any host www.qq.ru range 8100 8104 ; для руской кодировки
+ permit tcp any host images.qq.ru range 8100 8104
+ permit udp any any eq ntp ; все машины могут получать время с внешних ntp
+ permit tcp any any range 40000 44999 ; уже не помню для чего:-((
+ permit tcp any any eq ident
+ permit icmp any any
+ permit tcp any eq ftp-data any gt 1023; для active-ftp
+ deny   ip any any log
+===================
+
+P.S. Для того чтобы в логе все-таки были номера портов надо:
+deny tcp any any range 0 65535 log
+deny udp any any range 0 65535 log
+
+P.P.S. (Anatoly Gerasimov)
+Как я понимаю - не обязательно. Для того чтобы в логе появились номеpа поpтов
+кpоме deny ip any any log необходимо чтобы в access-list существовало хотя бы
+по одному пpавилу, включающему port как для tcp так и для udp.
+
+4.3>Q: Как сделать transparent-proxy ?
+
+>A: (DY)
+
+Для SQUID'a SQUID Frequently Asked Questions: Interception Caching/Proxying
+
+Для oops'a oops F.A.Q.
+
+[19.06.2001] (Denis V. Schapov) Полезно почитать любителям делать transparent proxy при помощи PBR
+(route-map).
+Access Control Lists and IP Fragments
+
+[27.04.2001] (Max T) Cookbook for setting up transparent wccp caching using squid and a cisco access server
+
+[05.10.2001] How To Make a Transparent WWW Proxy
+
+4.4>Q: Dynamic ACL.
+
+>A: Прислал (Oleh Hrynchuk)
+
+You can use timed access-lists in IOS 12.x
+
+You will need the router to synch to a clock source
+for accuracy though..
+
+for example:
+
+int ser0/0
+ ip access-group 101 in
+!
+access-list 101 remark --FOR THE QUAKE 3 PLAYERS AT THE OFFICE--
+access-list 101 permit udp any any range 27850 27999 time-range lunchtime
+access-list 101 deny any any
+!
+time-range lunchtime
+ periodic weekdays 12:00 to 14:00
+ periodic weekend 00:00 to 23:59
+!
+ntp source loopback0
+ntp server 
+!
+
+[13.06.2000] 4.5>Q: Как разрешить заходить на киску телнетом только
+с определенных хостов ?
+
+>A: (Gosha Zafievsky)
+
+access-list 11 permit host 192.168.1.1
+line vty 0 4
+  access-class 11 in
+
+===========================================================
+5. Traffic-shape, QoS
+
+===========================================================
+
+[07.12.2001] (Denis V. Schapov) Policing and Shaping Overview
+
+Там же формула для расчета параметров CAR
+
+Comparing Traffic Policing and Traffic Shaping for Bandwidth Limiting
+
+(Denis V. Schapov) How to Classify All Interface Traffic with a Single Policer
+
+(Slawa Olhovchenkov) Applying QoS Features to Ethernet Subinterfaces
+
+Configuring QoS Catalyst 4500 Series Switch Cisco
+
+5.1>Q: Как зажать исходящий ftp-трафик ?
+
+>A: (Vasily Ivanov)
+
+Для Active-FTP
+access-list 115 permit tcp host 123.123.123.123 eq ftp-data any gt 1023
+Для Passive-FTP
+access-list 115 permit tcp host 123.123.123.123 any eq ftp
+
+5.2>Q: Как сделать traffic-shape на tun ?
+
+>A: (DY)
+
+Вот завалялся кусок рабочего конфига от 4000.
+
+interface Tunnel1
+ ip address xxx.xxx.xxx.xxx 255.255.255.252
+ tunnel source aaa.aaa.aaa.aaa
+ tunnel destination bbb.bbb.bbb.bbb
+!
+interface Ethernet0
+ ip address aaa.aaa.aaa.aaa 255.255.255.224 secondary
+ traffic-shape group 122 32000 8000 8000 1000
+!
+no access-list 122
+access-list 122 permit ip host aaa.aaa.aaa.aaa host bbb.bbb.bbb.bbb
+access-list 122 deny   ip any any
+
+P.S. Vyacheslav Furist 
+Помоему лучше было бы
+access-list 122 permit gre host aaa.aaa.aaa.aaa host bbb.bbb.bbb.bbb
+
+5.3>Q: Как зажать входящий трафик?
+
+>A: "Boris Mikhailov" 
+
+При входе поможет policyroute, если мочи процессора хватит.
+Еще добавлю что до 11.2(где-то 12~13) traffic-shap
+криво затыкается и не шейпит (очень частый вопрос был раньше).
+
+access-list 180 описывает тpаффик, котоpый надо шейпить
+
+interface Loopback1
+ ip address 192.168.11.1 255.255.255.255
+ traffic-shape rate 64000
+!
+interface Serial0
+ ip policy route-map incoming-packets
+!
+access-list 180 permit ip any  192.168.1.0 0.0.0.255
+!
+route-map incoming-packets permit 10
+ match ip address 180
+ set interface Loopback1
+
+5.4>Q: Bandwith, queue
+
+>A: (Alex Bakhtin)
+
+Основным параметром, который влияет на распределение
+полосы пропускания при custom queuing, является byte-count. queue length на
+это дело влияет мало. Итак. Допустим, у нас есть такой вот queue-list:
+
+c4000-m#sh queueing custom
+Current custom queue configuration:
+
+List   Queue  Args
+1      1      byte-count 6000
+1      2      byte-count 3000
+1      3      byte-count 4500
+
+        Остальные очереди по 1500. Понятно, что напрямую bandwith для
+каждой из очередей не задается. Заполнение очередей, понятно, происходит на
+основании каких-то критериев, которые я в данном случае не
+учитываю. Дальше, мы начинаем обходить все 17 очередей начиная с нулевой -
+
+1. Передаем 1500 байт из очереди 0 (если там есть пакеты)
+2. Передаем 6000 байт из очереди 1
+3. Передаем 3000 байт из очереди 2
+4. Передаем 4500 байт из очереди 3
+5. Передаем 1500 байт из очереди 4
+.....
+17. Передаем 1500 байт из очереди 16
+
+        Допустим, что мы используем для нашего трафика только первые 4
+очереди - в остальные очереди трафик никогда не попадает. Соответвтсенно, в
+среднем за один цикл будет передано
+
+S=1500(q0)+6000(q1)+3000(q2)+4500(q3)+1500(q4)=16500 байт
+
+Соответственно, под Q0 будет выделено
+
+B0=1500/16500~=9% BW
+B1~=36% BW
+B2~=18% BW
+B3~=28% BW
+B4~=9% BW
+
+        То есть реальную полосу пропускания поджелят пропорционально
+используемые очереди. Соответственно, реальный bandwith по каждой очереди
+задается с помощью параметра byte-count, но indirectly, так как он зависит
+от числа используемых реально очередей и от пропускной способности
+интерфейса.
+
+        Данные значения, разумеется, будут верны только при достаточно
+серьезном усреднении. Связано это с тем, что если byte-count исчерпывается
+в процессе передачи пакета, пакет все равно передается до конца - то есть
+реальная занимаемая полоса будет больше. Все, что написано выше - не более
+чем некие теоретические выкладки при работе в идеальных условиях. Реально
+все эти значения надо подбирать, анализируя средний размер пакета и не
+только;)
+
+
+5.5>Q: Traffic-shape на Loopback'e, Tunnel'е есть или нет ?
+
+>A: (Alex Bakhtin)
+
+Hекоторое время назад мне понадобился шейпер на
+BVI интерфейсе в связи с чем я достаточно серьезно занимался этой
+проблемой. Итак.
+
+1. Шейпер работает. В 12.x - <=12.0(2a), в 11.3 тоже до какой-то версии.
+2. Шейпер работает криво - шейпит только process-switched пакеты. (btw, это
+   как раз причина того, что шейпер на группу асинков через policy-route
+   работает)
+3. Шейпер на виртуальных интерфейсах (которыми являются BVI, loopback и
+   Tunnel) unsupported by Cisco. То есть официально его нет. То, что он
+   раньше был - это баг такой в парсере конфигов/командной строки, который
+   позволял его включать. Я открывал по этому поводу кейс в циске - мне
+   предложили послать реквест на фичу.
+
+        Так что, боюсь, про замечательный способ шейпить на лупбаке
+придется забыть если используется 11.3 или 12.x:-((
+
+5.6>Q: Как зажать фтп ?
+
+>A: (Alexander Kazakov)
+
+В общем я отдал постоянные 32к для фтп. Все pаботает и вполне меня устpаивает.
+фpэйм-pелэй делать пока не стал, буду сначала пpобовать на стендовой кошке.
+
+как обещал - pабочий конфиг:
+
+=== Cut ===
+interface Serial2/0
+ description xxx XXX
+ ip address aaa.bbb.ccc.ddd 255.255.255.0
+ no ip route-cache
+ no ip mroute-cache
+ bandwidth 128
+ ipx network B021
+ ipx accounting
+ priority-group 2
+ traffic-shape group 191 32000 8000 8000 1000
+!
+
+access-list 191 permit tcp any any eq ftp
+access-list 191 permit tcp any any eq ftp-data
+
+priority-list 2 protocol ip medium list 101
+priority-list 2 protocol ipx low
+priority-list 2 protocol ip high tcp telnet
+priority-list 2 protocol ip high udp snmp
+priority-list 2 protocol ip high tcp echo
+priority-list 2 protocol ip high udp echo
+
+5.7>Q: Кто-то сталкивался с задачей совместить какую-нибудь приоритизацию 
+трафика с IPsec? Согласно тому, что я нашел в сайте и опыту с Priority Queuing, 
+QoS  "работает" в самом конце, после всех access-list, NAT, fw, cef, ipsec, etc.
+Т.е. если я буду что-то криптовать, что разделить "это" по приоритеттам уже
+не смогу. Извечный вопрос: что делать?
+
+>A: (Denis V. Schapov)
+
+qos pre-classify
+
+71xx/72xx
+Quality of Service for Virtual Private Networks
+Quality of Service for Virtual Private Networks
+
+26xx/36xx
+Quality of Service for Virtual Private Networks
+
+17xx - 12.2(8)T
+Quality of Service for Virtual Private Networks
+
+и т.д.
+
+Для 26xx,36xx - 12.2(2)T4 пойдет
+Для 17xx - можно попробовать 12.2(4)YB
+
+===========================================================
+6. Routing
+
+===========================================================
+
+IP Routing Protocols
+BGP Case Studies
+BGP (Border Gateway Protocol)
+(Slawa Olhovchenkov) Why Are Some OSPF Routes in the Database but Not in the Routing Table?
+Why can't I filter OSPF
+
+6.1>Q: Есть две Cisco2511, которые должны соединятся двумя линками,
+один через serial, второй через async, оба линка по выделенках.
+В этом проблем нет, но хочется иметь ОДИH бэкап через коммутирумую
+линию. То есть надо, что бы бакап поднимался только тогда когда
+ОБА линка пропадут.
+
+>A: (Vasily Ivanov)
+
+  ip route <адpес куда надо попасть> <маска> <адpес на коммутиpуемом int.> 216
+  Все пpотоколы pутинга имеют метpику <= 200, поэтому данная стpочка появится в
+локальной таблице pутинга только когда упадут оба твоих интеpфейса. Когда
+main-линк восстановится, она опять будет вытеpта пpотоколами pутинга из
+таблицы, и циска начнет отсчитывать dialer idle-timeout до бpосания тpубы.
+
+6.2>Q: Подскажите что надо шепнуть киске, чтобы она аннонсила рипом
+на Ethernet ppp-линки с маской /32, а не аггрегатировала
+их в подсеть.
+
+>A: Dmitry Morozovsky, Mike Shoyher, Gosha Zafievsky
+
+    router rip
+      version 2
+      ! просто полезно
+      redistribute static subnets
+      no auto-summary
+      ! Тоже не помешает
+      redistribute connected subnets
+
+6.3>Q: OSPF, RIP
+
+>A: (Alex Bakhtin)
+
+router ospf 10
+ redistribute connected metric 1 subnets route-map only_public_net
+ redistribute static metric 1 subnets route-map only_public_net
+ redistribute rip
+ network 194.186.108.0 0.0.0.63 area 0
+!
+router rip
+ version 2
+ redistribute connected route-map only_public_net
+ redistribute static route-map ony_public_net
+ redistribute ospf 10 metric 4
+ redistribute ospf 200 metric 4
+ network 194.186.108.0
+ neighbor 194.186.108.10
+ neighbor 194.186.108.138
+!
+Разумеется, стоит ip classless и ip subnet-zero.
+
+6.4>Q: У меня сеть класса C, в которой заняты не все адреса. Если от провайдера
+приходит пакет на отсутствующий адрес (или отвалившегося dialup-юзера)
+то моя Cisco и Cisco этого провайдера начинают этим пакетом перебрасываться.
+Почему это и как от этого избавиться.
+
+>A: (Basil (Vasily)  Dolmatov)
+У провайдера стоит route на весь ваш класс C.
+В следующей (вашей) Cisco прописаны только routes, которые она выяснила из
+адресов активных интерфейсов и каких- либо роутинг-протоколов. Остальное
+роутится по default route, то есть на провайдера.
+
+Как этого избежать?
+
+В Cisco есть замечательный интерфейс Null0. Конфигурируется он всего одной
+командой:
+int Null0
+ip unreachables
+
+Теперь достаточно добавить еще один route в конфигурацию Cisco (предположим,
+что сеть класса C - 193.193.193.0/24)
+
+ip route 193.193.193.0 255.255.255.0 Null 0 100
+
+В этом случае, если адрес используется, и route на него известен Cisco, 
+то именно этот route и будет активен (поскольку его метрика меньше), 
+если же адрес неизвестен, то активным станет route на Null0 и Null0 
+ответит на пришедший пакет icmp !H. То есть, никакого пинг-понга на 
+канале уже не будет.
+Кстати, рекомендуется еще прописать такие же routes для private-networks,
+это предотвратит их случайное выбрасывание в сторону провайдера.
+
+ip route 10.0.0.0    255.0.0.0   Null0 100
+ip route 172.16.0.0  255.240.0.0 Null0 100
+ip route 192.168.0.0 255.255.0.0 Null0 100
+
+6.5>Q: Есть два канала к провайдерам, есть две сетки, как сделать, чтобы
+каждая сеть ходила по своему каналу ?
+
+>A: (Dmitriy Yermakov)
+
+policy-routing, пример есть на CD.
+Для примера ( в очень простом случае )
+
+access-list 110 permit ip aaa.aaa.aaa.0 0.0.0.255 any
+access-list 111 permit ip bbb.bbb.bbb.0 0.0.0.255 any
+route-map XXXX permit 10
+ match ip address 110
+ set default interface Serial 0
+route-map XXXX permit 20
+ match ip address 111
+ set default interface Serial 1
+int eth 0
+ip policy route-map XXXX
+
+P.S. [29.11.2001] 2 провайдера, 2 канала, 2 сети, policy routing + NAT + backup
+
+6.5.1>Q: А вот как сделать чтобы сети aaa и bbb могли общаться дpуг с дpугом 
+не пpоходя чеpез сети пpовайдеpов ?
+
+>A: (Denis V. Schapov)
+
++ access-list 110 deny ip aaa.aaa.aaa.0 0.0.0.255 bbb.bbb.bbb.0 0.0.0.255
++ access-list 111 deny ip bbb.bbb.bbb.0 0.0.0.255 aaa.aaa.aaa.0 0.0.0.255
+
+или же
+
+вместо set default interface использовать 'set ip default next-hop' (в
+таблице роутинга должны быть маршруты на aaa.aaa.aaa.0 и bbb.bbb.bbb.0)
+
+либо "развязать" эти сети до входа на этот маршрутизатор
+
+6.5.2>Q: Как перекинуть рутинг на запасного провайдера при падении основного? Услуга подается по эзернету.
+
+>A: (Oleg A. Lebedev)
+
+Tech Tips and Training: Static and Policy Routing Enhancements
+
+>A: (Denis V. Schapov)
+Enhanced Object Tracking
+
+>A: (Alexander V. Klepikov)
+Ethernet/DSL+ISDN-backup
+
+6.6>Q: Не поделится ли кто-нибудь URL или просто секретом запуска OSPF
+между Gated и Cisco ?
+
+>A: (Alex Bakhtin)
+
+В gated и в Cisco по умолчанию выставлены разные hello/dead интервалы.
+Лечится выставлением соответствующих интервалов в gated.
+
+P.S. (DY) в последних GateD может и поправили, deb ip ospf 
+поможет выяснить.
+
+>A: (Basil (Vasily) Dolmatov)
+
+Ospf yes {
+    backbone {
+       authtype none;
+       interface aaa.bbb.ccc.ddd
+                 cost 1 {
+                         retransmitinterval 5;
+                         transitdelay 1;
+                         priority 0;
+                         hellointerval 10;
+                         routerdeadinterval 40;
+                        };
+        };
+};
+
+import proto ospfase {
+        ALL ;
+};
+
+export proto ospfase type 1 {
+        proto ospfase {
+                ALL
+                metric 1; };
+        proto static {
+                All
+                metric 1; };
+        proto direct {
+                ALL
+                metric 1; };
+};
+
+6.7>Q:  Есть статический маршрyт: ip route 0.0.0.0 0.0.0.0 Serial 0/0
+Как мне исключить его из ospf'ных анонсов?
+Убрать redistribute static - не предлагать ;)
+
+>A: (Dmitry Morozovsky)
+
+1. Убрать
+    default-information originate always, или заменить его на
+    default-information originate , если таки нужно его куда-то анонсить
+
+2. Отфильтровать ;)
+    distribute-list  out [interface name]
+    access-list  permit 0.0.0.0 0.0.0.0
+
+6.8>Q: Не мог ли бы кто-нибудь из уважаемых гуру толково объяснить с точки
+зрения практики (с небольшим примерчиком), что такое stubby areas и в каких
+случаях их введение оправдано?
+
+Правильно ли я понимаю, что они в общем-то нужны для экономии ресурсов роутера?
+
+>A: (Alex Mikoutsky), прислал (Oleh Hrynchuk)
+
+В цисках есть три типа тупиковых арий - stub, totally stub, Not-so-stubby.
+Про последние две Халлаби мог и не написать.
+Stub - это такая ария, роутерам в которой не нужно знать, куда кидать
+пакеты, предназначенные external адресам. Заметь - только external, т.е.
+тем, которые сами редистрибьютятся в домен оспф. Вместо этих анонсов ASBR
+будет выкидывать дефолт маршрут для посылки на него соответствующих пакетов.
+Если такая ария имеет несколько выходов в бэкбон, то каждый ASBR бужет слать
+свой дефолт. От тебя зависит, какой из них рассматривать первым, а какой -
+вторым. Это делается, ясное дело, метрикой по команде на ASBR: area 1
+default-cost  где ария 1 - типа stub.
+Все остальные маршруты, приходящие из других арий, кроме external будут
+анонсироваться.
+
+Totally stub и Not-so-stubby - это специфические цисочные прилады,
+помогающие фильтровать также анонсы маршрутов из других арий типа interdoman
+(totally stub), однако, только в том случае, если в этой тотально тупиковой
+арии нет ни одного external маршрута. Чтобы преодолеть последнее
+ограничение, арию можно сделать типа NSSA (начиная с версии 11.3). В
+последних случаях в арию вообще будет анонсироваться только дефолт по
+команде default-information originate. Так же, как и в предыдущем случае,
+ASBRов может быть несколько.
+Я понятно написал?
+
+[03.08.2000] 6.9>Q: Hадо подружить на синхронном линке роутеры
+Nortel ARN и CISCO-3640. Сейчас они дружат по ppp и rip. Хочется,
+чтобы дружили по frame-relay и ospf.
+
+>A: (Sergey Y. Afonin)
+
+Сделано на ARN с BayRS 13.20 и CISCO 3640 IOS version 12.0
+
+Фрагмент конфига ARN (as-boundary-router true к делу не относится,
+он говорит то том, что роутер может редистрибутить все, что есть и
+не зафильтровано специально; если false - то редистрибутится только
+только ospf):
+
+ospf router-id xxx.xxx.xxx.234
+    as-boundary-router true
+  area area-id 0.0.0.0
+  back
+back
+serial slot 1 connector 1
+    cable-type v35
+    bofl disabled
+    promiscuous enabled
+    service transparent
+    circuit-name S11
+  frame-relay
+    dlcmi
+        management-type none
+    back
+    default-service
+      pvc dlci 16
+          vc-state active
+      back
+      ip address xxx.xxx.xxx.218 mask 255.255.255.252
+          address-resolution arp-in-arp
+        ospf area 0.0.0.0
+            mtu 1480
+        back
+        arp
+        back
+      back
+    back
+  back
+
+Фрагмент конфига 3640 (тут тоже лишнее есть, правда):
+!
+interface Serial2/0
+ ip address xxx.xxx.xxx.217 255.255.255.252
+ ip access-group nasprotect out
+ ip directed-broadcast
+ encapsulation frame-relay
+ ip ospf network broadcast
+ no ip mroute-cache
+ no keepalive
+ no fair-queue
+ frame-relay map ip xxx.xxx.xxx.218 16 broadcast IETF
+!
+router ospf 13227
+ router-id aaa.aaa.aaa.234
+ redistribute connected subnets
+ redistribute static subnets
+ network xxx.xxx.xxx.216 0.0.0.3 area 0.0.0.0
+!
+
+Под управлением BayRS у Nortel работают так же ASN и роутеры
+серии BN, та что, полагаю, и для них подойдет.
+
+6.10>Q: Routing, metric, distance, etc.
+
+>A: (Alex Bakhtin)
+
+1. Routing Protocol - пpотокол динамической маpшpутизации, OSPF/EIGRP/etc.
+2. Routing Process - пpоцесс, выполняющий алгоpитм какого-либо pоутингового
+   пpотокола. Хаpактеpизуется двумя паpаметpами:
+        1. Routing Protocol
+        2. ID (AS для EIGRP, process number для OSPF, etc).
+
+        Пpоцесс выбоpа маpшpута, котоpый будет установлен в таблицу
+маpшpутизации следующий.
+
+        Пусть у нас есть сеть A, и pаботают два Routing Process: EIGRP 1
+(дистанция, допустим 55), OSPF 1(дистанция 54), таблица маpшpутизации пуста.
+
+1. Пpоцесс EIGRP 1 получает апдейт о маpшpуте к сети A (или несколько
+   маpшpутов - совеpшенно не важно)
+2. В соответствии со своим алгоpитмом он выбиpает наилучший маpшpут к сети
+   A и пеpедаст его пpоцессу, отвечающему за включение pоутов в таблицу
+   маpшpутизации.
+3. Этот пpоцесс посмотpит на маpшpут A, поищет в таблице маpшpутизации
+   аналогичный маpшpут, не найдет и вставит маpшpут A в таблицу с
+   дистанцией 55.
+4. Пpоцесс OSPF 1 получит апдейт о маpшpуте к A.
+5. OSPF 1 выбеpет наилучший маpшpут к A и пеpедаст его пpоцессу,
+   отвечающему за включение pоутов в таблицу маpшpутизации:)
+6. Этот пpоцесс посмотpит на маpшpут А, найдет в таблице аналогичный
+   маpшpут с дистанцией 55, сpавнит 55 и 54 и вставит в таблицу
+   маpшpутизации новый маpшpут.
+
+        Тепеpь внимание, вопpос. Что должно пpоисходить, если оба пpоцесса
+имеют администpативную дистанцию 55? Hа какую метpику они должны, по
+твоему, "взиpать"?;) Случай, когда пpотоколы одинаковые - ничем не
+отличается. Hикем не доказано, что метpики в двух pазных пpоцессах
+маpшpутизации, пусть даже pаботающих по одному пpотоколу, сpавнимы.
+
+===========================================================
+7. TACACS,RADIUS,AAA
+
+===========================================================
+
+7.1>Q: Где взять tacacs-plus/radius ? В исходниках ?
+
+>A: (Dmitriy Yermakov) См. также раздел SoftWare
+
+ftp://ftpeng.cisco.com/pub/tacacs оригинальный от Cisco (ls там не работает, сначала get README, потом get то, что нужно)
+ls там работает не во всех каталогах.
+
+ftp://ftp.east.ru/pub/inet-admins - патченный на предмет разных вкусностей
+ftp://ftp.vsu.ru/pub/hardware/cisco/tacacs - и еще пропатченный. pppd теперь отдельно от tac+ia, но рядом - tacpppd
+
+[08.09.2000] >A: (Igor Prokopov) Где взять TACACS+ под NT ?
+
+http://www.nttacplus.com NTTacPlus2 (демоверсия доступна для скачивания)
+Radius Tacacs+ Available for Windows NT 4.0 and Windows 95/98
+Работает с ODBC (Access97), предупреждает e-mail'ом об окончании лимита,
+может быть backup-сервером, работать с несколькими CISCO, ведет группы по
+привилегиям и т.д.
+Полная версия за деньги или на варезах ;)))
+
+[23.01.2001] >A: (Oleh Hrynchuk) AV pairs -  (broken link)
+
+TACACS+ Attribute-Value Pairs
+
+7.2>Q: Кто знает, как ограничить число запросов киски на login? То есть, если
+юзер первый раз неправильно ответил на login/password то сразу сделать hangup
+а не спрашивать его еще и еще. Все равно в большинстве скриптов это не
+предусмотрено. У меня киска упорно спрашивает три раза. Листание "Command
+Summary" успеха не принесло. Может это в такаксе надо концы искать?
+
+>A: (Alexey Kshnyakin)
+
+conf t; tacacs-server attempts N
+
+7.3>Q: Как снимать/считать статистику по интерфейсам ?
+
+>A: (Dmitriy Yermakov)
+
+снимать можно так
+
+conf t
+int X
+ip accounting
+
+разрешить rsh на киску, примерно так
+
+ip rcmd rsh-enable
+ip rcmd remote-host    enable
+
+и, по крону :)
+
+/usr/bin/rsh cisco clear ip accounting
+/usr/bin/rsh cisco sh ip accounting checkpoint > `/bin/date +"%Y%m%d%H%M"`
+/usr/bin/rsh cisco clear ip accounting checkpoint
+
+Поскольку возникли вопросы, то еще вариант.
+
+>A: (Konstantin D. Myshov)
+
+1) Скрипт:
+
+#!/bin/sh
+#[skip]
+
+rsh -l loger cisco.domain.adr clear ip accounting
+rsh -l loger cisco.domain.adr sh ip accounting checkpoint
+
+#[skip до конца скрипта :-)]
+
+2) Hа киске говоришь:
+
+username specloger privilege 8 password 0 plane_text_password
+! Пароль зашифруется и через password 7 показываться будет по sh ru
+ip rcmd rsh-enable
+ip rcmd remote-host loger REMOTE_IP_ADDRESS REMOTE_USER_NAME enable 8
+privilege exec level 8 show ip accounting checkpoint
+privilege exec level 1 show ip
+privilege exec level 8 clear ip accounting
+
+P.S. (Andrey Kuksa) kuksaa@chph.ras.ru
+
+включить бы еще
+no ip rcmd domain-lookup
+
+P.P.S. (DY) Cisco проверяет in-addr.arpa для хоста,
+с которого пришел запрос на RSHELL. Если IN PTR нету - не пускает.
+no ip rcmd domain-lookup эту проверку выключает.
+По умолчанию - включено.
+
+P.P.P.S. см также 0.4>Q:
+
+7.4>Q: Как заменить "Username:" на "login:" ?
+
+>A: (DY)
+
+Существует 2 варианта -
+1. В tac+ia можно переопределить этот prompt.
+2. aaa authentication username-promt
+
+[03.07.2001] (Jen Linkova) И не забыть про пункт 28 из tacacs-faq
+
+>A: (Alex Shavkun)
+aaa authentication baner
+aaa authentication username-prompt
+aaa authentication password-prompt
+
+
+[03.08.2000] 7.5>Q: rsh cisco show version получаю что-то типа Undefined error
+
+>A: (Alex Bakhtin)
+
+debug ip tcp rcmd
+
+[14.08.2000] 7.6>Q:  не работает aaa authentication banner "..." при использовании tacacs
+или radius для аутентикации
+
+>A: (Alexandre Snarskii), прислал (Vladimir Kravchenko)
+
+попробовать использовать banner login "..."
+
+[08.09.2000] 7.6>Q: Проброс на ifcico, разные порты - разные хосты.
+
+>A: (DY) закрываем тему ifcico.
+
+tacacs.conf (tac+ia-0.9x)
+
+group = fido {
+                after authorization "/usr/local/tacplus/emsi $user $port"
+                login = none
+                service = exec { }
+                }
+
+user = \*\*EMSI_INQC816 { member = fido }
+user = \*\*EMSI_INQC816q { member = fido }
+user = \*\*EMSI_INQC816\*\*EMSI_INQC816q. { member = fido }
+
+cat /usr/local/tacplus/emsi
+#!/bin/sh
+if [ "X$2X" = "Xtty3X" ]
+        then
+                echo noescape=true
+                echo autocmd="telnet host_1 60179 /stream"
+        else
+                echo noescape=true
+                echo autocmd="telnet host_2 60179 /stream"
+fi
+exit 2
+
+>A: (Denis Shaposhnikov) Конфиг для RADIUS'a
+
+**EMSI_INQC816  Auth-Type=Accept
+        Service-Type = Login-User,
+        Login-Service = Telnet,
+        Login-IP-Host = fido.XXXXX.ru,
+        Login-TCP-Port = 60179
+
+P.S. Возможны варианты для Login-Service:
+(Vadim Mikhailov) Rlogin
+(Ilya Rubinchik) TCP-Clear
+
+[27.12.2000] 7.7>Q: Как при аутентикации на радиусе пользователю 
+назначить in-out ip access-list на его интерфейсе ?
+
+>A: (Michael Korban)
+
+Framed-Filter-Id="blabla.in"
+Framed-Filter-Id="blabla.out"
+
+P.S. (DY) для TACACS'a - читать userguide, там написано.
+
+[07.05.2001] 7.8>Q: А можно ли заставить Cisco 2611 авторизовать 
+RADIS-ом или TACACS-ом клиентов локалки, которые лезут в интернет 
+с ethernet-порта через wic ?
+
+Q1: Существует ли возможность заставить проходить ч-з ААА 
+транзитные соединения, проходящие, допустим, ч-з маршрутизатор циско?
+
+>A: (Dmitri Kalintsev)
+
+Нет.
+
+>A: (Vladimir N. Garnick)
+
+можно вот так: Configuring Lock-and-Key Security (Dynamic Access Lists)
+
+пример: Example of Lock-and-Key with TACACS+ Authentication
+
+>A: (Denis V. Schapov)
+
+Можно, IP/FW Feature Set, auth-proxy
+
+[19.08.2001] (Michael Smirnov) информация по получению АОH-номера модемов
+После освобождения юзером линии заходить на нее обратным телнетом:
+http://info.east.ru/inet-admins/9903/msg00282.html
+В chat-скрипты использовать AT-команды? http://www.j2.ru/frozenfido/ru.unix/1343939200170.html
+
+[23.12.2002] 7.9>Q: Работает ли "ppp timeout idle" на асинках или нет?
+Ставиться оно ставится, но насколько оно рабочее?
+
+>A: (Denis V. Schapov)
+How to Setup PPP Idle Timeout For Async Using RADIUS
+PPP Per-User Timeouts
+
+[31.05.2002] 7.10>Q: RADIUS отдает per-user access-list  - то каким 
+образом в какой последовательности это будет работать. И будет ли вообще ?
+
+>A: (Oleg V Prokofiev)
+Работать будет acl переданный из aaa, если из aaa acl не дается, то будет
+работать acl на dialer в случае diler profiles, в случае legacy ddr будет
+работать acl на bri                               
+
+[08.01.2003] 7.11>Q: Как выставить username/password для autentification
+у удаленной стороны при "encapsulation ppp"?
+
+>A: (Victor Sudakov)
+
+Configuring Authentication
+
+[29.05.2003] ISDN Pre-Auth
+Preauthentication with ISDN PRI
+Preauthentication with ISDN PRI and Channel-Associated Signalling Enhancements
+
+[27.02.2003] (Slawa Olhovchenkov) AAA Dead-Server Detection
+
+[19.10.2004] 7.12>Q: Можно ли с RADIUS-а (TACACS+) назначить на интерфейс nat inside или nat outside?
+
+>A: (Oleg Gawriloff) RADIUS:
+Cisco-AVPair="lcp:interface-config=ip nat inside"
+
+P.S. (DY) [nsp] PPPoE and NAT on the LNS
+
+>A: (Rishat N Agzamov) TACACS
+user = xxxx {
+member = yyyy
+global = cleartext "zzzzzz"
+service = ppp protocol = lcp {
+    interface-config = "ip nat outside"
+    }
+}
+
+
+===========================================================
+8. Memory
+
+===========================================================
+
+Память делают - Kingston, Transcend, Micron.
+Продают - AllMemory
+iBuy
+Ak-Cent
+
+[2000.10.12] 8.0> Общее.
+
+>A: (Alex Bakhtin)
+
+Объем памяти, опpеделенный IOSом показывается в выводе команды sh ver
+в виде двух чисел MEM1/MEM2, где MEM1 - это объем process memory а MEM2 -
+это объем IO memory.
+
+P.S. (DY) for example
+
+6144K/2048K - всего 8Mb (2511)
+126976K/4096K - всего 128Mb (3640)
+
+Для AS5300 - 65536K/16384K - 64Mb Main Memory и 16Mb Packet Memory
+(2 отдельных DRAM SIMM)
+
+[20.05.2003] (Alexey Luckyanchikov) How to Determine the SIMM Configuration of a 3620 or 3640
+
+8.1>Q: А какие симы можно ставить в CISCO ? А то я все пеpепpобовал, ни один
+не подходит. :-(
+
+>A: (Vasily Ivanov)
+
+Hа симах должны быть пpавильно pаспаяны пеpемычки, указывающие оpганизацию
+сима и скоpость чипов в наносекундах (большинство китайских пpоизводителей эти
+пеpемычки не pаспаивают). Вот табличка, котоpая поможет вам это сделать:
+Размеp  Оpганизация     68      67      66      11
+4Mb     512k*8/9        X       X       X       X
+4Mb     1M*2/4/16/18    -       X       X       -
+8Mb     2M*8/9          -       X       -       X
+16Mb    2M*8/9          X       X       -       X
+16Mb    4M*2/4/16/18    -       X       -       -
+Hаны    69      70
+50ns    X       X
+60ns    -       -
+70ns    X       -
+
+   Знаком [X] помечены контакты, котоpые необходимо соеденить с 72м контактом
+сима, обычно он выведен уже в непосpедственной близости от пеpемычек. [-] -
+свободный контакт. В настоящее вpемя можно без пpоблем купить 4х метpовые симы
+с оpганизацией 1M*2/4/16/18 и 16ти метpовые с оpганизацией 4M*2/4/16/18. 8ми
+метpовые симы со стандаpтной оpганизацией 1M*2/4/16/18 в pутеpах CISCO не
+pаботают !!! Также как и EDO RAM.
+
+NB !!! В 25хх симы без паpитета _pаботать_не_будут_ ! Hикогда.
+
+>A: (Leonid Kirillov)
+
+От себя добавлю маленькую попроавку:
+1. SIMM должен иметь скорость меньшую либо равную скорости RAM на мамке;
+2. Имеются мамки 2 видов: старые и новые. В старых нужны SIMM с четностью, в
+новых - нет, так как это выключено на мамке. Отличие очень простое - не запаяна
+пятая микросхеми памяти. Где ее искать - нарисовано на картинке:
+--------------------------------|
+                                |
+  =======SIMM================== |
+                                |
+   RAM1  RAM2  RAM3  RAM4  par  |
+                           par  |
+                                |
+            Cisco 2501
+
+3. Двухбанковый SIMM видится как однобанковый. Таким образом я делал себе 16Мб
+памяти из 32 (очень было нужно:-) Работает нормально.
+
+>A: (Kirill Osovsky)
+
+Еще немного о SIMM'ах.
+Для 1600 - четность нежелательна - работать они будут, но тогда отвалится
+on-board DRAM. Dual bank 8 Mb видится и работается как 8 Мб
+Для 3620 - четность (насколько я понял) безразлична. Дуал банк 8 Мб видится как
+дуал банк, но работать 3620 с ним не будет (не положено по инструкции)
+3640 - работает с дуал банк.
+
+>A: (Dmitry Morozovsky)
+
+    Еще дополнение: 36xx работает с EDO (3640 точно, 3620. кажется, тоже). 3640
+при постановке четного количества одинаковых симмов переходит в 64разрядный
+режим, что увеличивает производительность, но также увеличивает и расход памяти
+в связи с alignment.
+
+P.S. (Basil Dolmatov)
+3620 понимает только FPM.
+3640 понимает и EDO тоже.
+
+[25.07.2001] P.P.S (Alexander Voropay)
+В 3620 и 3640 нормально работает память от 2500 и DRAM
+и FLASH модули.
+
+
+8.2>Q:  Подскажите где еще встречаются эти 100-пиновые DIMM'ы, которые в
+2600 стоят. Или где их можно купить? За две тонны баксов не предлагать.
+
+>A: (Dmitry Morozovsky)
+
+Подходит память для HP LJ 4000 (100pin EDO SODIMM). Кроме того, можно брать
+память у практически любого дилера Micron, Transcend, Kingston. У этих --
+просто по каталогу.
+
+P.S. Это же относится и к MC3810.
+
+P.P.S. (Vitaliy Tyulkin)
+
+Возможна ситуация:
+
+32K bytes of non-volatile configuration memory.
+16384K bytes of  System flash (Device not programmable)
+
+или
+
+2500 processor with 14336 Kbytes of main memory
+%Error: System flash bank 0 chip 0 unknown, chip id 0x9155 (reversed = 0x89AA)
+
+Ответ из Transcend:
+Upgrading Flash memory requires ROM level 10.2(8a) or higher.
+
+[04.07.2000] 8.3>Q: А не подскажет ли кто-нибудь, какая SIMM-память подходит
+к серии 4000 (конкретнее, 4500M+) и чего на ней пропаять?
+Имеется в виду: edo/fpm, четность, паритет, число чипов.
+
+>A: (Alexander Voropay)
+
+ Для 4X00 подходит та же самая память, что и для 2500,
+и FLASH и DRAM. Packet DRAM та же самая, что и System
+DRAM, и чем больше тем лучше :-)
+
+ А конкретно, 72-pin SIMM, NoEDO (FPM), real Parity.
+Обязательно должны стоять перемычки ID. Лучше
+брать -60ns хотя для System DRAM подойдет и -70ns.
+
+[09.04.2001] 8.4>Q: Есть DIMM (SODIMM ?) 100 pin, на нём писано 16МВ,
+SYNC, 100MHz. Подойдёт ли этот модуль к Cisco 26xx ?
+
+>A: (Gosha Zafievsky)
+
+Если sync - то скорее всего SDRAM.
+В 261x/262x не залезет, в 265x - залезет (теоретически)
+ибо 2600 (1x/2x) пользуют EDO.
+
+[01.02.2006] >A: (Alexander Voropay)
+
+CISCO 2600 и CISCO 2600XМ используют 100-pin DIMM-ы, которые одинаковы по разъему, 
+но используют разную технологию памяти. В CISCO 2600 применяются EDO, в CISCO 2600XM - SDRAM. 
+Если поставить в 2600XM EDO модуль от 2600, BOOTROM напишет "Invalid SPD" и CISCO не стартует. 
+Модуль не сгорит
+
+[22.04.2001] (Dmitry Morozovsky) Для 366x подойдет обычный SDRAM.
+Работают SPD PC66 и быстрее. 
+
+(Denis V. Schapov) How to Determine the SIMM Configuration of a 3620 or 3640
+
+
+8.4>Q: Как посмотреть, сколько и каких модулей памяти стоит в C3825, не вскрывая?
+
+>A: (Eugene Grosbein)
+
+Overview of Cisco 3800 Series Routers
+
+Всего два слота под ECC DDR SDRAM. Пример для одной 3845:
+
+#show tech | include Size of dimm|Memory Slot
+Size of dimm                 = 256 Megabytes
+Memory Slot Empty
+
+В первом слоте модуль на 256M, второй пустой.
+
+
+[18.03.2003] Cisco FLASH (Alexander Voropay)
+
+Для CISCO 2500, 4000, 3600, 5300 (boot и системная)
+и вероятно, некоторых других применяются FLASH в
+виде специальных SIMM-ов, несколько длиннее
+обычной PC-памяти. По GPL обозначаются
+MEM-***-1X16F; MEM-***-16FS; MEM-16F-AS53
+Как правило все они взяимозаменяемы, иногда требуется
+upgrade Boot-ROM. Выполяются на микросхемах
+FLASH Intel 28F0XX, AMD и Fujitsu.
+
+ Старшие модели CISCO имеют гнездо PCMCIA.
+ВНИМАНИЕ! Существуют два стандарта на PCMCIA
+FLASH карточки, несовместимые между собой.
+Будте внимательны.
+
+ Самый простой способ проверить тип FLASH -
+вставить ее в гнездо ноутбука под Windows'95/98
+или старше. Не бойтесь, не сгорит, она для этого
+и предназначена.
+
+1) Так называемый Linear Flash - это просто несколько
+микросхем FLASH в картридже PCMCIA. В GPL обозначаются
+MEM-***-FLC20M . Под Windows требует особый драйвер
+(FFS/FTL) и не распознается. В CISCO видится как flash: или slot0:
+и выдает информацию по  show flash slot0: chips
+о чипах на которых сделана. Встречается редко, малой
+емкости и довольно дорогая (Для муз.синтезаторов, Apple Newton,
+Poqet PC, телефонных станций и т.д.).
+Идет в CISCO 1005, 805, 3600 (и еще ?)
+# show version выдает
+16384K bytes of processor board PCMCIA Slot0 flash (Read/Write)
+
+2) Flash который прикидывается обычным IDE/ATA диском.
+Изобрела такие карты SanDisk, драйвер есть в составе
+Windows'95/98 : видится просто как диск 16..64Mb на котором
+лежат CISCO IOS(совместимая fs !). Обозначаются
+MEM-***-FLD48M. В CISCO видится как disk0:
+# show version выдает
+46976K bytes of ATA PCMCIA card at slot 0 (Sector size 512 bytes).
+Еще полезная команда :
+# dir all-filesystems
+Используется во множестве цифровых камер, MP3-плееров и т.д.
+Стоит копейки, а особенно если взять переходник
+PCMCIA-->CompactFlash (CF и PCMCIA-ATA полностью совместимы)
+См.  http://www.compactflash.org  есть FAQ
+Встречаются емкостью до нескольких гигабайт.
+Идет в CATALYST, CISCO 7200 (и еще?)
+
+P.S. (DY) В Catalyst 5000, Cisco 7500, LS1010 используется
+свой формат записи во flash. К примеру, не получится в flash
+для 5000 записать имидж на 7200.
+
+Formatting a Flash Memory Card
+
+PCMCIA Flash memory cards must either be formatted on the RSM or on an RSP-based 7500 series router running software at the same level, or greater, as the RSM. Flash memory cards previously formatted on an RP-based Cisco 7000 series router cannot be used on the RSM. Note that Flash memory cards formatted on the RSM can be used on RSP-based 7500 series routers (but not on RP-based 7000 series routers).
+
+PCMCIA Filesystem Compatibility Matrix and Filesystem Information
+
+===========================================================
+9. NTP, TZ
+
+===========================================================
+
+[24.12.2001] 9.0> (ВОЛКА)
+Basic System Managment Commands - ntp server
+
+Bog BOS: IOS - операционная система маршрутизаторов CISCO
+
+9.1>Q: Как правильно выставить timezone и синхронизировать время на киске
+
+>A: (Vasily Ivanov)
+
+вот пpимеp для Омска (UTC+6): (NB: проверяйте правильность смещения от UTC на настоящее время)
+clock timezone OMT 6
+clock summer-time OMTS recurring last Sun Mar 3:00 last Sun Oct 3:00
+
+И еще:
+
+1) часы устанавливаются, если только на тайм-сеpвеpе вpемя выставлено
+коppектно, если же он находится в пpоцессе подведения своих часов, то циска
+будет ждать окончания этого пpоцесса.
+
+2) выставление часов пpоисходит не сpазу, а 5-10 минут. Подожди немного.
+
+>A: (Alec Voropay) для Москвы <>
+
+clock timezone MSK 3
+clock summer-time MSD recurring last Sun Mar 2:00 last Sun Oct 3:00
+
+>A: (DY) 30.10.2011 переход на зимнее время не нужен
+
+clock timezone MSK 4
+no clock summer-time MSD
+
+9.2>Q: А как заставить киску синхронизировать время с каким-либо сервером 
+и быть самой ntp-сервером ?
+
+>A: (Maksim Malchuk)
+
+ntp source interfaceX
+ntp master 3
+ntp server aaa.bbb.ccc.ddd
+ntp server eee.fff.ggg.hhh
+ntp server iii.jjj.kkk.lll
+
+P.S. (Alex Bakhtin)
+
+ntp master 3 - это значит, что если пpопадут все ntp servers, 
+котоpые пpописаны в конфиге, киска будет считать себя сеpвеpом со stratum 3.
+
+P.P.S. (Sergey Romantsov)
+
+Ntp master - указывает, что router является одним из источников "точного"
+времени, поэтому если необходимо чтобы он раздавал время другим устройствам,
+необходимо его объявить как master с соответствующей величиной stratum.
+stratum=1 : это атомные часы
+stratum=2 : усторйство непосредственно подключено к атомным часам
+stratum=3 : устройство связано с устройством ( см выше)
+и так далее... до 15.
+stratum=16 : устройство не является авторизованным источником времени.
+
+[18.02.2003] 9.3>Q: Cisco 800 не понимает команды ntp.
+
+>A: использовать "sntp"
+
+>A: (Denis V. Schapov)
+или IOS IP Plus - там есть ntp
+
+===========================================================
+10. NAT
+
+===========================================================
+
+NAT Technical Tips
+Network Address Translation (NAT) FAQ
+Using NAT in Overlapping Networks
+Network Address Translation on a Stick
+
+[13.09.2001] 10.0. (Denis V. Schapov) NAT, IPSEC, ACL порядок обработки
+
+NAT Order of Operation
+Sample Configuration: IPSec Router-to-Router, Pre-shared, NAT Overload Between a Private and a Public Network
+
+10.1>Q: Можно как-нибудь сделать на киске 2511 с IOS 11.3, 
+чтобы все соединения по FTP, WWW с локальной сетки (имеющей public
+интернет адреса) устанавливались с адреса скажем 62.244.63.114, 
+это связано с тем, что при установлении соединения с этого адреса 
+пакеты возвращаются через спутник.
+
+>A: dimka@spy.ints.net (Dmitry Aksyonov)
+точно для этого случая:
+
+[..]
+ip nat inside source list 111 interface Loopback4 overload
+[..]
+interface Loopback4
+ ip address 62.244.63.162 255.255.255.255
+[..]
+interface Ethernet0
+ ip nat inside
+[..]
+interface Serial0
+ ip nat outside
+[..]
+access-list 111 permit tcp 194.44.58.0 0.0.0.255 any eq ftp
+access-list 111 permit tcp 194.44.58.0 0.0.0.255 any eq ftp-data
+access-list 111 permit tcp 194.44.58.0 0.0.0.255 any eq www
+
+остальные порты по вкусу ;)
+
+посмотреть что получается - sh ip nat tra
+
+10.2>Q: Есть две сетки: 192.Х.Х.0 и 193.Х.Х.80/28 и киска 2509
+Hужно включить NAT, чтобы юзера из 192... сетки ходили в 193... .
+Интересует кусок(ки) конфига киски, только работающий и подробный.
+
+>A: (Eugene A. Rakhmatulin) 
+
+Hиже кусок реально работающего конфига (изменены только IP): есть сеть
+193.193.193.224/29, которую дал провайдер и внутренняя сеть 192.168.1.0/24.
+Hа трансляцию всех внутренних адресов, кроме 192.168.1.2 выделяется адрес
+193.193.193.227, а на 192.168.1.2 записывается статическая трансляция адреса
+193.193.193.230.
+
+cs-2501# show running-config
+
+[ .. ]
+
+ip nat pool one 193.193.193.227 193.193.193.227 netmask 255.255.255.248
+ip nat inside source list 1 pool one overload
+ip nat inside source static 192.168.1.2 193.193.193.230
+
+[ .. ]
+!
+interface Ethernet0
+ ip address 192.168.1.1 255.255.255.0
+ ip broadcast-address 192.168.1.255
+ ip nat inside
+
+[ .. ]
+!
+interface Serial1
+ description Link to Provider
+ ip address 193.193.193.226 255.255.255.248
+ ip nat outside
+
+[ .. ]
+
+access-list 1 permit 192.168.1.0 0.0.0.255
+
+10.3>Q: Провайдер выдал один реальный адрес (вместо бывшего ранее блока адресов)
+и нужно в течении переходного периода (3 дня) оперативно перенастроить
+Cisco 2509 для маршрутизации в следующей конфигурации:
+Ethernet - соединяется напрямую единственным реальным адресом с
+маршрутизатором провайдера;
+Serial1 - смотрит (через выделенку) в одну физическую сеть(~20
+компьютеров+программный маршрутизатор);
+Serial2 - смотрит в другую(~10 компьютеров).
+
+>A: (Ilya Geldiev) 
+
+ip nat translation timeout 1800
+ip nat translation tcp-timeout 1800
+ip nat translation udp-timeout 150
+ip nat inside source list 101 interface Async8 overload
+' ip nat inside source static tcp {Ethernet0-ip} 80 {Async8-ip} 80
+extendable
+' не более чем проброс веб-запросов во внутреннюю ЛАH
+!
+interface Ethernet0
+ description connected to internal LAN
+ ip nat inside
+!
+interface Async8
+ description connected to ISP
+ ip nat outside
+!
+interface Async9
+ description connected to internal Remote Access
+ dialer-group 1
+!
+interface Group-Async1
+ description connected to Dial-inPCs_mobile
+ ip nat inside
+!
+
+10.4>Q: Впустить обратно с Inet-а в локалку. Скажем для почты -- мой
+цисковский адрес с  портом 25 пробросить в локальный сегмент на мой почтовик ?
+
+>A: CoreDumped@CoreDumped.null.ru
+
+ip nat inside source static tcp int.ter.nsl.addr 25 ext.ter.nal.addr 25
+extendable no-alias
+
+===========================================================
+11. Telco, ISDN
+
+===========================================================
+
+PBX interoperability application notes for 5300
+(Alcatel, Ericsson, Siemens Hicom 300 Series)
+PBX interoperability application notes for 2600
+Voice Network Signaling and Control
+
+Конверторы сигнализаций
+
+АТС М-200
+ЛОНИИС
+НПО ЮНИТЕЛ
+
+[20.10.2000] 11.0> Разборки с ISDN Layer 1,2.
+
+Компиляция нескольких вопросов и ответов.
+
+(Gosha Zafievsky)
+
+Вообщем все смотреть по доке.
+Cisco по умолчанию встает как user-side device.
+
+Если Layer 1 not UP - проверить _досконально_ все кабели и соединения,
+смотреть sh controller e1 XX на предмет наличия ошибок.
+Ошибки могут возникать только в случае непопадания в установки
+crc/no-crc, другие варианты встречаются крайне редко. Как только ошибки на
+контроллере пропадут, Layer 1 обычно становится ACTIVE. 
+
+Выставить правильно isdn switch-type
+Если Layer 2 TEI_ASSIGNED - выставить правильно network side,
+должно быть MULTIPLE_FRAME_ESTABLISHED, не верьте на слово телефонистам :)
+
+Если с другой стороны тупое железо, не умеющее
+NETWORK-SIDE, поставить IOS 12.1.3T - там появилось
+isdn protocol-emulate network
+
+Как только Layer 2 MULTIPLE_FRAME_ESTABLISHED - все должно работать.
+В клинических случаях не поднятия Layer 2 - 
+deb isdn q931 на бочку ближайшему гуру.
+
+(DY) Understanding the show controllers e1 Command
+(DY) E1 Troubleshooting Flowchart
+E1 PRI Troubleshooting
+
+(Igor Monakhov) расшифровка Q.931 disconnect cause
+ISDN Switch Types, Codes, and Values
+
+11.1>Q: AS5300 и Ericsson MD-110.
+
+>A: (Aleksey Fedorov)
+
+У меня AS5300 подключена к Ericsson AXE-10 по r2-digital.
+В моем случае чтобы все было хорошо нужно сказать:
+cas-custom 0
+  debounce-time 10
+  seizure-ack-time 10
+  country itu use-defaults
+
+>A: (DY) работает вот так, но со станцией (MD-110) долго мучались.
+
+controller E1 1
+ clock source line secondary 1
+ pri-group timeslots 1-31
+!
+interface Serial1:15
+ isdn switch-type primary-net5
+ isdn incoming-voice modem
+ isdn bchan-number-order ascending
+ isdn sending-complete
+!
+
+11.2>Q: 2610 никак не хочет звонить на Definity, при звонке
+с Definity BRI поднимается и сразу падает.
+
+>A: (Gosha Zafievsky)
+
+Hа киске isdn switch-type basic-net3,
+в Definity этот BRI надо описать как
+data module или trunk, но не как WCBRI station.
+Country protocol : etsi.
+
+11.3>Q: isdn caller number, AS5300, Alcatel S12, ISDN PRI.
+
+>A: (Victor L. Belov)
+
+interface Serial0:15
+ isdn switch-type primary-net5
+ isdn protocol-emulate user
+ isdn incoming-voice modem
+ isdn sending-complete
+
+и они приходят.
+ios 12.0.4-XH
+
+[13.06.2000] 11.4>Q: Имеем 3640 - E1R2 - AXE 10.
+
+>A: (Vladimir A. Golovnin)
+
+> controller E1 0/0
+>  framing NO-CRC4
+>  ds0-group 0 timeslots 1-15,17-31 type r2-digital r2-compelled
+>  cas-custom 0
+>   debounce-time 10
+>   seizure-ack-time 10
+>   dnis-digits min 1 max 2
+>   ani-digits min 3 max 6
+>  description First E1 line : connected to port 1
+
+У меня настроено так:
+controller E1 0/0
+ framing NO-CRC4
+ ds0-group 0 timeslots 1-15,17-31 type r2-digital r2-compelled
+ cas-custom 0
+  country easteurope
+  debounce-time 10
+  release-guard-time 150
+  seizure-ack-time 2
+  dnis-digits min 1 max 3
+  ani-digits min 0 max 3
+  answer-guard-time 40
+  ani-timeout 1
+
+Вроде работае, но кривенько как то. Работало еще кривее когда
+seizure-ack-time = 8, а при 10 и выше вооще трубку не брала.
+
+P.S. (Gosha Zafievsky)
+
+VG>   country easteurope
+
+    Вот с этим - поаккуpатнее. Я бы для начала поставил country itu
+use-defaults. R2MFC в Cisco - вещь в себе...
+
+11.5>Q: Возникла следующая необходимость - связать по ISDN две железки - Zyxel
+Prestige-100 (это ISDN-роутер такой) и Cisco 2522CH.
+Совершенно не получается это сделать. Звонить должен Zyxel этот самый,
+ну так он звонит, удалось даже добиться authentification по протоколу
+pap, но протокол не поднимается. Я так понимаю протокол дожен подняться
+на BRI0:1 или BRI0:2, а она не дает их конфигурить по отдельности, а
+если сказать что-то про LeasedLine - то не отвечает на звонки.
+
+Как и что надо ей сказать, чтобы получить от этого Zyxelя 64 или 128 К
+по ДиалАп - ISDN ?
+
+>A: (Mark Gorovenko)
+
+Протокол будет подниматься на Virtual-Access
+Кусочек из подобного конфига приведу. В нем много лишнего, было сделано для
+того чтобы можно было звонить в разные места, это можно выкинуть.
+
+interface Virtual-Template1
+ ip unnumbered Ethernet0
+ no ip directed-broadcast
+ autodetect encapsulation ppp
+ peer default ip address pool default
+ no fair-queue
+ ppp authentication chap pap callin
+ ppp multilink
+!
+interface BRI0
+ ip unnumbered Ethernet0
+ encapsulation ppp
+ no ip route-cache
+ bandwidth 128
+ dialer pool-member 1
+ autodetect encapsulation ppp
+ isdn incoming-voice modem 64
+ isdn answer1 xxx
+ isdn answer2 xxx
+ isdn calling-number xxx
+ peer default ip address pool default
+ no cdp enable
+ ppp authentication chap pap callin
+!
+interface Dialer0
+ ip address xxxx
+ encapsulation ppp
+ bandwidth 64
+ dialer remote-name xxx
+ dialer idle-timeout 30
+ dialer string xxx
+ dialer load-threshold 1 either
+ dialer pool 1
+ dialer-group 1
+ autodetect encapsulation ppp v120
+ peer default ip address xxx
+ no cdp enable
+ ppp authentication chap pap callin
+!
+interface Dialer1
+ ip unnumbered Ethernet0
+ encapsulation ppp
+ bandwidth 64
+ dialer remote-name xxxx
+ dialer idle-timeout 30
+ dialer wait-for-carrier-time 15
+ dialer string xxxxx
+ dialer load-threshold 1 either
+ dialer max-call 4
+ dialer pool 1
+ dialer-group 2
+ peer default ip address xxx
+ no cdp enable
+ ppp authentication chap pap callin
+!
+ip local pool default xxx
+ip classless
+ip route 0.0.0.0 0.0.0.0 xxxxx
+ip route xxxxxxxx 255.255.255.255 Dialer1
+ip route xxxxxxxx 255.255.255.255 Dialer0
+access-list 11 permit any
+access-list 100 permit ip any host xxxxxx
+virtual-profile virtual-template 1
+dialer-list 1 protocol ip list 11
+dialer-list 2 protocol ip list 100
+
+11.6>Q: MC3810+Alcatel,  Пpимеpно pаз в 1-2 дня падает PRI линк 
+междy станцией и гейтом:
+Layer 2 Status:
+    TEI = 0, Ces = 1, SAPI = 0, State = TEI_ASSIGNED
+                                        ^^^^^^^^^^^^^Layer 2 yшел в даyн 
+
+>A: (Gosha Zafievsky)
+
+    А это вам бальшой подарок от Алкателя, у которого весьма своеобразное
+понимание работы L2. Должно вылечиться прописыванием
+
+int sx:15
+  isdn tei-negotiation first-call
+
+[30.08.2001] 11.7>Q. Сменил софт на AS5300 на 12.2(x). Через нее 
+перестали проходить звонки с netmeeting'a в PSTN. Подключение через PRI.
+
+>A: (Dmitry Valdov)
+conf t
+voice-port 0:D
+bearer-cap Speech
+
+Ссылка: Voice - Outbound ISDN Calls Fail when Originated from NetMeeting or Similar Third Party H.323 Devices
+
+Проверено - работает.
+
+(Denis V. Schapov) Voice - Outbound ISDN Calls Fail when Originated from NetMeeting or Similar Third Party H.323 Devices
+
+[21.10.2001] 11.8>Q: Есть ли способ заставить as5300 делать исходящий 
+модемный звонок с использованием конкретного контроллера Е1?
+
+>A: (Denis V. Schapov)
+
+Configuring a T1 or E1 Interface for Outgoing Analog Calls Using the modem dialout controller Command
+
+>A: (Dmitry Valdov)
+
+line 1 XXX
+modem dialout-controller e1 0
+
+[13.02.2002] 11.9>Q: Квантовский ИКМ-30 (или как его) и цискины PRI.
+
+>A: (Igor Zafievsky)
+
+Оторвать у "Кванта" все попытки набора номера (работать только по 
+занятию/освобождению) на этих СЛках, на кошке - ds0 group type fxs-loop-start.                    
+
+[18.02.2002] 11.10>Q: AS5200 и АТС NEAX-61 sigma по пpотоколy R2.
+Станция не полyчает сигнал подтвеpжедния занятия канала (А-1 В-1).
+
+>A: (Andrey Zimin)
+
+не 52-я, но работает вот так:
+==
+!
+controller E1 1/2
+ framing NO-CRC4
+ ds0-group 0 timeslots 1-15,17-31 type r2-digital r2-compelled ani
+ cas-custom 0
+  unused-abcd 1 0 0 1
+  country easteurope
+  release-ack
+  dnis-digits min 3 max 7
+  ani-digits min 0 max 16
+ description DTI051602
+!
+==
+хотя и здесь есть проблемы - некоторые B-каналы  виснут в странное состояние
+типа:
+12  cas          -        -    insvc     signaling   0 0 0 1   1 1 0 1
+23  cas          -        -                          0 0 0 1   1 0 0 1
+
+[03.07.2002] 11.10>Q: Cisco 2600 with NM-HDV-1E1-30E and Panasonic 500
+
+>A: (Igor Vorontsov)
+
+Если кому-нибудь интересно:
+1. Сигнализация карты PRI30 в Panasonic KX-TD500 - primary-net5, а не QSIG,
+сколько бы это не утверждали телефонисты. ;) 
+Выбирать на АТС надо Euro-Standart.
+2. Network side ISDN PRI эта АТС не умеет. Соотвественно, на кошке надо
+ставить protocol-emulate network. Хотя мы нашли обратное утверждение в
+документациях, гору которых перелопатили.
+3. Сколько бы не говорили телефонисты по поводу метода передачи номера
+en-block в данной АТС, не верьте - там overlap. ;)
+4. Hе забывайте прописать на АТС DDI-таблицу.
+
+[05.08.2002] 11.11>Q: Где можно почитать о сигнализациях E&M, CAS ?
+
+>A: (Denis V. Schapov)
+
+Voice Network Signaling and Control
+Voice - Analog E&M Signaling Overview
+Understanding and Troubleshooting Analog E&M Interface Types and Wiring Arrangements
+
+[20.03.2003] 11.12>Q: E1/R2 Iskratel Si2000, Cisco
+
+>A: (Sergey Afonin)
+
+3640:
+
+controller E1 3/0
+ framing NO-CRC4
+ ds0-group 0 timeslots 1-15,17-31 type r2-digital r2-compelled
+ cas-custom 0
+  country easteurope
+  dnis-digits min 1 max 6
+  dnis-complete
+
+===========================================================
+12. VoIP
+
+===========================================================
+
+Voice/Data Integration Technologies
+
+IP Ports and Protocols used by H.323 Devices
+
+(Pavel Rodionov) VoIP Traversal of NAT and Firewall
+
+Understanding Codecs: Complexity, Hardware Support, MOS, and Negotiation
+
+Fine-Tuning Analog and Digital Voice Ports
+
+Ссылки по настройке
+
+[26.02.2001] Конфигурационные файлы для Cisco
+
+[26.02.2001] Испытания и результаты Центр IP-телефонии Comptek
+
+[22.03.2001] (Andrei Ioudine) Настройка gatekeeper'a
+Конфигурационные файлы для Cisco
+VoIP with Gatekeeper
+
+Understanding Cisco IOS Gatekeeper Call Routing
+
+[07.03.2002] Troubleshooting One Way Voice Issues
+(Denis V. Schapov) ip routing - 
+Детали реализации пакетизации в IP и последующего свитчинга IP уже с голосом.
+Оно делается через cef/fast, ни того, ни другого нет без routing table/FIB и соотв. активированного роутинга.
+
+Cisco Software for VoIP Applications Development
+
+NAT-Support of IP Phone to Cisco CallManager
+
+NAT Support for SIP
+
+Configuring H.323 Support for Virtual Interfaces
+
+Troubleshooting No Ringback Tone on ISDN-VoIP (H.323) Calls
+Troubleshooting No Busy Tone and No Announcement Messages on ISDN-VoIP (H.323) Calls
+
+[05.12.2002] (Alexey G Misurenko) Third Party H323 Calls Fail with Cisco IOS Later than 12.2(8)T
+
+Configuring Dial Plans, Dial Peers, and Digit Manipulation
+
+Cisco ATA 186 FAQ and Common Issues
+
+How to reset a Cisco ATA186 to factory defaults (работает и на 2.15)
+
+(Dmitry Arsh) Voice Over IP - Per Call Bandwidth Consumption
+
+(Akimov Petr) Troubleshooting Echo Problems between IP Phones and Cisco IOS Gateways
+
+[23.01.2004] Модели и методы оценки качества услуг IP-телефонии
+
+Recognizing and Categorizing Symptoms of Voice Quality Problems
+
+[31.01.2001] 12.1>Q: Как научить Киску понимать сигнал занято который дает АТС?
+С картами FXO.
+
+>A: (Vladimir Golovko)
+
+Поставь на линию "отбойник":
+http://www.pluscom.ru/general/news/event/td10/td-10.html
+Это должно помочь.
+
+P.S. (DY) "научное" название "отбойника" - детектор отбоя.
+
+>A: (DY) Если FXO включается в свою PBX - выставить на станции 
+"принудительный отбой" или заказывать VWIC-FXO-M2, где эта проблема 
+должна быть уже решена.
+
+>A: (Vladislav Nebolsine) в 12.1T и 12.2 - в том числе и в 12.2(6) - 
+FXO Supervisory Disconnect HЕ работает, главным образом из-за баги в 
+DSPWare (это микрокод DSP).
+
+Hо в 12.1(5)XM и в 12.2(2)T и выше - например, в 12.2(4)T - FXO
+Supervisory Disconnect РАБОТАЕТ, так как фича была переписана и включена
+новая версия DSPWare.
+
+!!! NB (DY) см. ниже комментарии
+
+Синтакс команды сильно изменился и теперь можно описывать не только
+busy, но и все остальные cptones. Документация:
+
+FXO Answer and Disconnect Supervision
+[25.09.2001] (PhoneMan) FXO Supervision Disconnect
+FXO Disconnect Supervision
+(DY) Voice - Understanding FXO Disconnect Problem
+
+(Vladislav Nebolsine) Таким образом, Ваша минимальная конфигурация должна выглядеть так:
+
+voice class custom-cptone class1
+ dualtone busy
+ frequency 425
+ cadence 200 300
+
+voice-port 1/0/0
+ cptone RU
+ supervisory disconnect dualtone pre-connect
+ supervisory custom-cptone class1
+ no battery-reversal
+
+Все команды обязательны. Остальные cptones добавляются по вкусу. По
+поводу выбора IOS: рекомендую не связываться с 12.2T, а поставить
+12.1(5)XM4.
+
+(Slawa Olhovchenkov)
+В 12.1(5)XM нормально оно там не работает, в 12.2(2)T оно даже иногда
+работает, если угадать настройки. Т.е. если таймауты не выставишь -- оно
+работать не будет.
+
+voice-port 1/6
+ disc-pi-off
+ cptone RU
+ timeouts call-disconnect 1
+ timeouts wait-release 1
+ timing guard-out 500
+ station-id number +6006
+ caller-id enable
+ supervisory disconnect dualtone mid-call
+ supervisory answer dualtone
+ supervisory custom-cptone panas
+ supervisory dualtone-detect-params 1
+ no battery-reversal
+
+Есть еще подстава -- кородкие гудки в разных ситуациях бывают разные и часто
+очень быстро переходят просто в тишину.
+
+voice class custom-cptone mer
+ dualtone disconnect
+  frequency 350 440
+  cadence 500 250
+
+voice-port 3/1
+ supervisory disconnect dualtone mid-call
+ supervisory answer dualtone
+ supervisory custom-cptone mer
+
+[22.03.2001] >A: (Vladislav Nebolsine) Если схема примерно такая
+phone:FXO--->FXS:PABX:FXS--->FXO:router:FXS<---FXO:phone
+
+То проблема есть и решить ее можно
+несколькими способами:
+
+1. Перейти на E&M для транкового соединения
+2. Использовать ground-start signalling
+3. Hастроить power denial со стороны PABX
+
+[25.09.2001] DTMF в направлении FXS->FXO не передается. 
+
+[07.02.2001] >A: (Yura Zotin) еще "отбойники" - http://www.icon.sp.ru
+(DY) и еще
+http://www.ddelta.ru/telephone/accessory/index.html
+http://www.telesys.ru/dialoff.shtml
+http://www.vinco.spb.ru/dop.htm
+
+[10.04.2001] 12.2>Q: PSTN-AS5300-3640-PSTN, сигнализация - PRI, IOS - 12.1(5)T5, станция - EWSD не всегда есть КПВ.
+
+>A: (Gosha Zafievsky)
+
+0. Откатиться на 12.1(3a)T4. Это известный баг 12.1(5)T
+1. Заставить EWSD выдавать КПВ абоненту по приходу с 
+   ISDN-транка сообщения ALERTing.
+2. Выдавать с 3600/5300 это сообщение.
+
+>A: (S.Bat)
+
+in se0/0:15
+isdn send-alerting
+isdn sending-complete
+
+[18.02.2002] 12.3>Q: Что означают счётчики команды show call active voice brief
+rtt:ms pl:/ms lost://?
+
+>A: (Sergei Batakov), прислал Vladimir Tregub
+
+pl:/ms
+
+pl: - это OnTimeRvPlayout, т.е. это длительность воспроизведения
+голосовых данных, пришедших вовремя. Эта цифра должна быть ненулевой.
+
+OnTimeRvPlayout - Duration of voice playout from data received on time
+for this call. You can derive the Total Voice Playout Duration for Active
+Voice by adding the OnTimeRvPlayout value to the GapFill values.
+
+pl:ms - это сумма всех GapFill
+(GapFillWithSilence+GapFillWithPrediction+GapFillWithInterpolation
++GapFillWithRedundancy) , т.е. это длительность "заплаток" в
+потоке голосовых данных вместо тех сэмплов, которые вовремя не были
+получены для воспроизведения. Т.к. алгоритмов возмещения 
+(генерации "заплаток") потерянных голосовых данных несколько, 
+то и параметров GapFill несколько:
+
+GapFillWithSilence - Duration of voice signal replaced with silence
+because the voice data was lost or not received on time for this call.
+GapFillWithPrediction - Duration of voice signal played out with signal
+synthesized from parameters or samples of data preceding and following 
+in time because the voice data was lost or not received on time from 
+the voice gateway for this call.
+GapFillWithInterpolation - Duration of voice signal played out with signal
+synthesized from parameters or samples of data preceding and following 
+in time because the voice data was lost or not received on time from the 
+voice gateway for this call.
+GapFillWithRedundancy - Duration of voice signal played out with signal
+synthesized from redundancy parameters available because the voice data 
+was lost or not received on time from the voice gateway for this call.
+
+Эта цифра должна быть 0 (к этому надо стремиться). У Вас же она соизмерима
+с pl: (pl: pl:3440/12630ms  - в три раза больше голосовых пакетов 
+либо теряются по дороге, либо приходят, но слишком поздно).
+
+lost:// - число потерянных/ранних/поздних пакетов.
+Хорошо, когда все цифры 0, ну или не велики. У Вас же lost:1868/197/10325,
+т.е. из 3381 полученных пакетов (rx:3381/542279 ) 55% пакетов потеряны, 
+а ещё 5,8% пакетов пришли слишком поздно (что делается с ранними пакетами, 
+я точно не помню, то ли они буферизируются, то ли тоже отбрасываются). 
+Понятно, что при этом качество голоса будет плохим.
+
+[07.03.2002] 12.4>Q: При использовании tcl-скрипта cisco 5300 не дает 
+станции Alert. Сразу идет Connect. Если скрипт не применять - все 
+нормально Alert затем Connect.
+
+>A: (Denis V. Schapov)
+
+CSCdt67217
+CSCdu49780
+CSCdw72304
+
+Both of these bugs did not have fixes integrated but rather worked around
+either using a customized TCL script to provide alerting or use IOS 12.0(7)T.
+Here is a snip of the modified script they used.....
+
+proc act_Setup { } {
+
+      init_perCallVars
+      leg proceeding leg_incoming <--- send call proceeding
+      leg progress leg_incoming -p8 <--- send PI 8 after call proceeding
+      leg connect leg_incoming <--- connect call
+#    leg setupack leg_incoming <--- commented out so IOS ignores statement
+
+Правьте ваш tcl скрипт, чтобы он сам отдавал alerting, перед connect.
+
+[20.06.2002] 12.5>Q: Кто использует AS5350 для dial-up и как VoIP-шлюз ?
+Модемные звонки попадают на диалтон.
+
+>A: (Vladislav Nebolsine)
+
+Как было раньше:
+Understanding How Inbound and Outbound Dial Peers are Matched on Cisco IOS Platforms
+
+Hовый способ:
+Understanding How Inbound and Outbound Dial Peers are Matched on Cisco IOS Platforms
+
+[11.07.2002] 12.6>Q: А можно как-то в начале номера символ + задавить?
+
+>A: (Vladislav Nebolsine)
+
+Плюс - такой же символ, как и любая цифра или '*':
+
+rule 0 ^+0 0
+rule 1 ^+1 1
+rule 2 ^+2 2
+...
+rule 9 ^+9 9
+
+Но такой способ отъема префикса не сработал с '+',
+хотя работает с обычными цифрами.
+
+К сожалению, другого пути убрать префикс '+' до 12.2(11)T - нет. num-exp
+тут тоже ни к селу, ни к городу.
+
+Или вот так в 12.2(11)T:
+
+rule 1 /^\+/ //
+
+12.2(11)T берут там же, где и другие имаджи, в /release/122/bin. Hа CCO
+он появится в конце августа.
+
+Или так (редкий вариант на исходящем порте POTS с вычитанием префикса):
+
+dial-p v 123 p
+ dest +......
+
+[24.07.2002] 12.7>Q: А как можно звонить с ATA-186 на ATA-186 без SIP proxy/GateKeeper ?
+
+>A: (DY)
+
+На ATA-A прописать в качестве SIPproxy/GK ip address ATA-B.
+На ATA-B - ip ATA-B. Прописать на обоих оригинальные UID_0/1.
+
+См. также CompTek : Отчет о тестировании Cisco ATA 186
+Это же относится и к 7960/SIP - см. Обеспечение взаимодействия 2-х Cisco IP Phone 7960 без proxy.
+Для числа ATA/79[46]0 > 2 - см. раздел SoftWare, SIP, Other.
+
+12.8>Q: alias static работает или нет ? Или gateways X,Y,Z по-прежнему
+должны быть обязательно зарегистрированы на данном GK/proxy ?
+
+>A: (Dmitry Arsh), (Denis V. Schapov)
+
+Заработал. К каждому alias static надо прописывать tech-prefix с помощью
+gw-type-prefix 1# gw ipaddr x.x.x.x тогда работает, иначе -- нет.
+
+[29.07.2002] 12.9>Q: Как через alias static описать патерн ? e164 7095......., 
+zone prefix 7095* не работают. С tech-prefix'ами не хочется ковыряться 
+т.к. шлюзы X,Y,Z равноправные и для них неплохо-бы организовать хотя-бы 
+round-robin выборку, на крайняк абсолютный приоритет.
+
+>A: (Dmitry Arsh)
+
+zone prefix gk 7095....... gw-priority 0
+zone prefix gk 7095....... gw-priority 10 gw1 gw2 gw3
+
+где gw1, gw2, gw3 -- H.323 ID этих гейтвеев, которые я прописывал в alias
+static:
+
+alias static 192.168.1.1 gkid gk ras 192.168.1.2 gateway voip h323id gw1
+
+Таким образом, звонки на 7095....... посылаются на эти три gw, на остальные
+автоматом выставляется priority 0, запрещающий выбор этих остальных при поиске
+destination gateway для этого префикса.
+
+Hу и понятно, что если хочется выделить из этих трех gw какой-нибудь в качестве
+основного, а остальные -- backup-ов, то основному ставится priority 10,
+остальным двум -- скажем, 5.
+
+[29.07.2002] 12.10>Q: ATA & ringback
+
+>A: (Denis V. Schapov)
+
+Если проблема только в том, что от ATA в аудио канале нет КПВ, тогда читать вот
+здесь
+
+[09.09.2002] 12.11>Q: Две 1750(c FXS) соединены друг с другом, после того как 
+на одном конце кладут трубку на другом - тишина, а хочется коротких гудков
+
+>A: (Vladislav Nebolsine)
+
+Коротких гудков не будет, но если поставить "timeouts wait-release 3" на
+голосовой порт, то через три секунды будет dial tone.
+
+[09.09.2002] 12.12>Q: Как прикрыть некоторые напрвления VoIP? Например 73x ?
+
+>A: (German Myzovsky)
+
+COR (Class of restriction) Configuring Class of Restrictions (COR) или, если не поддерживается IOS'ом:
+
+a). пишешь на TCL следующий скрипт:
+
+=== cut  ===
+# Script Locked by: TarioNetworks
+# Script Version: 1.0.0
+# Script Name: kazakhstan
+# Script Lock Date: Fri Sep  6 02:14:15 2002
+
+exit 3
+
+# Script Approval Signature: C/8a7d
+=== cut ===
+
+Note: <3> означает "No route to destination".
+ Остальные коды на выбор в документе ISDN Switch Types, Codes, and Values
+
+б). копируешь во flash:
+copy tftp://tftp.fidonet.org/kazakhstan.1.0.0.tcl flash:
+
+в). создаешь конфигурацию:
+
+call application voice KA3AXCTAH flash:kazakhstan.tcl
+dial-peer voice 73 voip
+  application ka3axctah
+  incoming called-number 73[123]T
+
+>A: (Vladislav Nebolsine) 
+Просто для общей информации (а не в качестве предложения к действию!)
+сообщаю, что в 11T легко делается:
+
+1. блокировка определенного диапазон входящих звонков с выбором cause code
+2. блокировка входящих звонков от определенного source ip address с
+выбором cause code
+
+VoIP Gateway Trunk and Carrier Based Routing Enhancements
+
+[19.09.2001] (Slawa Olhovchenkov) Сигнатура для TCL scripts
+TCL IVR API Version 2.0 Programmer's Guide
+
+Starting with Cisco IOS Release 12.1(3)T, TCL scripts are no longer locked, so
+customers can create and change their own TCL scripts.
+
+P.S. (German Myzovsky) Это неправда, по крайней мере в отношении TCL IVR v1.0.
+P.P.S. (Vladimir Kravchenko) 2.0 как бы не от рождение не требует подписи
+1.0 афаик для 3600 series не требует подписи с 12.2.10
+
+[20.09.2001] (German Myzovsky) утилита lockScript для подписывания TCL IVR scripts
+lockScript
+Для запуска утилиты требуется Solaris/SPARC
+
+TCL IVR 1.0 Frequently Asked Questions
+
+[03.12.2002] 12.13>Q: Есть два шлюза, принимающих от меня войс.
+Можно ли сделать так, чтобы на один dial-peer voice X voip
+пакеты летели с одним src addr, а на другой - с другим?
+
+>A: (Denis V. Schapov) 
+
+VoIP Interoperability with CEF anf PBR
+
+[10.12.2001] (Denis V. Schapov) Платформы для Cisco Call Manager
+
+Cisco MCS-7825
+Cisco MCS-7835
+Compaq DL320
+Compaq DL380
+IBM xServer 330
+IBM xServer 340
+
+И только для CM >= 3.0(8) по-моему
+
+P.S. (Andy Parfenov)
+Cisco MCS-7825 = Compaq DL320
+Cisco MCS-7835 = Compaq DL380
+
+P.P.S (Dmitry Arsh) Cisco CallManager 3.2
+
+[11.12.2001] (Vladislav Nebolsine) VoIP IP-to-IP gatewaying
+
+VoIP-to-VoIP tandem switching не поддерживается и не работает в
+соответствии с идеологией, что маршрутизировать IP-пакеты это задача
+маршрутизатора, а не голосового gateway.
+
+[30.07.2002] (Vladislav Nebolsine) Думаю, что не выдам военной тайны, если скажу, что поддержка 
+"VoIP to VoIP Gateway Feature" появится в 12.2(12)T
+Первоначально ожидается на 265x, 26xx-XM, 3660, 3725, 3745. 
+Точнее будет объявлено при официальном выпуске.
+
+[25.04.2003] (Slawa Olhovchenkov) VoIP-VoIP Gateway
+Cisco Multiservice IP-to-IP Gateway Feature
+
+P.S. (DY) Обратите внимание на Restriction.
+Universal Voice Transcoding Support for IP-to-IP Gateways
+
+[24.05.2003] (Denis V. Schapov) Кому интересно, в 12.3(1) на IPIPGW добавили 
+flow-around mode (проксирование только сигнализации) и официально CCM support через ICT.
+
+[12.02.2002] (Vladislav Nebolsine) Кстати, по большому секрету - 
+в 12.2(10)T появятся настоящие (почти взаправдашние) regex для translation rules.
+[06.07.2002] regex появится в 12.2(11)T - я уже пробовал, все работает.
+
+voice translation rule 1
+  rule 1 /^810/ //
+
+Все. Префикс будет отрезан. Хотя можно сделать и так:
+
+dial-p voice 123 pots
+  dest 810T
+  no forward-digits-all
+
+тот же самый эффект.
+
+
+[07.03.2002] (Denis V. Schapov) максимальное число dial-peers
+
+as5300         PLATFORM_MAX_DIAL_PEERS 5000
+as5400         PLATFORM_MAX_DIAL_PEERS 5000
+c1700          PLATFORM_MAX_DIAL_PEERS 500
+c2600          PLATFORM_MAX_DIAL_PEERS 2147483647
+c3600          PLATFORM_MAX_DIAL_PEERS 2147483647
+c3800          PLATFORM_MAX_DIAL_PEERS 2147483647
+c7100          PLATFORM_MAX_DIAL_PEERS 5000
+c820           PLATFORM_MAX_DIAL_PEERS 2147483647
+chopin         PLATFORM_MAX_DIAL_PEERS 2147483647
+mc3810         PLATFORM_MAX_DIAL_PEERS 2147483647
+rsp            PLATFORM_MAX_DIAL_PEERS 2147483647
+ubr910         PLATFORM_MAX_DIAL_PEERS 2147483647
+ubr920         PLATFORM_MAX_DIAL_PEERS 2147483647
+
+Also, there is a hard coded number-exp limit set at 250.  
+This was changed from 64 to 250 by CSCds10118.
+
+(DY): Note: The maximum number of dial peers that can be configured on a Cisco IOS gateway depends on the available memory (DRAM). 
+Each dial peer consumes approximately 6KB of memory. Make sure that you have at least 20% of the total memory reserved for other CPU processes. 
+If the dial peers are used for call routing, a larger number of dial peers will add to the delay to route a call. 
+This will be significant as the Cisco IOS voice stack looks through dial peers from the top down, similar to an Acess Control List.
+
+[09.09.2002] (Andrew Anikin) AS5350 и R2 - по умолчанию AS5350 не разрывает соединение,
+если приходит Disconnect с PI. 
+Чтобы происходил разрыв соединения надо дать команду:
+
+voice-port 3/0:D
+ disc-pi-off
+
+[21.10.2002] (Andrew Anikin) Глушения входящего голосового трафика исходящим.
+Это работа эхо-канселлера на воис-порту, точнее его блока нелинейной обработки. 
+В этом можно легко убедиться, сказав 'no non-linear' на voice-port. 
+Появится эхо, но глушение пропадёт.
+Этот эффект есть на XB5, XB7, 12.2.11T.
+
+(Vladislav Nebolsine) Это похоже на CSCdx61444 
+"AS5350,5400: Clipping speech happen at double-talk condition". 
+Починили только что, фикс в 128.0.0.220.spe или
+в следующих релизах 11T. Workaround: "no non-linear", но с эхом.
+
+[25.12.2002] (Denis V. Schapov) cisco 827-4V&T.38
+The T.38 Fax Relay for Voice over IP (VoIP) feature provides standards-based
+fax relay protocol support on the Cisco 827-4V router
+Release Notes for the Cisco 800 Series Routers and Cisco SOHO 70 Series Routers for Cisco IOS Release 12.2(11)YU
+
+Как довесок, modem passthrough там же.
+Hе торопитесь вливать, обратите внимение на memory requirements ;)
+
+[11.07.2003] QoS for VoIP на Ethernet/DSL WAN канале
+(Denis V. Schapov) CBTS (CBWFQ inside GTS) + LLQ
+CRTP работать не будет, не та среда
+
+Простой пример Class-Based Traffic Shaping to Support Low-Latency Queuing
+
+[29.12.2003] Как скрестить CCM и AudioCodes.
+
+(Alexey G Misurenko) CCM и AudioCodes
+
+[22.08.2007] Возможна ли русификация Cisco IP Phone 7940 (SIP) без CCM?
+
+(Slawa Olhovchenkov) Да. Файл локализации на cisco.com (требуется логин с контрактом на download)
+
+===========================================================
+13. SNMP
+
+===========================================================
+
+SNMP BUG - http://www.cisco.com/warp/public/707/cisco-malformed-snmp-msgs-pub.shtml
+
+[18.11.2001] Для начала - Simple Network Management Protocol Technical Tips
+
+(Dmitriy Smirnov) SNMP Counters: Frequently Asked Questions 64-bit counters
+
+(Alexey Betin) Cisco Network Management Toolkit - MIBs
+
+(Andrey Zhilyakov)
+Moving Files and Images Between a Router and TFTP Server via SNMP
+Существует и новая схема.
+How To Copy Configurations To and From Cisco Devices Using SNMP
+
+13.1>Q: Ребут киски по snmp ?
+
+>A: (Oleh Hrynchuk)
+
+snmp-server system-shutdown
+
+and after that....
+snmpset -c community -t 70 ip.addr.of.router .1.3.6.1.4.1.9.2.9.9.0 i 2
+
+
+13.2>Q: Download cisco config via SNMP.
+
+>A: Прислал (Oleh Hrynchuk)
+
+Using SNMP and the appropriate OID .1.3.6.1.4.1.9.2.1.55, postfix the IP
+address as the index for the OID.  Use this "OID" as a string set value.
+The string value will be the name of the file.
+
+    snmpset  .1.3.6.1.4.1.9.2.1.55.10.10.20.20 string ""
+
+The router will reward you with a nice log message and the file should
+appear on the tftp server (in this example, 10.10.20.20).
+Be careful as some UN*X tftp servers will not create files, but can only
+write to existing files (little security precaution).
+
+A much more interesting exercise is to get a router to read a config from
+a tftp server using only snmp...but we'll cover that some other time.
+
+
+Tod Daniels
+Greymatter, Inc.
+
+[17.01.2001] >A: (Joe Hishon)
+
+I use a UNIX shell script. You need to have a tftp server also running.
+For example if your tftp server is at 192.168.1.1, and your target router
+is IP "$IP" and read-write community "$RW" then the important lines are:
+
+'wr mem'
+snmpset -c $RW $IP .1.3.6.1.4.1.9.2.1.54.0 integer 1
+'wr net'
+snmpset -c $RW $IP .1.3.6.1.4.1.9.2.1.55.192.168.1.1 string routername-confg
+
+for COS switches... 'wr net'
+snmpset -c $RW $IP .1.3.6.1.4.1.9.5.1.5.1.0 octetstring 192.168.1.1
+snmpset -c $RW $IP .1.3.6.1.4.1.9.5.1.5.2.0 octetstring routername-confg
+snmpset -c $RW $IP .1.3.6.1.4.1.9.5.1.5.4.0 integer 3
+
+P.S. (DY)
+'copy tftp runn'
+snmpset -c $RW $IP .1.3.6.1.4.1.9.2.1.53.XXX.XXX.XXX.XXX string "filename"
+
+[18.11.2001] >A: (Roman Popov)
+Cisco IOS and Configuration File Migration Using SNMP
+
+[29.09.2004] >A: (Anton V. Yuzhaninov)
+How To Copy Configurations To and From Cisco Devices Using SNMP-IP Application Services
+
+[09.04.2001] 13.3>Q: По комманде sh ver можно увидеть информацию каким образом 
+рестартовало устройство (reboot, power-up и тп). Можно ли эту информацию забрать
+по snmp ? ( какая ветка MIB ?)
+
+>A: (Юрий Селиванов)
+
+OLD-CISCO-SYSTEM-MIB
+"whyReload" --  "1.3.6.1.4.1.9.2.1.2"
+
+[04.10.2001] 13.4>Q: Как вручную заставить киску сделать исходящий звонок
+(без dial on demand). Желательно по SNMP?
+
+>A: (Andrey Kostin)
+
+Ping MIB Implementation
+
+[06.11.2001] 13.5>Q: Как по snmp снять dial-up пользователя ?
+
+>A: (Roman Popov)
+
+snmpset -v1 $router $community .1.3.6.1.4.1.9.2.9.10.0 i $line
+
+[22.04.2002] 13.6>Q: Возможно ли сохранение SNMP-index интерфейсов ?
+
+>A: (DY) Да. Interface Index Persistence
+
+[27.12.2002] 13.7>Q: Как мониторить число занятых тайм-слотов ?
+
+>A: (DY) для AS5300, Octal E1 Card выглядит так
+current usage per E1
+enterprises.9.10.19.1.1.9.1.3.0.0 = Gauge32: 17
+enterprises.9.10.19.1.1.9.1.3.0.1 = Gauge32: 0
+enterprises.9.10.19.1.1.9.1.3.0.2 = Gauge32: 0
+enterprises.9.10.19.1.1.9.1.3.0.3 = Gauge32: 0
+enterprises.9.10.19.1.1.9.1.3.0.4 = Gauge32: 15
+enterprises.9.10.19.1.1.9.1.3.0.5 = Gauge32: 0
+enterprises.9.10.19.1.1.9.1.3.0.6 = Gauge32: 0
+enterprises.9.10.19.1.1.9.1.3.0.7 = Gauge32: 0
+max usage per E1
+enterprises.9.10.19.1.1.9.1.4.0.0 = Counter32: 25
+enterprises.9.10.19.1.1.9.1.4.0.1 = Counter32: 0
+enterprises.9.10.19.1.1.9.1.4.0.2 = Counter32: 0
+enterprises.9.10.19.1.1.9.1.4.0.3 = Counter32: 0
+enterprises.9.10.19.1.1.9.1.4.0.4 = Counter32: 20
+enterprises.9.10.19.1.1.9.1.4.0.5 = Counter32: 0
+enterprises.9.10.19.1.1.9.1.4.0.6 = Counter32: 2
+enterprises.9.10.19.1.1.9.1.4.0.7 = Counter32: 2
+
+enterprises.9.10.19.1.1.4.0 - total current usage
+enterprises.9.10.19.1.1.8.0 - total max usage
+
+P.S. (Vladimir Kravchenko)
+Эти счетчики отражают "Layer3 Active Calls" -- каждое слово отражает 
+то что этот счетчик показывает не кол-во занятых TS в потоке, а кол-во 
+активных звонков, тех которые connected.
+
+>A: (nevian) AS5350, 12.3(6a)
+1.3.6.1.4.1.9.10.19.1.1.9.1.3.(slot).(int) - current usage
+1.3.6.1.4.1.9.10.19.1.1.9.1.4.(slot).(int) - max usage
+
+(Andrey Silvestrov)
+Using SNMP to Find a Port Number from a MAC Address on a Catalyst Switch
+
+===========================================================
+14. Cables
+
+===========================================================
+
+14.1>Q: Слышал, что есть кабель для соединения двух цисок DB60M <-> DB60M
+но нигде на cisco.com не смог его найти ?
+
+>A: (Yuri Yuferev)
+
+http://www.pacificable.com/PicFrames/CABMMXHD60PicFrame.htm?
+
+[23.01.2001] 14.2>Q: Перекрестный ethernet AUI кабель для соединения 2х активных
+AUI портов.
+
+>A: (Orlov Sergey)
+
+Перекрестный ethernet AUI кабель
+     DB15 DB15
+
+DI-A   5    3  DO-A
+DI-B  12   10  DO-B
+      11   11  DO-S
+DO-A   3    5  DI-A
+DO-B  10   12  DI-B
+       4    4  DI-S
+CI-A   2    2  CI-A
+CI-B   9    9  CI-B
+
+[03.07.2001] (Yuri Selivanov) Hа паре трансиверов хотим сэкономить? :))
+Причем, pinouts находят все, а вот архивы посмотреть на deja или как 
+там его -- google не судьба?  :)
+
+This fragment was taken from the "old" comp.dcom.lans.ethernet FAQ:
+
+03.10 Q: Can I make a cable to connect the AUI ports of two devices directly
+        to each other?
+     A: Yes and  no.  You can make the  equivalent of a null modem cable by
+        connecting a two-pair, twisted  pair cable  connecting pins 3/10 at
+        each end to  pins 5/12 (respectively)  at the other.  This connects
+        transmit-to receive (null modem).   However, this will probably NOT
+        work with "standard" software because:
+
+          - There is no  collision detect.  If  a collision  occurs neither
+             device will back-off or and retry.
+          - There  is  no  loopback  (stations   will  not  hear  their own
+            transmissions which may cause diagnostics failures).
+          - There is no heartbeat (SQE  test)  provided,  which  may  cause
+            diagnostic failure.
+
+        If you want to use standard software, buy some transceivers. An AUI
+        null-modem  will work  for  a  laboratory, test  environment  under
+        certain conditions.
+
+[03.07.2001] (Eugene Zhilitsky) Пара дополнений.
+1. Такая распайка возможно будет работать на full-duplex, т.к. при FD и детект
+коллизий, и петля отключаются.
+2. Hекоторые Циски, в частности популярная у начинающих :) серия 25хх FD не
+умеет. Следовательно, на таких боксах работать не будет.
+
+[25.01.2001] 14.3>Q: Расскажите как подключить киску к эйкон карте C20 по x25 ?
+
+>A: (Vladimir N. Baronov)
+
+Кабель "нуль-модем" RS-232+Cisco CAB 232-MT,
+DB25 Male          DB25 Female
+1            -            1
+2            -            3
+3            -            2
+4,5          -            8
+6            -            20
+7            -            7
+8            -            4,5
+15,17        -            24
+20           -            6
+24           -            15,17
+Соединял Eicon S51 + Cisco 25xx
+
+[12.10.2001] 14.4>Q: Hа сколько метров максимально можно удлинить шнурок V.35
+Думаю использовать для удлиннителя витую пару 5 категории напаяв разьемы DB25
+(получается два кабеля). Кто пробовал так? Интересует еще, как желательно
+распределять пары в кабеле для сигналов квитирования (для данных все ясно).
+
+>A: (Andrey Kostin)
+
+V.35/RS449 Cable Length Recommendations
+
+V.35/RS449 Cable Length Recommendations
+
+===========================================================
+15. TROUBLESHOOTING
+
+===========================================================
+
+[23.01.2001] 15.1>Q: %SYS-2-MALLOCFAIL: Memory allocation of 1684 
+bytes failed from 0x195A98, pool iomem, alignment 4. 
+Что это такое и как лечить ?
+
+>A: (Denis V. Schapov) Полезно почитать здесь
+Troubleshooting Memory Problems
+Troubleshooting High CPU Utilization on Cisco Routers
+
+>A: (SO) Troubleshooting High CPU Utilization in IP Input Process
+
+>A: (DY)
+Troubleshooting Buffer Leaks
+Buffer Tuning
+Troubleshooting Router Hangs
+
+>A: (Basil Dolmatov)
+
+Память либо кончилась, либо отфрагментировалась.. 
+Лечить можно разными способами, в зависимости от реальной причины... 
+Начиная от банальной добивки памяти или выключения функций, которые 
+данный кошак с данной памятью не тянет, продолжая оптимизацией функций, 
+жрущих память с применением головы, и заканчивая сменой IOS на тот, 
+в котором данный конкретный memory leak устранен (или еще не внесен :)
+
+I/O mem в 25-й серии _всегда_ 2 мега... :)
+
+>A: (Sergey Nedosekin)
+
+На лицо типичная ошибка memory allocation. Бороться нужно так же как 
+и в случае обычного компа.
+1. поставить свежую/более другую  версию софта, в надежде что там баг 
+или уже исправлен или еще не внесен. :)
+2. Поменять память.
+3. Поменять мать. (тут это называется шасси)
+(DY - тут речь шла про 805)
+
+P.S. (DY) увеличить объем памяти для I/O можно дав команду
+memory-size iomem NN
+NN - число в процентах от общей памяти, по умолчанию объем
+I/O memory - 25%.
+Вступает в действие после перезагрузки.
+P.P.S. (Тимофей@chgnet)
+Если результат команды не отображается в конфиге по sh run, начните с команды
+no memory-size iomem
+Также команда не отображается, а следовательно игнорируется, 
+если указан большой %% при большом количестве памяти. Попробуйте уменьшить значение. 
+
+[23.01.2001] 15.2>Q: Есть 2511 и в терминале постоянно идет сообщение
+3d16h: %LANCE-5-LATECOLL: Unit 0, late collision error
+
+>A: (Vlad V.Paramonov) Согласно
+IPFAST through LPD
+
+Error Message: %LANCE-5-LATECOLL: Unit [dec], late collision error
+Explanation: An Ethernet transceiver is malfunctioning, the Ethernet is
+overloaded, or the Ethernet cable is too long.
+Recommended Action: Repair or replace the controller.
+
+P.S. (DY) В общем случае помогает замена hub, куда включена киска на switch.
+
+[13.02.2000] 15.3>Q: С тех пор как кошководы переделали навигатор, 
+я как-то потерял с ним взаимопонимание. не подскажете ли мне, как, 
+имея show stack/region/etc выловить подходящий баг?
+
+>A: (Andrey Zimin)
+
+http://www.cisco.com/stack
+(если слово заветное знаешь ес-нно, хотя логин зеленью рисует)
+рекомендую сразу на мыло - в вебе не дождесси...
+далее внимательно почитывая.
+работает только на ССОшных не свежих софтинах.
+
+Если не получится, то читая набор багов через нафигатор-2.
+
+Если опять не получится - не огорчайся, там не только простым смертным
+частенько много чего не кажут, но и кошковым инженерам то-же не всегда,
+не всем и не все... 8-)
+
+[13.02.2000] 15.4>Q: Изpедка (в зависимости от нагpузки) зависают модемы mica.
+Как на AS5300 так и на 3640. Веpсия portware 2.7.2.0.
+Подскажите пожайлуста как с этим боpоться.
+
+>A: (Andrey Zimin)
+
+Смотря как подвисают.
+Поставь 12.1(6)АА - там есть несколько критичных фиксов.
+
+[05.03.2001] 15.5>Q: Подскажите, как на MICA-х включить
+V90, а то работает 33 600 и все.
+
+>A: (Gosha Zafievsky) 
+
+Сменить portware на 2.6.2.0 в случае R2 либо 2.7.2.0 в случае ISDN PRI.
+
+[27.03.2001] 15.6>Q: 3640, 12.0(9), модуль 8 BRI. После down/up
+канала со стороны телефонистов порты уходят в TEI_ASSIGNED.
+
+>A: (Vladislav Nebolsine) Если по debug bri там есть еще следующая ошибка -
+"Sending MPH-ERROR Indication reporting error to layer2", то это точно 
+CSCdp60924
+
+Пофиксено в 12.1(7.4). Из описания проблемы:
+"When the cable is disconnected from a bri on a 2600, the TEI is not
+released : L2 remains in state TEI_ASSIGNED.
+When the cable is reconnected and L1 comes back up, the router will use
+the same TEI when it sends a SABME to reconnect LAPD.
+In my lab setup, the ISDN switch ignores these SABME's, no doubt
+because it does not consider this TEI to be 
+assigned any more.  See attached debugs. [...]"
+
+===========================================================
+16. Switching,VLAN
+
+===========================================================
+
+[27.02.2001] Configuring InterVLAN Routing and ISL/802.1Q Trunking on a Catalyst 2900XL/3500XL/2950 Switch Using An External Router
+Обратите внимание на Table 1, 2 по поводу minimal feature set
+
+802.1Q Trunking Between Catalyst Switches Running CatOS and Cisco IOS System Software
+
+(Denis V. Schapov) Cisco - 802.1Q Encapsulation Support on Cisco 2600/3600 Series Routers
+Routing Between VLANs Overview
+
+Configuring ISL Trunks on Cisco Routers
+
+[27.02.2001] (Jen Linkova) VLANs and Routers
+ISL Functional Specification 
+
+Creating Ethernet VLANs on Catalyst Switches
+
+Configuring Multi-VLAN Port on Catalyst 2900XL/3500XL обратить внимание на Note. Либо trunk, либо multi-vlan port.
+
+Understanding and Configuration VLAN Trunk Protocol (VTP)
+
+(Denis V. Schapov) Fast EtherChannel(R) and ISL on Servers and NICs-Vendor Information
+
+(DY) Understanding EtherChannel Load Balancing and Redundancy on Catalyst Switches
+
+[27.11.2001] iXBT: Конфигурирование коммутаторов с поддержкой 802.1Q
+
+Catalyst Switched Port Analyzer (SPAN) Configuration Example
+
+[03.12.2002] (Pavel Rodionov) Configuring 802.1Q and Layer 2 Protocol Tunneling (3550) 
+(Yuri Selivanov) Configuring 802.1Q and Layer 2 Protocol Tunneling (3750)
+
+[16.12.2003] (Yuri Selivanov)
+ISL
+802.1q
+
+[27.02.2004] (DY) Cisco Switch/FAQ
+
+ISL - _ТОЛЬКО_ на 100Mb/1Gb портах.
+802.1q - 10/100Mb
+На 25xx _НЕТ_ ни 802.1q, ни, тем более ISL.
+VLAN 802.1q _НЕЛЬЗЯ_ поднять на 19xx, ISL only. Для 19xx надо Enterprise soft.
+На Catalyst 2950-xx - _ТОЛЬКО_ 802.1q
+
+VLAN 802.1q _МОЖЕТ_ работать на портах 10Mbit (к примеру 2610<->29xx)
+(Artem I. Ivanov) Cisco 2611, 8FLASH/24DRAM, IOS 12.0(4)T, 802.1q отлично живет на Ethernet.
+Cisco IOS IEEE 802.1Q Support
+(Denis V. Schapov) То есть _официально_ эта фича (802.1q on ethernet) supported только начиная с 12.2(2)T
+
+[24.10.2000] Basil Dolmatov - 17[25]0 не поддерживает ISL, hardware limitation.
+И не будет поддерживать.
+(Григорий) - "IEEE 802.1Q (VLAN) and ISL are not supported on the Cisco 1720 or Cisco 1750 due to a hardware limitation in the 860T processor."
+Cisco 1700 Series - Release Notes for Release 12.0 T BugID - CSCdm72054
+P.S. (Pavel Rodionov) Из 1700 серии поддерживает 1721, 1751, 1760 и 1710. С соответствующим Feature Set.
+(Volume) - http://www.cisco.com/warp/public/cc/pd/rt/1700/
+(Dmitry Valdov) - dot1q из 17-й серии умеют 1710, 1711, 1712, 1721, 1751, 1760. 1720, 1750 - не умеют.
+
+[27.05.2003] (Pavel Rodionov) - По поводу EI и SI (Enhanced Image и Standard Image)
+Cisco Catalyst 2950 Series Switches with Standard Image and Enhanced Image Software
+Если кратко -- это зависит от модели коммутатора, но не зависит от IOS.
+
+[02.06.2003] 16.1>Q: Кто pешил пpоблему закpытия пеpвого ВЛАH-а от заказчиков, котоpых необходимо подключить чеpез тpанк?
+
+>A: (Denis V. Schapov) Virtual LAN Security Best Practices
+
+===========================================================
+17. Netflow
+
+===========================================================
+
+[13.06.2000] 17.1>Q: Что такое NetFlow и с чем его едят ?
+
+>A: (DY)
+
+Подробнее об этом можно почитать на Cisco http://www.cisco.com/warp/public/732/netflow
+
+Cisco IOS Software - NetFlow IOS Support Matrix
+
+Платформы и минимальная версия IOS - NetFlow Packaging
+
+Программы для сборки и обработки статистики NetFlow - см. раздел SoftWare
+
+>A: (Vladislav Nebolsine)
+
+Примеры конфигурации -
+
+NetFlow Policy Routing
+там же ссылки на дополнительную документацию.
+
+>A: (DY) Статьи с cisco.opennet.ru
+
+Настройка Netramet для учёта трафика посредством netflow
+Настройка Netfltools для учёта трафика посредством netflow
+
+[07.05.2001] 17.2>Q: А работает ли сбор netflow-статистики с интерфейса 
+при включенном на нем ip tcp header-compression ?
+
+>A: (Alexandre Snarskii)
+
+Нет.
+
+Версия (Victor Sudakov)
+
+>Q: Чем вреден ip tcp header-compression?
+>A: Hе будет работать netflow. Hе будет работать IP fast switching. 
+    Может быть, еще что-нибудь работать не будет :)
+
+[29.07.2004] UPDATE: (Alexey G Misurenko)
+
+Before Cisco IOS Release 12.0(7)T, if compression of TCP or Real-Time Transport Protocol (RTP)
+headers was enabled, compression was performed in the process switching path.
+That meant that packets traversing interfaces that had TCP or RTP header compression enabled
+were queued and passed up to the process to be switched. This procedure slowed down
+transmission of the packet, and therefore some users preferred to fast switch uncompressed 
+TCP and RTP packets.
+
+Now, if TCP or RTP header compression is enabled, it occurs by default in the
+fast-switched path or the Cisco Express Forwarding-switched (CEF-switched) path, depending on
+which switching method is enabled on the interface. Furthermore, the number of TCP and RTP header
+compression connections was increased to 1000 connections each.
+
+If neither fast switching nor CEF switching is enabled, then if TCP or RTP
+header compression is enabled, it will occur in the process-switched path as before.
+
+[12.10.2001] (Dmitry Morozovsky, Andrey Zimin)
+
+NetFlow по определению считает именно входящий трафик. В отличие от
+ip accounting, который ровно наоборот. Вывод: для подсчета всего его надо
+включать на всех интерфейсах core router'ов. Если их более одного -- да,
+придется потом исключать посчитанный дважды.
+
+Следствием этого, кстати, является то, что NetFlow ни при каких условиях не
+посчитает трафик, сгенерированный самим роутером.
+
+AZ> надо включать на _границах_ _сети_
+AZ> надеюсь понятно, что тогда никакого дубляжа не будет.
+
+Hmm... Если стоит задача посчитать исходящий трафик клиента посредством
+NetFlow, без дублирования не всегда можно обойтись. Если я правильно помню, на
+асинках NetFlow включать не рекомендуют. Или починили?
+
+[17.05.2001] (Sergey V. Artjushkin) Hе работает на Tunnel0 netflow.
+Он и не будет считаться.
+NetFlow Deployment on Logical Interfaces
+
+[03.08.2001] (Denis V. Schapov) netflow export with redundancy
+NetFlow Multiple Export Destinations
+Причем, из command reference видно, что фича появилась в 12.1(3)T
+
+(Sergey V. Artjushkin) NetFlow Multiple Export Destinations
+
+===========================================================
+18. PIX/ASA
+
+===========================================================
+
+Configuration Examples and TechNotes
+Managing System Access
+PIX/ASA 7.x as a DHCP Relay Configuration Example
+
+===========================================================
+96. Modules
+
+===========================================================
+
+[11.03.2001] 96.1>Q: А это правда, что wic-1T умеет async в 17xx 
+и не умеет async в 26xx?
+
+>A: (Denis V. Schpov)
+Правда.
+Understading the 1-Port Serial WAN Inteface Card (WIC-1T)
+
+===========================================================
+97. SoftWare
+
+===========================================================
+
+Здесь ссылки на различный софт для Cisco и не только.
+Некоторые могут дублироваться из других разделов.
+
+Cisco Release Notes
+
+Cisco PIX Firewall Software
+
+Accounting
+
+Список сетей, поделенных по признакам foreign/russian/other
+(с точки зрения RelCom'a) - http://relcom.duty.ru/dbdump.txt.gz
+
+Для sh ip account
+IPaccounting
+ipanalize
+ipacc from ss23 by bwm - ss23.tar.gz и
+ss23.tar.Z
+
+счетчик IP трафика через SNMP прислал (Yura Pismerov)
+Statistics
+aaa+fw
+
+FreeBSD
+
+ipacc for kernel
+Cisco IP accounting simulator (daemon). Эмулирование show ip accounting (a-la Cisco) для снятия IP-статистики с Unix-роутеров
+[25.02.2001]Учет трафика при использовании FreeBSD в качестве маршрутизатора.
+[19.08.2001]ipacctd
+[19.08.2001]netgraph node для аккаунтинга трафика
+
+Linux
+
+netfilter2 (constantin cherkasoff)
+
+P.S. Ну а почему-бы и не использовать NeTraMet, одновременно снимает
+с 4-х интерфейсов. Ограничение - похоже не работает когда поднят транк.
+
+NetFlow [14.03.2001]
+
+
+NB! на разных платформах, могут проблемы с byte order
+
+(Alexander Kefeli) Дело в том что на Cisco обратный (по отношению к
+Intel) порядок байт в целых числах. Отсюда мораль на интеле надо конвертить.
+Если SPARC, MIPS или еще что рисковое тогда все должно быть
+нормально.
+
+TF-TANT@SWITCH: Flow-Based Monitoring and Analysis: Software (прислала Jen Linkova)
+
+NeTraMet Release Notes
+cflowd: Traffic Flow Analysis Tool
+IPMeter (NeTraMet + биллинг)
+OSU flow-tools и полезные утилитки. Или здесь
+NFCollector/java by John Gladkih
+Flow Data Collector Daemon
+Простой коллектор на перле
+Extreme Happy Netflow Tool
+NetFlowTools by Andrey Slepuhin
+Flowc (прислал Anton A. Golubev)
+NeTAMS - The Right Way To Manage Your IP Traffic
+
+Softflowd (оригинатор ? NetFlow)
+pfflowd converts OpenBSD PF status messages to Cisco NetFlow. datagrams
+a NetFlow probe - libpcap-based tool that collect network traffic data and emit it as NetFlow flows towards the specified collector
+Netflow implementation for netgraph (Gleb Smirnoff)
+
+Shaping
+
+BW_MAN bandwidth management system
+ALTQ
+
+MONITORING
+
+MRTG и
+[05.03.2001] (Igor Nikolaev)  Using MRTG to Monitor and Graph Traffic Loads
+RRDtool
+SNMP Traffic Monitor (Yura Pismerov)
+MRTG for Windows 95, 98, and ME
+
+ROUTING
+
+GateD
+Конфиги RelCom'a для GateD - snapshot
+GNU Zebra
+(Yuri PQ) Quagga Routing Suite
+mrt
+
+Для работы с ACL 
+http://www.isi.edu/ra/RAToolSet RAToolSET
+http://www.lexa.ru/snar/bgpq.html
+ftp://ftp.sztaki.hu/pub/private/kissg/aclgen
+
+TACACS,RADIUS,Billing [25.01.2001]
+
+Cisco Secure ACS
+
+TACACS
+ftp://ftpeng.cisco.com/pub/tacacs оригинальный от Cisco
+ftp://ftp.east.ru/pub/inet-admins
+ftp://ftp.vsu.ru/pub/hardware/cisco/tacacs tac+ia - Best choice :)
+http://www.disaster.com/tacplus
+http://www.shrubbery.net/tac_plus
+http://www.nttacplus.com - TACACS for NT ($$ ?)
+http://stiwww.epfl.ch/tacacs
+http://web.tiscalinet.it/macchese/PAM/patch-tac_plus.F4.0.3.alpha-PAM-0.3
+PAM module
+TacacsPlus Perl module by Mike Shoyher, есть и на CPAN
+Native MySQL support is in Devrim Seral's improvement of Cisco version + recommend update (for you the crossplatformity, minor bugfixes)
+Tacacs+ RPM Distribution Home Page (Alexander Voropay)
+
+RADIUS
+Что такое RADIUS, список Products (Ruslan Laishev)
+radius by vadik likholetov
+RADAACT by RiNet Corp.
+http://www.chat.ru/~kitiket merit-AAA + PostgreSQL + perl5 + Pg
+cistron
+Livingston
+Merit AAA
+freeRADIUS
+XtRADIUS
+ICRADIUS
+PerlRADIUS
+Radiator Radius Server ($$)
+RADIUS from Vovida
+GNU Radius
+pppd, патченый под RADIUS
+pppd-radius
+
+Разный софт для организации интернет-узла (статистика,аутентификация,аккаунтинг)
+
+Billing [07.08.2002]
+"BG - биллинг" - универсальная биллинговая система Java ? FREE !?
+LANBillng - биллинговая система есть коммерческие и некоммерческие версии
+ppp billing
+User management, authentication, and billing software for UNIX
+Freeside - Billing and account administration software
+radius+mysql
+http://www.oss-net.ru/oss2000.html АСР ОСС-2000 ($$)
+http://www.servocomp.ru/rus/abs.htm Абсолют ($$)
+PortaOne is a VoIP (IP Telephony) Billing Solutions Company VoIP Billing ($$)
+IPSoft billing ($$)
+MIND-CTI ($$)
+Traffic Accounting System
+Billing ih h323 proxy environment Debitel Cookbook
+
+VoIP [04.10.2001]
+
+SIP
+VOVIDA SIP proxy/redirect/feature server, H.323, MGCP to SIP protocol translators
+ftp http jredirector (JAVA)
+NIST-SIP stack (JAVA)
+oSIP library (LGPL) and the Opensource SIP Registrar (and redirect server)
+The partysip SIP proxy server
+SIP Implementations
+Columbia SIPd $$$
+Mera Networks SIP library ($$$)
+SIP proxy сервер
+siproxd - SIP proxy/masquerading daemon
+iptel.org SIP Express Router
+comand line tool for developers and amdinistrators of SIP
+PortaSIP - SIP server, RTP proxy, can be bundled with PortaBilling ($$)
+
+H.323
+AquaGatekeeper (FreeBSD, Linux, Win32)
+http://www.openh323.org
+http://www.opengatekeeper.org
+GNU GateKeeper
+KOMproxyd h323,sip
+Linux masq h323 module
+NAT & H.323 module
+netfilter patches
+Mera Networks xPEERience Gatekeeper/Proxy (xPGK) (DEMO, $$$)
+Mera Networks H.323 library ($$$)
+
+Other
+Asterisk - the Open Source Linux PBX
+Bayonne - GNU telephony server
+skinny-proxy
+Open Callmanager project
+
+Applications
+OpenMCU, OpenAM, OpenIVR, OpenGK, OhPhone, PSTNGw, CallGen323
+
+TUNNELs [17.05.2001]
+
+for FreeBSD (просто как-то нашел)
+ftp://ftp.sut.ru/pub/dyer/tunnel
+(nos-tun есть в самой системе)
+ftp://ftp.radio-msu.net/pub/homebrew/FreeBSD/gre
+
+(Alexander A. Karpoff) - http://mike.spottydogs.org/projects/gre-tun
+
+(Marat B. Kuznetsov) - с версии (afair) 4.0 в самой системе так же есть gif
+http://www.freebsd.org/cgi/man.cgi?gif
+успешно используется для организации IPoverIP туннеля уже около года...
+
+TOOLS
+
+http://www.caida.org/tools/taxonomy/performance.xml Traffic simulator ?
+
+Syslogd for !*nix
+[23.01.2003] (DY) MT Syslog Daemon
+[27.02.2001] (ter@sibintek.net) Syslogd for NT
+[27.02.2001] (Dmytro Kryvko) http://www.mt.lv/wirsys/sysloginstall.exe
+
+TFTPD for !*nix
+http://tftpd32.jounin.net/
+http://www.firedaemon.com/
+
+PIX log parsers (Roman Oplanchuk)
+http://cs.calvin.edu/~mpost89/pixlog/
+http://cert.uni-stuttgart.de/projects/fwlogwatch
+
+[27.02.2001] (Valery Borovyk) ACL editor, tftpd, etc
+
+VLANs [19.10.2001] 
+
+FreeBSD (в 4.x 802.1q есть)
+
+FreeBSD VLAN mini HowTo (Yuri Selivanov)
+
+Драйвер ISL - ftp://ftp.radio-msu.net/pub/homebrew/FreeBSD
+Для fxp - http://www.euitt.upm.es/~pjlobo/fbsdvlan.html (patch MTU>1500. Впрочем на 4.4-STABLE у меня давно работает и без него)
+
+(Jen Linkova) FastEtherChannel
+
+Linux
+
+Иван Песин, Повесть о Linux и VLAN
+802.1q - http://scry.wanfear.com/~greear/vlan.html и
+http://vlan.sourceforge.net
+ISL - http://www.tu-chemnitz.de/~sger/isl
+
+(Igor Nikolaev)
+http://www.candelatech.com/~greear/vlan/cisco_howto.html
+
+PPPoE
+
+[12.10.2001] (DY) PPPoE клиент для Windows 98/98SE/ME/2000/XP/2002
+RASPPPOE Home Page
+
+(Nikolay Y. Kryukov) A PPPoE Implementation for Linux
+
+a href="http://www.in-line.ru/technology/article9.asp">Применение технологии PPPoE в сетях провайдеров услуг Интернет
+
+
+
+
+===========================================================
+98. IOS Black List/White List/Recommendations
+
+===========================================================
+
+[14.06.2000] 12.0(5)Tx. Добpый совет. Выкиньте это
+оно для использования _совеpшенно_ не пpигодно.
+Alex Bakhtin
+
+[15.06.2000] 3640 12.0(4)T - CEF глючный. Сильно.
+Dmitri Kalintsev
+
+[05.09.2000] Vladislav Nebolsine
+
+12.1 (без буковки) - это проверенная и обкатанная 12.0Т (с буковкой), в которую
+перешли все ее фичи.
+
+А в 12.1Т (с буковкой) добавлены новые фичи (и поддержка новых платформ),
+которые со временем перейдут в 12.2.
+
+Есть фичи, которые не вошли в 12.1, так как были не в 12.0Т, а в 12.0XK.
+Hапример, поддержка Q.SIG, которая была в 12.0(5)XK и 12.0(7)XK), перешла не в
+12.1(1), а в 12.1(2)T. И еще ряд фич из различных не-T имаджей.
+
+Выбирать надо по потребностям (и размеру флэша) и наличию требуемых фич в
+имадже. Перечень фич в каждой версии есть в документации на www.cisco.com:
+http://www.cisco.com/univercd/cc/td/doc/product/index.htm
+
+12.1(2a) - хорошая работающая версия ИОСа с полноценной поддержкой голоса.
+на момент [17.05.2001] - Рекомендация стабильного голосового имаджа на сегодняшний день: 12.2(1).
+Есть вероятность, что 12.2(1) не будет идеально работать со старыми
+версиями по VoIP. Как всегда, правильнее ставить одну и ту же версию со
+всех сторон.
+[01.08.2002] Для голоса самый стабильный на сегодняшний день 12.2(2)XB5
+Про баги 12.1(5)XM8 говорить не стоит, "изделие" годовой давности, все
+уже починено до нас.
+
+Не помню кто сообщал.
+12.1(3)T - разные SNMP индексы на sub-if VLAN/ISL.
+-is- - уже не лезет в 8Mb Flash
+P.S. VLAN/ISL only ! При encap dot1q не будет разных snmp-index,
+[15.03.2001] (Denis V. Schapov) это Bug Id : CSCds00250
+ifTable is not populated for Fast Ethernet subinterfaces defined as trunks
+having dot1q encapsulation.
+
+Basil (Vasily) Dolmatov - Ммм... Я не стал бы пользовать IRB в ранних версиях 
+11.2 mainline ;)
+
+[17.01.2001] (Vladislav Nebolsine) Самый стабильный _голосовой_ IOS на сегодняшний день - 12.1(3a)XI4
+[04.01.2001] Если же необходимость менять есть, то на 12.2(5).
+12.2(1) к использованию уже не рекомендуется.
+
+[17.01.2001] (Dmitry Valdov) в 90% софта 12.1(x)T на 7206VXR не работает export netflow
+
+[19.02.2001] (Denis V. Schapov) c3640-i-mz.121-2.T.bin - пропадают secondary адреса на FastEthernet
+Документированный баг. Менять иос на более свежий или откатиться назад.
+
+[20.02.2001] (Andrey Kostin) no ip finger поломан,  баг, найден в 12.1(5), пофиксен [будет] в 12.2(1)
+Пользоваться "ip finger rfc-compliant" в качестве workaround не советую:
+случается зависание сессий фингера, которые занимают все vty, которое
+лечится только ребутом. Решение - использовать ИОС без бага.
+
+(Andrey Zolotnicky) - BugID - CSCds92731
+
+[20.02.2001] (Yuri Jilkin) После апрегйда 3620 с 12.0.7(Т) на 12.1.5(Т)
+невозможно получить данные по всем 30-ти интерфейсам Async(33-62).
+Получается только по Async60 и только ifDescr:
+ snmpwalk mycisco.domain.dom public | grep Async
+     interfaces.ifTable.ifEntry.ifDescr.5 = Async60
+
+(Alexandre Snarskii) Пока no workaround.
+
+[10.07.2001] (Denis V. Schpov) Проблема с NAT и skinny protocol в 
+12.1(5)T-12.1(5)T6 включительно, Bug ID CSCds72170
+NAT Enabled Routers Encounter Problems with Cisco IOS 12.1(5)T
+
+Решение: перейти на 12.1(5)T7 или сразу на T9, или более свежую версию
+
+P.S. Как временное решение, повесить на in и out интерфейсов
+(inside&outside) acl, где запрещать пакеты tcp с dst_port и src_port 2000.
+
+[19.08.2001] (Ruslan Laishev) 3640 ISO 12.2 (3)
+Hа всякий случай, эта версия не понимает шаблона ".T" (без кавычек :) в
+dial-peer-е, откатил на 12.2 (1) - работает.
+"^T" тоже не понимает.
+
+(Cyril Zlachevsky) И TCL IVR, похоже, поломали - у меня скрипт, 
+успешно работавший на 12.1(3)T, 12.1(5)T и 12.2.1 на 12.2.3 не 
+запускается - "ccappmib: insertion error. duplicate name new"
+
+[12.10.2001] (Vladimir Litovka) BGP crash on 12.2(1b)
+Предупреждаю об обнаруженном глюке - если на 12.2(1b) сказать
+
+ neighbor x.x.x.x default-originate
+
+кошка немедленно уходит в reboot. Проверено на 2509 (c IP IPSec Plus,
+Enterprise), для каких еще моделей актуально - не знаю.
+
+[13.10.2001] (Gosha Zafievsky) в 12.2(3) вроде как Display IE починили.
+
+[17.10.2001] (Dmitri Kalintsev) Ранние 12.2 имеют баг с мультилинком,
+трудновоспроизводимый и очень неприятный (лечение - ребут). Пофиксано
+(вроде) в 12.2(5). 12.2(3) имеет баг с ATM p-t-p, когда оный просто не
+встаёт. Пофиксено в 12.2(5) (факт).
+
+[12.11.2001] (Oleg A. Lebedev) 12.2.5 и SNMP на sub-интерфейсах
+
+CSCdv27118
+
+Cisco IOS Release 12.2(3) may not successfully support the Simple Network
+Management Protocol (SNMP) Management Information Base (MIB) for fast
+ethernet subinterfaces in the ifIndex Mib object. There is no workaround.
+
+(Vladimir Chepikov) В 12.2.6, когда выйдет, должно уже работать -
+присылали interim 12.2.5(5.4), там уже всё пофиксили.
+CSCdv22756, CSCdv27118 - bug IDs.
+
+P.S. [29.11.2001] (Denis V. Schapov) этот баг в resolved caveats 12.2(6)
+
+[29.11.2001] (Denis V. Schapov) SNMP support for IfTable for 802.1Q 
+subinterfaces BugID - CSCds00250 уже стал Assigned, Severity 2
+
+[24.12.2001] (Dmitry Valdov) ip tacacs source-interface сломан в
+IOS (tm) 3600 Software (C3640-IS-M), Version 12.2(4)T1,  RELEASE SOFTWARE (fc1)
+
+[25.12.2001] (Igor Suvorov) bug in ios 12.2.6a, Cisco 801
+Cisco 801, ios 12.2.6a (последний), ip версия.
+
+Сломано распознавание ответа на bootp запрос при автоконфигурации.
+Т.е. запрос cisco шлет, а ответа не слышит. Hа TAC ничего похожего не 
+нашел, но ошибка воспроизводится свободно.
+
+Откат на ветку 12.0 проблему решает.
+
+[19.02.2002] (Vladimir Tregub) 1751: no IP CEF
+
+Hет в 1751 цефа, по крайней мере в простом софте.
+cisco#1751sh ip cef
+                 ^
+% Invalid input detected at '^' marker.
+
+cisco1751#sh ver
+Cisco Internetwork Operating System Software
+IOS (tm) C1700 Software (C1700-Y-M), Version 12.2(4)T1,  RELEASE SOFTWARE (fc1)
+
+Есть только в IP/VOICE PLUS, пусть он и стоит 0$, но придётся докупить
+мозгов (Minimum Recommended Memory to download image - 16 MB Flash and 48 MB
+RAM).
+
+[31.05.2002] (Vladislav Nebolsine) cRTP over FR
+cRTP имеет свойство работать лишь в некоторых 12.2 версиях IOS.
+
+Для таких
+> IOS (tm) MC3810 Software (MC3810-A2ISV5-M), Version 12.2(8)T1,  RELEASE
+> IOS (tm) 7200 Software (C7200-JO3S-M), Version 12.2(8)T1,  RELEASE SOFTWARE
+
+Самая похожая бага - CSCdw28689 "frame relay packets not compressed as
+expected" (она же CSCdw46908/CSCdw91283/CSCuk32308)
+Появилась где-то в 12.2(6.8)T, пофиксена в 12.2(9.1)T.
+
+Резюме - cRTP более-менее хорошо живет в 12.2(6) и выше фактически во
+всех конфигурациях. Что касается T ниже 12.2(10)T, мнэ-э... не советую.
+
+12.2(9)T не существует, 12.2(10)T выйдет в конце июня (ориентировочно).
+12.2(10) должна работать
+
+(Slawa Olhovchenkov) На 3810 бага. no ip route-cache на сабинтерфесе
+на 3810 лечит. На 7200 все в порядке.
+
+[09.09.2002] (Irakli Natsvlishvili) 122-11.T - SSH рвет соеденения когда 
+и куда попало с криком bad CRC.
+
+===========================================================
+99. Misc
+
+===========================================================
+
+99.1>Q: Как послать киске break ?
+
+03 это скорая, 02 - милиция, а break - это не символ, а очень длинный старт-бит
+(c) Michael Shestyriov
+
+>A: (DY)
+
+RTFM по терминалке :)
+cu,tip - ~#, ~% 
+(напоминаю что у ssh тоже есть escape character. и при схеме ssh->host->telnet cisco надо ~~#
+и из man ssh:
+     ~B      Send a BREAK to the remote system (only useful for SSH protocol
+             version 2 and if the peer supports it).
+)
+DOS Navigator - F4
+Cisco Break Sequence
+
+>A: (Alec Voropay)
+Standard Break Key Sequence Combinations During Password Recovery
+
+99.2>Q: Как восстановить забытый (не мной, а администратором) пароль или сменить
+его на какой-то другой? Можно ли сделать это без потери конфигурации?
+
+>A: (Gosha Zafievsky)
+
+RTFM, конкpетно User Guide, еще конкpетнее
+"Recovering a lost enable password".
+
+Да.
+
+P.S. (DY) про Break - см. выше
+
+(Andrey Tarasov) Расшифровка password 7 05080F1C2243 - 
+PTM's Cisco password decryption tool
+Cisco weak password decryption applet
+(Evgeny Sergachev) Расшифровываем пароли level 7
+
+Use of the Configuration Register on All Cisco Routers
+
+[25.07.2000] >A: (Konstantin Gribakh) Cisco собрала все эти процедуры
+на одной страничке Password Recovery Procedures
+
+99.3>Q: Сертифицировано ли в Минсвязи оборудование Cisco ?
+
+[2005.09.09]>A: (Sergey Nikiforov)
+поиск на Cisco
+
+Чтобы узнать номера сертификатов, достаточно гостевого аккаунта.
+С полноценным дают скачать скан оригинала.
+
+P.S. (DY) Картинки есть тут - Сертификаты и лицензии. (nag.ru)
+
+>A: (Serge Turchin)
+
+Да, номера сертификатов ОС/1-СПД-59 - ОС/1-СПД-91
+
+СЕРТИФИКАТЫ СООТВЕТСТВИЯ
+СЕРТИФИКАТЫ СООТВЕТСТВИЯ СИСТЕМЫ "ЭЛЕКТРОСВЯЗЬ"
+
+>A: (Denis Golovenko )
+
+ОС/1-СПД-70 -- для моделей 2505/07/09/11/18
+
+>A: (Vladislav Nebolsine)
+
+ЦИИИС было сертифицировано следующее оборудование:
+Маршрутизаторы Cisco
+761, 765, 771, 775
+1001, 1003, 1005, 1601, 1603
+2501, 2503, 2505, 2507, 2509, 2511, 2512, 2514, 2518, 2520, 2522
+26xx
+3620, 3640
+4000, 4000M, 4500, 4500M, 4700, 4700M
+7204, 7206, 7505, 7507, 7513
+AS5200, AS5300
+MC3810
+Cache Engine LDIR-410, LDIR-420
+LAN коммутаторы
+Catalyst 1400, 1900, 2820, 29xx
+3000, 3100, 3200
+5000, 5002, 5500, 5505
+WAN коммутаторы
+LightStream 1010
+IGX8, IGX16, IGX32, IGX8410, IGX8420, IGX8430
+BPX8600
+MGX8220
+
+Сетевые экраны Cisco PIX Firewall
+(3 класс защищенности по системе сертификации средств защиты
+информации по требованиям безопасности информации)
+
+P.S. (DY)
+Список соответствия оборудования и сертификатов
+Номера сертификатов Госкомсвязи России
+
+[05.01.2001] >A: Ilia Zubkov - про сертификацию Catalyst
+На эту тему -- вот у меня на столе лежит копия письма зам. министра МинСвязи
+Волокитина (б/н, от 02.11.2000) в московский офис киски о том, что, мол, 
+"На Ваш запрос о необходимости сертификации коммутаторов"
+типа Catalyst 1900,2900XL,3500XL,4000,6000,8500CSR "Минсвязи сообщает, что
+указанное оборудование не подлежит сертификации в системе "Электросвязь", 
+и его применение не запрещает коммерческую эксплуатацию сети
+при установке на узлах связи для соединения оборудования во взаимоувязанной
+сети по протоколам Ethernet, FastEthernet, GigabitEthernet".
+
+По моему разумению, желающим в МинСвязи не должны отказывать в выдаче
+копии этого письма.
+
+P.S. (DY) поскольку это письмо б/н (без исходящего номера) то
+статус этого письма до конца не ясен.
+
+[25.07.2001] (Vladimir V. Lobanov) Есть сертификаты ССЭ от 22.06.2001 #329, #330, #331.
+В них указан набор 29xx и 35xx.
+
+[25.07.2001] (Vladimir Tregub)
+ОС/1-СПД-332 Cisco Catalyst 1912/24
+Применение на ВСС России в качестве коммутатора локальной сети
+ОС/1-СПД-331 Cisco Catalyst 29xx
+Применение на ВСС России в качестве коммутатора локальной сети
+ОС/1-СПД-331 Cisco Catalyst 2948G-L3
+Применение на ВСС России в качестве коммутатора локальной сети с функциями
+маршрутизации
+
+Sergey Eremenko
+ОС/1-СПД-329    35xx XL
+ОС/1-СПД-330    2948G-L3
+ОС/1-СПД-331    29xx XL, 29xxG
+ОС/1-СПД-332    19xx
+ОС/1-СПД-333    40xx
+
+Всё от 22.06.2001 до 22.06.2004
+
+[25.10.2005] (Sergey Goncharov) 3750 сертификат ССС
+ОС-1-СПД-0014
+Cisco Systems, Inc.
+Коммутаторы локальной сети
+Catalyst WS-C3750, WS-C3750G, ME-C3750 (версия ПО 12.2)
+Hачало действия сертификата 15.09.2005
+Окончание действия сертификата 15.09.2008
+
+[13.06.2000] 99.4>Q: Как по названию файла опpеделить веpсию иоса,
+IP-only он, IP/IPX или enterprise?
+
+>A: (Serge Turchin)
+
+*-i-*   - IP
+*-is-*  - IP Plus
+*-d-*   - Desktop
+*-ds-*  - Desktop Plus
+*-j-*   - Enterprise.
+
+и т.д. В 11.2 нет IP/IPX, а только Desktop, на него цена снижена
+в сравнении с 11.1. Суффикс - a - appn. Вообще, где-то есть на
+сервере расшифровка.
+У 1000-ных ядер система другая. n-Novell, b - Apple Talk, y - IP,
+q - асинхронный вариант.
+> И еще - на сайте для веpсий были файлы pазмеpом в 2-4pаза меньше иосов и
+> с
+> загадочным словом boot в названии - это bootstrap only? :-)
+У 7500, 4500-4700 нет прошитых намертво бутовых систем. Hо есть
+специальный т.н. bootflash в котором записана укороченная версия
+системы.
+
+>A: (Dmitriy Yermakov)
+
+Кажется все описано тут - Cisco IOS(R) Reference Guide см. Cisco IOS Image Feature Definition
+
+>Q: Подскажите где на CCO лежит список возможностей конкретного feature set
+для конкретной платформы.
+
+>A: (Slawa Olhovchenkov)
+
+Hаиболее надежный способ (вранья меньше всего) это идти по ссылке
+Cisco IOS Software Configuration в
+интересующую тебя версию софта и и читать там Cross-Platform Release Notes. 
+Там тупо глядеть простыни таблиц (Platform-Specific Information Includes memory
+recommendations, supported hardware, feature set tables, and platform-specific
+notes).
+
+99.5>Q: Есть ли поддержка R2 для 3600 ?
+
+>A: Vladislav Nebolsine 
+
+***Hot News*** Announcing R2 support for the 3600 Digital Modems!!
+
+Hot News!!!
+===========
+Announcing R2 support for the 3600 family of Digital Modems
+=================================================
+
+The 3600 team is pleased to announce R2 support for integrated Digital Modems on the popular Cisco 3600 series platform. This feature is available with the introduction of IOS 12.0(1)T
+This new feature supports the use of  R2 signalling with the 3600 internal digital modems, enabling  high-speed (up to 56kbps) remote access for branch offices and small/mid size ISP's who utilize this specific line-signalling protocol.
+This announcement extends the range of connectivity options available for
+the 3600 Digital Modems, now supporting:
+PRI CAS(CT1) R2 (CE1))
+
+By supporting this flexible range of signalling protocols , the 3600
+digital modem solutions can now be deployed on a world-wide basis!
+
+A Country list and Mini Q&A follow.
+
+Countries configurable with R2 on the 3600: (this is a subset of the
+supported 5300 R2 countries)
+=================================
+Argentina Australia Brazil * China *
+Columbia Costa Rica
+Eastern Europe mode supports:
+        Croatia Russia * Ecuador (ITU and LME)
+Greece Guatemala Hong Kong (China & ITU Variants)
+India Indonesia Israel *
+
+ITU mode supports:
+        Denmark Finland Germany
+        Russia (ITU variant) *
+        Hong Kong (ITU variant)
+        South Africa (ITU variant)
+Korea * Malaysia * Mexico (Telmex and Telnor) *
+New Zealand * Paraguay Peru
+Philippines Saudi Arabia
+
+Note: All countries listed have been tested in house. Countries marked
+with a * have also been successfully  tested in-country.
+
+Mini Q&A
+=========
+
+Q. What is R2 ?
+A. R2 is a signaling system (Q.422) used by a number of countries
+worldwide. This signaling system runs over an E1 Carrier (2.048Mb/s),
+containing 32 64Kb/s timeslots, of which, 30 timeslots can be used
+for digital modem calls.
+
+Q. Does this feature require new hardware in the 3600?
+A. No
+
+Q. What network modules support this feature?
+A. All the current 1/2 PRI NMs, including the new 1FE 1/2 PRI NM.
+
+Q.Is the Cisco Dial-out Utility supported through an R2 connection?
+A. Yes. Version 2 of the Cisco Dial-out Utility (available early
+November) together with MICA Portware 2.5.1.0 support Dial/Fax out
+through the R2 interface
+
+Q. Is this R2 feature supported the Cisco 2600, 3620, and 3640?
+A. The ability for Modem calls to be terminated through an R2 interface
+is available for all platforms that support Cisco digital modems. This
+currently limits R2 support to the 3640/3620
+
+Q. Do I need a new version of the digital modem microcode to support R2?
+A. No. All shipping versions of Portware are supported. For information
+on Portware and instructions on downloading the latest version, please
+visit: http://www.cisco.com/public/sw-center/sw-access.shtml.
+
+Q. What IOS is required to utilize this feature?
+A. IOS 12.0(1)T and above
+
+Q. Can I support ISDN PRI R2, and CAS in the same chassis?
+A. Yes, on a per network module basis. Each individual PRI NM can be
+configured as R2,CAS or ISDN PRI.
+
+Q. What countries will this R2 feature be available in?
+A. At FCS, a subset of the 5300 supported R2 countries will be supported.
+All Countries in the list above have been successfully tested internally.
+
+Q. Will the new mixed media FE/PRI support R2?
+A. Yes.
+
+Q. Can two PRI/R2  links share one DM NM?
+A. Yes. The pool of modems is available to all R2/PRI interfaces.
+
+99.6>Q: Когда же наконец будет релиз V.90 для MICA ?
+
+>A: (Oleg Zharoff) 
+
+Вышел наконец долгожданный релиз V.90 для MICA модемов, версия 2.5.1.0.
+ (broken link)
+
+99.8>Q: Тут проблема - кто знает как выставить номер сети у Hовелльного
+клиента ?  Hачал бить сетку на VLANы - и возникли проблемы. MS работает
+нормально, а Hовельный клиент не хочет.
+
+>A: (Serge Turchin)
+
+Прописать spantree portfast на портах Каталиста.
+
+[13.06.2000] 99.8.1>Q: Как заставить порты на 2924XL быстрее инициализироваться ?
+
+>A: os@alkar.net
+
+Using Portfast and Other Commands to Fix Workstation Startup Connectivity Delays
+
+99.9>Q: Кто-нибудь знает, как быть с утерянным паролем на 1020?
+
+>A: (Gleb Pijov)
+
+Question: How do you recover lost passwords on a Cisco 1020?
+Answer:
+
+As the Cisco 1020 is rarely physically secured, password recovery is
+done by calling Cisco and providing a system generated CHALLENGE. Using
+the override program, the support engineer can provide a one-time
+password to use to get into enable mode.  Then, follow these steps:
+
+  1.Customer: Put up dip switch 1 and apply power. You should see
+"Console Username:".
+
+  2.Customer : Login with Username "enable" and Password "override". It
+will print a CHALLENGE.
+
+  3.Cisco runs the override program and prints a RESPONSE.
+
+  4.Customer: On the 1020, log in as "enable" and give the RESPONSE as
+the password. That will get you the # prompt, then you can do a wr t  to
+see the current enable password. Or, you can do a config t and reset the
+enable password.
+
+99.10>Q: Проблемы с MTU на interface tunnel.
+
+>A: "Philipp V. Patrushoff" 
+
+BugID: CSCdm54169
+
+>>> [13.09.2000] Vladislav Nebolsine, NB !!!
+>>> баг исправлен в 11.3(11) и 12.0(6)
+
+You cannot change the MTU size of a tunnel interface using software 
+after Cisco IOS Release 11.3(9.2).
+
+ Workarounds:
+
+  Use images between Release 11.3(5.1)T and Release 11.3(9.3) or 
+Release 12.0(0.16) and Release 12.0(4.2).  
+Configure ip mtu on the tunnel interface before you configure tunnel
+destination. If tunnel destination is already configured, then unconfigure 
+the destination, configure ip mtu, and then reconfigure the destination. 
+You need to wait five seconds after removing the tunnel destination before 
+issuing the ip mtu command. Once the workaround is issued, there should be 
+no problems in the event of a router reboot as the ip mtu command
+is parsed before the tunnel destination.
+
+[27.12.2000] 99.11>Q: Есть несколько Кисок сеpии 25xx. Hyжно одновpеменно 
+на всех в опpеделенный момент менять X25 routing, пpичем желательно одним 
+скpиптом из-под FreeBSD.  Как ?
+
+>A: (Alex Bakhtin), (John Gladkih), (Vladislav Staroselsky)
+
+=== newconfig ===
+interface serial 
+shutdown
+exit
+no x25 route ...
+x25 route ...
+interface serial 
+no shutdown
+end
+=== newconfig ===
+
+=== Cisco config ===
+ip rcmd rcp-enable
+ip rcmd remote-host    enable
+ip rcmd remote-username 
+rlogin trusted-remoteuser-source local
+rlogin trusted-localuser-source local
+=== Cisco config ===
+
+=== change_routing.sh ===
+#!/bin/sh
+su  -c "rcp newconfig @:running-config"
+=== change_routing.sh ===
+
+В newconfig вставляем нyжные изменения текyщего pоyтинга (чеpез no route и
+route). Пpописываем на FreeBSD юзеpа. В нyжный момент запyскаем
+change_routing.sh
+
+[23.01.2001] 99.12>Q: Почему при ping'овании локального интерфейса
+киски (к примеру Serial 0) round-trip в два раза больше,
+чем при ping'овании удаленной стороны.
+
+>A: (Eugene Zhilitsky)
+
+Локальные интерфейсы Циска пингует, через удаленные.
+
+>A: (Игорь Масленников)
+
+На point-to-point линках через сериалы пинг всегда работает через второй конец
+линка, т.е. когда пингуешь свой собственный интерфейс, пакеты всегда бегут на 
+интерфейс соседа и возвращаются обратно. Это легко увидеть по времени пинга.
+Т.е. свой собственный неподнятый serial интерфейс не пинганешь.
+
+>A: (Maxim Basunov)
+
+ip route localip loopback0
+
+[16.02.2001] 99.13>Q: Может ли как-нибудь пригодиться 'ip mask-reply' 
+на интерфейсе?
+
+>A: (Victor Sudakov)
+
+Есть железки, например аппаратные принт-сервера, для которых
+это единственный способ задать маску подсети.
+
+[28.02.2001] 99.14>Q: На trunk'овом порту каталиста, к которому подключен 
+router, switch идут input/CRC error. Что делать?
+
+>A: (Jen Linkova) 
+
+1)жесткое задание speed & duplex
+2)отключение cdp с обоих сторон
+3)no keepalive со стороны роутера
+
+>A: (Oleg Stasiuk)
+В этих документах подpобно объяcняетcя cитуация c неcоглаcованием
+cкоpоcтей и дуплекcа, диагноcтика и методы пpотиводейcтвия.
+
+Troubleshooting Cisco Catalyst Switches to Network Interface Card (NIC) Compatibility Issues
+Configuring and Troubleshooting Ethernet 10/100Mb Half/Full Duplex Auto-Negotiation
+   
+[14.12.2001] 99.16>Q: Как логгировать все команды, данные с консоли ?
+
+>A: (Sergey N. Okishev)
+
+Configuring Accounting
+
+Раздел Сommand Accounting. Пишет в лог все, вплоть до sh ver. 
+
+99.17>Q: Как можно через rsh выполнить последовательность команд ? 
+Например conf t; int xx; shutdown
+
+>A: НИКАК. Используйте апдейт конфигурации посредством tftp/rcp/snmp.
+
+99.18>Q: Какие езернет карты (кроме родных) можно воткнуть в PIX 525?
+
+>A: (Irakli Natsvlishvili)
+http://www.cisco.com/warp/public/770/fn15028.shtml
+
+99.19>Q: Сколько может быть логических интерфейсов на киске ?
+
+>A: (Pavel Rodionov)
+
+Maximum Number of Interfaces and Subinterfaces for Cisco IOS Software Platforms: IDB Limits
+
+[25.12.2003] 99.20>Q: Возможен ли дамп содержимого пакетов с циски?
+
+>A: (Denis V. Schapov)
+
+в промышленных масштабах
+IP Traffic Export
+если просто посмотреть
+debug ip packet dump
+
+>A: (Alex V. Belinsky)
+Миррорить кошачий трафмк на другой порт на свитче, на котором сидит unix
+box и слушает tcpdump'ом.
+
+[03.08.2004] 99.21>Q: Подвесил vty 0. Hа clear line [x] и clear line vty [y] циска говорит, что [OK],
+но реально не клеарит vty.
+
+>A: (Alexandre Snarskii)
+
+Hайти tcb (tcp control block) этого соединения и почистить его на
+уровне tcp-соединения.
+
+RT001-201#show tcp brief
+TCB       Local Address           Foreign Address        (state)
+447236F0  192.168.10.131.23       remote.host.removed.32781   ESTAB
+
+RT001-201#clear tcp tcb ?
+  <0x0-0xFFFFFFFF>  TCB address
+
+T001-201#clear tcp tcb 447236F0
+[confirm]Connection closed by foreign host.
+
+- вот так я сам себя с кошки вычистил.
+
+[01.02.2006] >Q: Я обнаружил, что CISCO BootRom содержит скрытую команду 'priv' которая спрашивает пароль. 
+Что это за команда и где взять пароль ?
+
+>A: Команда 'priv' - это технологическая команда BootRom. 
+Она открывает более 20 дополнительных команд: тесты железа, памяти, отладчик и т.д. 
+CISCO не сообщает пароль на данную команду. Однако метод генерации пароля был обнаружен. 
+Пароль вычисляется из 10 первых байтов serial cookie. Алгоритм описан здесь: http://ers.msk.ru/cisco/priv.html 
+
+===========================================================
+NN. Заметки на полях.
+
+===========================================================
+
+Sergey Trofimovsky -  PPP per-user timeouts explained
+http://www.employees.org/~dpeng/per_user_timeout.htm
+Кстати говоря, начиная с 11.3(8)T (или AA :-) timeouts уже и в PPP/PAP
+работают.Без извратов в vprofiles etc.
+
+Dmitriy Yermakov - где-то начиная с 11.3(5)T появилось
+ppp authorization per interface
+теперь можно отключать авторизацию на leased line с enc ppp
+
+Serge Turchin - В 12.03T появился X.25 over FR...
+Vladislav Nebolsine - Hу, а подробнее об этой опции можно прочитать Annex G (X.25 over Frame Relay)
+
+Dmitriy Yermakov -  требования к объему памяти
+
+Cisco-on-line Conference on Comptek
+
+Martin McFlySr 
+ Cisco Year 2000 Product Compliance URL
+
+Dmitriy Yermakov - Проблемы с Zelax M115 на связке cisco-unix,
+решение от Игоря Николаева - http://knot.pu.ru/faq/pppd.html
+
+Распайки различных кабелей, конфиги для модемов - http://www.links.ru
+
+[13.06.2000] Cisco IOS Software RoadMap
+
+[13.06.2000] Vasily Ivanov - Ограничение скорости коннекта для MICA модемов -
+ (broken link)
+
+[04.07.2000] Vladislav Nebolsine - Если кому интересно - в 12.1(2)XH появилась
+- поддержка E1 R2 для 2600/3600/7200,
+- Caller ID для 3810/2600/3600,
+- ISDN PRI Q.931 User-Side/Network-Side для голосовых модулей 2600/3600
+(до этого был только Q.SIG)
+- и кое-что другое.
+
+Подробности:
+New Features in Release 12.1(2)XH
+
+[04.07.2000] Полтергейст в NM-*AM (Проблемы с NM-8AM (NM-16AM))
+Симптомы:
+1. Модемы не берут трубу при входящем звонке.
+2. Модемы показывают наличие входящего звонка просто при подключении к
+тел.линии.
+3. При звонке обратным телнетом на обычный телефон - вместо
+handshack-сигнала - рев 50 гц.
+
+Заземлите циску.
+
+[27.12.2000] Yuri Vorobyev -  Cisco ground 
+ http://www.cisco.com/univercd/cc/td/doc/product/access/acs_mod/cis3600/3600_ cn/nebslugs.htm
+
+[02.08.2000] Gosha Zafievsky NM-8AM, NM-16AM _не_ поддерживают режим leased line.
+
+P.S. (DY) Желающие могут поэкспериментировать с ATA и большИм временем
+ожидания CARRIER. За результат не ручаюсь.
+
+[12.09.2000] john gladkih - LL (leased line) на MCOM модемах (NM-8/16AM)
+кого интересовали LL на MCOM модемах? оно работает.
+мы заводили 18 вольт на короткой линии. Через DDR+RIP
+
+[06.02.2001] Alex Bakhtin - Сделали они LL саппоpт для NM-8(16)AM. В последней 12.1T вpоде.
+Поробности - Leased Line Support for Cisco 2600/3600 Series Analog Modems
+
+NB !!! Loop current is required.
+(john gladkih) - наряжение при подключении модемов с 2-х сторон
+к линии должно быть _не_ _менее_ 12-18 V, при этом ток
+_должен быть_ _ограничен_ источником до ~1.2mA
+
+[05.09.2000] Victor L. Belov - Туннель с win98 на cisco router
+
+вариантов 2 =-)
+
+1. pptp поддерживается только в специальном IOS
+   (12.0.7XE что ли... не помню точно) на 7xxx маршрутизаторах.
+   С другой стороны pptpd на FreeBSD и Linux работает нормально.
+
+2. на мелких маршрутизаторах поддерживается l2tp туннели,
+   но тогда на 95/98/NT придется ставить доп. клиент - например
+   WinVPN от http://www.routerware.com
+   В Windows 2000 есть встроенная поддержка l2tp. Я даже завел
+   между ним и Cisco IPSec - получается совсем хорошо.
+
+[22.10.2000] (DY) псевдовыделенка на чем угодно, как поднимать канал.
+Как настраивать DDR - читать доки.
+А чтобы киска сама поднимала канал не зависимо от активности в сети,
+наверное, имеет смысл настроить ntp на киске :)
+
+[09.12.2000] Valery Filippov - 4500 не тянет 4Mbit на DCE.
+
+[27.12.2000] Eugeny Krasilnikov - undocumented Cisco IOS commands
+http://boerland.com/dotu
+
+[23.01.2001] Dmitri Lubimkov - AS5300 & [Bb]ad modems
+
+>  исходя из чего 5300-я помечает модемы как bad? Работают они будь здоров
+>  как, пока не приходят в состояние (по show modem call-stats) 'B' или 'b'.
+Hасколько я понимаю B из-за большого количества неуспешных коннектов
+(несостоявшихся).
+4-й столбец в show modem. Может быть AS5300 их после этого тестирует и они
+ей не нравятся.
+А b появляются наверное только когда их в конфигурации отключить - а может и
+нет.
+
+>  И можно как-нть без общего reload привести их в чувство? И вот еще -
+Можно. Я делаю так - смотрю к какому модулю относятся  Bad модем. Hа одном
+модуле 6 или 12 модемов - зависит от железа. firmware загружается в модуль -
+в несколько модемов сразу. Вычисляешь spe - помни, что начинается с 0.
+Предположим у тебя Bad 9-й модем - это spe 1/1. Пишешь команды:
+spe 1/1 1/1
+  firmware location flash:mica-modem-pw.2.7.2.0.bin
+  firmware upgrade busyout
+
+Эта команда не сохраняется но приказывает начать заливку модемов сейчас (на
+один модуль) а не дожидаясь пока придет recovery time. Смотришь sh modem -
+незанятые модемы будут помечены как ! Добрая Cisco теперь будет ждать когда
+освободятся все остальные модемы на модуле. Если ты не такой добрый, то
+делаешь
+clear line    :-)
+И выгоняешь всех пользователей с модуля на который firmware писать надо.
+Только помни, что modem начинается с 0, а line с 1 - надо 1 прибавлять к
+номеру модема в clear line
+! меняется на p потом на D а потом модемы снова доступны - все занимает
+меньше одной минуты.
+
+>  сегодня наблюдал _весь день_ несколько модемов висело в состоянии 'p' и
+>  никак из него не выходило. Что это может быть за проблема?
+Причина наверное в этом же - освободи все модемы на модули и p превратится в D
+
+>  Версия IOS'а - 12.0(7)T, SPE конфигурация:
+>
+> spe 1/0 2/9
+>  firmware location flash:mica-modem-pw.2.7.2.0.bin
+>  firmware upgrade recovery
+Когда ты захочешь автоматизировать тестирование и ремонт модемов при помощи modem ?
+Hекоторые модемы будут уходить в T (Back-to-Back test in progress) и оттуда
+не возвращаться - вот тогда уже только перезагрузка.
+Я оставил эту автоматизацию - руками оно надежнее.
+
+[23.01.2001] Про loadbalancing, per-packet, per-destination.
+
+>A: Vladimir Chepikov - Cisco - Sample Configurations for Load Sharing with BGP in Single and Multihomed Environments
+>A: Urri Kotov, Victor L. Belov, Valery Filippov
+
+>  >> All:  Имеется конфигурация: CISCO 7120 соединена с 2611 двумя
+>  >> каналами 1920 и 1280 кбит. Трафик (ISP) прет от 2611 в сторону 7120.
+>  >> Как настроить кисок, чтобы трафик лился по каналам _пропорционально
+>  >> пропускной способности_ канала? Обычно трафик растет равномерно,
+>  >> меньший канал уходит в насыщение со всеми вытекающими. При этом надо
+>  >> чтобы при обрыве любого из каналов все запихивалось в
+>  >> работающий.
+>
+>  > Какой протокол маршрутизации запущен?
+>  > BGP. Hо можно запустить что угодно.
+>
+>  YY> EIGRP умеет учитывать bandwidth, delay, load и т.д.
+> Hасколько я понимаю, любой протокол динамической маршрутизации
+> в конечном итоге прописывает в таблицу маршрутизации определенный
+> маршрут. Если в таблице маршрутизации оказывается один маршрут с
+> двумя или более возможными портами (адресами), (это можно прописать
+> и статикой, без всяких там EIGRP и пр.), то распределением трафика
+> на эти порты (адреса) заведует не сам протокол динамической
+> маршрутизации, а что-то другое. Hа www.cisco.com все попытки
+> поиска этого чего-то (load balancing) приводят в конце концов на
+> описание ip cef. Однако и при выключенном ip cef циска все-таки
+> распределяет нагрузку.
+>
+> Удалось понять и то, что она умеет это делать двояко: per packet
+> и per destination. Если я правильно читаю по английски, то
+> per packet означает просто чередование пакетов (один туды, второй
+> сюды). Per destination действует иначе - если в роутер попадает
+> пакет, для destination-адреса которого нет вхождения в
+> роут-кэш-таблице(?), роутер создает это вхождение и прописывает
+> туда порт, нагрузка на который в этот момент меньше.
+>
+> Hи один из методов не дает грантии, что один из каналов не будет
+> уходить в насыщение, потому как в случае per packet это всегда
+> будет меньший канал, а в случае per destination, как показывает
+> практика, всегда найдется какой-нибудь клиент с толстым каналом,
+> который начнет сосать что-нибудь большое, и весь этот трафик
+> полетит через один канал (тот, который был меньше нагружен в
+> момент создания для этого клиента записи в роут-кеш-таблице).
+>
+> Вопрос остается открытым.
+>
+
+При per-packet происходит ровная загрузка каналов
+но он работает на processor switching, насколько я
+понимаю. То же самое на fast switching только на
+CEF делается. А per-destination работает на fast
+switching'е, но дает очень неравномерную нагрузку
+на каналы. Вообще это вполне логично, потому как
+route-cache. С помощью CEF и EIGRP можно сделать
+non-equal multi-path (работает например у Ростелекома
+на канале в Телеглоб, один ствол - 16Мбит, другой -
+34МБит). Равный load-balancing можно сделать на
+processor switching (на обоих интерфейсах no ip
+route-cache) на небольших скоростях хоть на OSPF,
+хоть на static. Иногда это делается в смеси с BGP.
+Делается скажем 2 serial unnumbered от loopback.
+После этого с обоих сторон статика и 1 bgp сессия
+между loopback'ами. Можно сделать и на 2-х bgp-
+сессиях, но когда там full-view то это не оправдано.
+В любом случае нужно OSPF или BGP сказать maximum
+paths = 2. Hо это все теория, а в данном случае
+на неравноценных каналах выход только один - CEF+
+EIGRP.
+
+(Valery Filippov) :
+
+Все гораздо печальнее. Трафик в случае per-packet load-balancing
+делится в соответствии с небезызвестной величиной "traffic share count",
+коя и вычисляется из разнообразных фишек роутинговых протоколов.
+В случае с eigrp исходя из bandwidth, delay,load ... вычисляется
+metric-и роута по разным маршрутам целочисленное деление которых
+друг на друга и дает пресловутую вличину traffic share count.
+Т.е. share count для худшего маршрута всегда 1.
+Исходя из вышеизложеного понятно, что хорошую балансировку с помощью
+eigrp можно получить при сотношении "ширин" каналов N:1.
+(Пример с Ростелекомом хорошая иллюстрация, полагаю, в канале 34М у них
+остается примерно 2 М свободной полосы, когда канал 16М уже нагружен
+полностью).
+Я не нашел способа повлиять на share count "младшего роута" (разве-что
+попытаться обмануть ios и нарисовать например balancing 3:2 с помощью статиков
+
+ip route a.a.a.a 255.255.255.255 c.c.c.c
+ip route a.a.a.a 255.255.255.255 d.d.d.d
+ip route a.a.a.a 255.255.255.255 interfaceC
+ip route a.a.a.a 255.255.255.255 interfaceD
+ip route a.a.a.a 255.255.255.255 interfaceC c.c.c.c
+
+;)), поэтому приходится идти на поводу у cisco и вводить в конструкцию
+лишний "нормировочный" канал, например Tunnel минимальной ширины. Вот пример
+рабочей конструкции с балансировкой двух каналов 2M и 1.66М.
+
+router#sh ip route X.X.X.X
+Routing entry for X.X.X.X/32
+  Known via "eigrp YYYY", distance 170, metric 2663936, type external
+  Redistributing via eigrp YYYY
+  Last update from A.A.A.A on Tunnel0, 09:11:34 ago
+  Routing Descriptor Blocks:
+    B.B.B.B, from B.B.B.B, 09:11:34 ago, via Serial4/5
+      Route metric is 2663936, traffic share count is 96
+                                                     ^^^
+      Total delay is 55000 microseconds, minimum bandwidth is 2038 Kbit
+      Reliability 255/255, minimum MTU 1500 bytes
+      Loading 1/255, Hops 1
+  * C.C.C.C, from C.C.C.C, 09:11:34 ago, via Serial4/4
+      Route metric is 2946304, traffic share count is 87
+                                                    ^^^^
+      Total delay is 55000 microseconds, minimum bandwidth is 1664 Kbit
+      Reliability 255/255, minimum MTU 1500 bytes
+      Loading 1/255, Hops 1
+    A.A.A.A, from A.A.A.A, 09:11:34 ago, via Tunnel0
+      Route metric is 256640000, traffic share count is 1
+                                                      ^^^^
+      Total delay is 25000 microseconds, minimum bandwidth is 10 Kbit
+      Reliability 255/255, minimum MTU 1476 bytes
+      Loading 1/255, Hops 1
+
+X.X.X.X используется в качестве loopback адреса для bgp.
+
+Serial4/4 is up, line protocol is up
+  MTU 1500 bytes, BW 1664 Kbit, DLY 50000 usec, rely 255/255, load 81/255
+  30 second input rate 416000 bits/sec, 275 packets/sec
+  30 second output rate 489000 bits/sec, 203 packets/sec
+
+Serial4/5 is up, line protocol is up
+  MTU 1500 bytes, BW 2038 Kbit, DLY 50000 usec, rely 255/255, load 65/255
+  30 second input rate 442000 bits/sec, 311 packets/sec
+  30 second output rate 575000 bits/sec, 237 packets/sec
+
+Tunnel0 is up, line protocol is up
+  MTU 1514 bytes, BW 10 Kbit, DLY 20000 usec, rely 255/255, load 153/255
+  30 second input rate 4000 bits/sec, 3 packets/sec
+  30 second output rate 6000 bits/sec, 2 packets/sec
+
+[20.02.2001] (Sergey Budnitsky) Анонс про поддержку V.92 - Cisco Systems Supports New V.92 and V.44 Modem Standards on Its Award-Winning Remote Access Platforms
+
+(Andrey Kostin) Дополнение.
+
+NextPort CSMv6 modems (AS5350, AS5400, AS5800 with 324-modem cards)
+  March 2001: V.92 Quick Connect and Modem on Hold, V.44
+  Q3 CY 2001: V.92 PCM Upstream
+
+MICA modems (3600, AS5300, AS5800 with MICA cards)
+  April 2001: V.92 Quick Connect and Modem on Hold, V.44
+  (no plans for V.92 PCM Upstream)
+
+Microcom modems (AS5200, AS5300)
+  No upgrades; firmware is End of Engineering
+
+[04.09.2001] (Denis V. Schapov) Вот, появилось и на CCO про ttcp
+Может кому пригодится.
+Using Test TCP (TTCP) to Test Throughput
+
+[04.09.2001] (Denis V. Schapov) CallBack
+From Cisco IOS version 12.1(7), it is possible to use the Internet
+Engineering Task Force (IETF) RADIUS attribute 19 for ISDN and Analog
+Microsoft callback.
+
+Auth-Type = Local, Password = "cisco"
+                Service-Type = callback framed
+                ! --- Service-Type (6) is callback framed (4)
+                ! --- Callback framed is also known as Dialback-Framed-User
+                Callback =6083
+                ! --- IETF RADIUS Callback attribute (19) with the phone number
+                ! --- for the callback
+
+То есть теперь можно будет per-user разрешать клиенту _только_ callback.
+
+[20.09.2001] (Dmitry Morozovsky) HotSwap на 3660
+3661, сейчас четыре модуля (2CE1, FE, 1E2W, 4T). IOS с 12.0T по 12.1(5)T9.
+
+Обещанный подхват аналогичного модуля на то же место работал всегда; более
+того, с 12.1 все свежевставляемые модули корректно подхватывались на ходу. С
+12.0 иногда (пару-тройку раз) наблюдались перезагрузки по "автобусным ошибкам"
+
+(Sergey V. Artjushkin) Intel460T не очень корректно работает с dot1q.
+1) не тривиально настраивается транк порт
+2) нельзя выключить spaning tree на vlan'ах. Такая функция в свитче
+заложена, но не поддерживается. Intel официально заявил что no work around.
+(Dmitry Frolov) В простой конфигурации с 1 свичем все работает без нареканий.
+Hеобходимо перешить свичи прошивкой 4.60.85. И если пользовать fbsd,
+то stable образца не ранее октября сего года (пофиксили vlan'ы).
+
+[25.04.2003] (Eugene Grosbein) Tx level для модемов Microcom
+Для поднятия Tx level - регистры :T52 для V.90 и :T51 для V.34
+
+[09.06.2003] (Vitaly Gonchar) CA, BSD, Cisco - VPN solutions with IPSec (IPSec IP Tunnel Cisco<->FreeBSD, IPSec GRE Tunnel Cisco<->FreeBSD)
+
+Resolve IP Fragmentation, MTU, MSS, and PMTUD Issues with GRE and IPSEC
+
+[22.07.2003] Cisco IOS Packaging 12.3 packages
+
+[19.02.2004] (Dmitri Kalintsev) Portable Product Sheet - Router Perf (сводная таблица производительности роутеров)
+
+tftp и Cisco IOS более 32МБ
+ - использовать tftp-hpa
+ - использовать FTP (в том числе и из rommon - см. tftp более 32MB в ru.cisco)
+
+Cisco routers & SSH
+Для того чтобы заработал ssh нужно:
+- соответствующий IOS
+- transport input ssh на line vty 0 X
+- сгенерировать и привязать ключи:
+ip domain name example.com
+crypto key generate rsa general-keys label CISCO_KEY_LABEL modulus <360-2048>
+ip ssh rsa keypair-name CISCO_KEY_LABEL
+
+
